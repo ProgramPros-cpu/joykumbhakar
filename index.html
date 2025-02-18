@@ -1,86 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- CodeMirror Styles & Scripts -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/theme/dracula.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/htmlmixed/htmlmixed.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/css/css.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/javascript/javascript.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/edit/closetag.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/edit/closebrackets.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>personal webapp</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Website with Hamburger Menu</title>
     <link rel="stylesheet" href="styles.css">
-       <!-- Tabs Navigation with Logo on Right -->
-<!-- Tabs Navigation -->
-<nav>
-    <ul>
-        <li><a href="#home" class="active">Home</a></li>
-        <li><a href="#introduction">Tutorial</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-</nav>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="menu-container">
-        <div class="hamburger" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
-        </div>
-    </div>
-    
-    <!-- Add these inside your sidebar <ul> -->
-        <div class="sidebar" id="sidebar">
-            <div class="logo">
-                <img src="logo.png" alt="ProgramPros Logo">
-            </div>
-            <ul>
-                <li><a href="https://www.youtube.com/@ProgramPros-fs4ss" target="_blank"><i class="fab fa-youtube"></i> YouTube Channel</a></li>
-                <li><a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
-                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact Me</a></li>
-                <!-- Add Dark/Light Mode Buttons -->
-                <li><button id="dark-mode-btn"><i class="fas fa-moon"></i> Dark Mode</button></li>
-                <li><button id="light-mode-btn"><i class="fas fa-sun"></i> Light Mode</button></li>
+    <header>
+        <nav>
+            <div class="logo">ProgramPros</div>
+            <div class="clock" id="clock">00:00:00</div>
+
+            <!-- Mobile Menu Toggle -->
+            <details class="mobile-nav">
+                <summary>
+                    <i class="fas fa-bars"></i> <!-- Hamburger icon -->
+                    <span>Menu</span>
+                </summary>
+                <ul class="nav-links">
+                    <li><a href="#home" onclick="showTab('home')">Home</a></li>
+                    <li><a href="#tutorial" onclick="showTab('tutorial')">Tutorial</a></li>
+                    <li><a href="#project" onclick="showTab('project')">Project</a></li>
+                    <li><a href="#contact" onclick="showTab('contact')">Contact</a></li>
+                </ul>
+            </details>
+
+            <!-- Desktop Navigation -->
+            <ul class="desktop-nav">
+                <li><a href="#home" onclick="showTab('home')">Home</a></li>
+                <li><a href="#tutorial" onclick="showTab('tutorial')">Tutorial</a></li>
+                <li><a href="#project" onclick="showTab('project')">Project</a></li>
+                <li><a href="#contact" onclick="showTab('contact')">Contact</a></li>
             </ul>
-        </div>
-    <!-- Blurred Container -->
-        <section id="home" class="tab-content active">
-            <h1>I am that website Joy Kumbhakar built, still surviving on coffee and code!"</h1>
+
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="sidebar" id="sidebar">
+                <div class="profile-section">
+                    <img src="profile.png" alt="Profile Photo">
+                    <h1>Joy Kumbhakar</h1>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/bengalianimo?igsh=MXBydmhibWJ2bXc2dQ==" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://www.youtube.com/@ProgramPros-fs4ss" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                    <a href="https://www.facebook.com/share/1HAJ5MpvzE/?mibextid=qi2Omg" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="themeToggle" onchange="toggleDarkMode()">
+                    <span class="slider round"></span>
+                </label>
+                <span class="mode-label">Dark Mode</span>
+                
+            </div>
+            <main class="content">
+        </nav>
+    </header>
+        <!-- Home Tab -->
+        <div id="home" class="tab-content">
+            <h3>I’m that website Joy Kumbhakar built, still surviving on coffee and code!"</h3>
+            <hr>
             <p>This is the home section. Navigate through the tabs to learn more about me!</p>
         
             <!-- Article Section -->
-            <h2>About Me</h2>
-            <P12> নমস্কার আমি জয় কুম্ভকার এক প্রোগ্রামার, চলচিত্র সম্পাদক, ছবি সম্পাদক এবং এক চলচিত্রকার। এটা আমার Personal Website আপনার কোন কিছু প্রয়োজন পরলে আমাকে contact করতে পারেন | </P12>
+            <h3>About Me</h3>
+            <hr>
+            <br>
             <div class="article">
-                <h3>A Vlogger and a Programmer</h3>
+                <h4>A Vlogger and a Programmer</h4>
                 <p> I am a passionate vlogger and skilled programmer, blending creativity with technology. 
                     Through my vlogs, I capture engaging stories and experiences, while my programming 
                     expertise allows me to build innovative solutions. Whether I'm coding the next big 
                     project or sharing insights through my videos, I bring a unique perspective to both fields.</p>
             </div>
+            <hr>
         
-            <!-- Important Lines of famous persons-->
-<h2>Important Things to Remember</h2>
-
-<div class="famous-lines">
-    <p>"A person who never made a mistake never tried anything new."<br>
-        - Albert Einstein
-    </p>
-    <img src="einstein-image.png" alt="Einstein" class="round-image">
-</div>
-
-<div class="famous-lines">
-    <p>"Don't limit a child to your own learning, for he was born in another time."<br>
-        - Rabindranath Tagore
-    </p>
-    <img src="Rabindra Nath Tagore.jpg" alt="Rabindra Nath" class="Rabindra-image">
-</div>
+            
+            <!-- Important Lines -->
+            <br>
+            
+            <h6>Important Things to Remember</h6>
+            <div class="famous-lines">
+                <p>"A person who never made a mistake never tried anything new."<br>
+                    - Albert Einstein
+                </p>
+                <img src="einstein-image.png" alt="Einstein" class="round-image">
+            </div>
+            
+            <div class="famous-lines">
+                <p>"Don't limit a child to your own learning, for he was born in another time."<br>
+                    - Rabindranath Tagore
+                </p>
+                <img src="Rabindra Nath Tagore.jpg" alt="Rabindra Nath" class="Rabindra-image">
+            </div>
             <details>
                 <summary>
                     Useful Websites
@@ -113,186 +129,202 @@
                     </div>
                 </details>
             </details>
-            <h1>Check out my Instagram!</h1>
-            <p>Follow me on Instagram for more updates:</p>
-            
+            <h5>Check out my Other Channels</h5>
+            <hr>
+            <br>
             <!-- Instagram link with Font Awesome icon -->
-            <a class="instagram-link" href="https://www.instagram.com/bengalianimo?igsh=MXBydmhibWJ2bXc2dQ==" target="_blank">
-                <i class="fab fa-instagram"></i> Follow me on Instagram
+            <a class="YouTube" href="https://www.youtube.com/@ejoytech101" target="_blank">
+                <i class="fab fa-youtube"></i> EJoy Tech
             </a>
-        </section>
-        <section id="introduction" class="tab-content">
-            <h1>About Me</h1>
-            <p>Hi, I'm Joy Kumbhakar,a Programmer, Editor & Graphics Designer specializing in Coding, Video Editing & Photo Editing. I love creating innovative solutions and exploring new technologies.</p>
-            
-<details>
-    <summary>
-        Tutorial Videos
-    </summary>
-    <details>
-        <summary>
-            <p1>HTML5 Explanation
-            </p1>
-        </summary>
-               <!-- Embedded YouTube Videos -->
-               <div class="video-container">
-                   <iframe width="560" height="315" 
-                       src="https://www.youtube.com/embed/7ylhVxiHdnE" 
-                       title="HTML5 Explanation" 
-                       frameborder="0" 
-                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                       allowfullscreen>
-                   </iframe>           
-               </div>
-    </details>
-    <details>
-        <summary>
-            CSS Explanation
-        </summary>
-        <!-- Embedded YouTube Video -->
-    <div class="video-container">
-        <iframe width="560" height="315" 
-            src="https://www.youtube.com/embed/7B1FVQRCv2c" 
-            title="YouTube Video" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-        </iframe>            
-    </div>
-    </details>
-    <details>
-        <summary>
-            JavaScript Explanation
-        </summary>
-        <!-- Embedded YouTube Video -->
-    <div class="video-container">
-        <iframe width="560" height="315" 
-            src="https://www.youtube.com/embed/7B1FVQRCv2c" 
-            title="YouTube Video" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-        </iframe>            
-    </div>
-    </details>
-    <details>
-        <summary>
-            Python Explanation
-        </summary>
-        <!-- Embedded YouTube Video -->
-    <div class="video-container">
-        <iframe width="560" height="315" 
-            src="https://www.youtube.com/embed/EpE_ZP15Sr4" 
-            title="YouTube Video" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-        </iframe>            
-    </div>
-    </details>
-</details>
-<details>
-    <summary>
-        Notes
-    </summary>
-    <details>
-        <summary>
-            HTML5
-        </summary>
-        <div class="project">
-        <a href="Html5.html">HTML5 NOTES</a>
         </div>
-    </details>
-    <details>
-        <summary>
-            CSS
-        </summary>
-        
-    </details>
-    <details>
-        <summary>
-            JavaScript
-        </summary>
-        
-    </details>
-    <details>
-        <summary>
-            Python
-        </summary>
-        
-    </details>
-</details>
-<h2>Try Coding Here</h2>
-<div class="editor-container">
-    <textarea id="code-editor">// Write your HTML, CSS, or JavaScript here...</textarea>
-    <button onclick="runCode()">Run Code</button>
-    <button onclick="saveAsHTML()">Save as .html</button>
-</div>
 
-<!-- Output Display -->
-<h3>Output:</h3>
-<iframe id="output-frame"></iframe>
-
-        </section>
-
-        <section id="projects" class="tab-content">
-            <h1>My Projects</h1>
-            
-            <!-- EMI Calculator -->
-            <div class="project">
-                <h3>EMI Calculator</h3>
-                <div class="calculator">
-                    <label for="principal">Loan Amount (₹):</label>
-                    <input type="number" id="principal" placeholder="Enter loan amount">
-                    <label for="rate">Interest Rate (%):</label>
-                    <input type="number" id="rate" placeholder="Enter interest rate">
-                    <label for="time">Loan Tenure (Years):</label>
-                    <input type="number" id="time" placeholder="Enter tenure">
-                    <button onclick="calculateEMI()">Calculate EMI</button>
-                    <p id="emi-result"></p>
-                </div>
-            </div>
-
-            <!-- Calculator -->
-            <div class="project">
-                <h3>Calculator</h3>
-                <div class="calculator">
-                    <input type="text" id="calc-input" placeholder="Enter expression" readonly>
-                    <div class="calc-buttons">
-                        <button onclick="appendToInput('7')">7</button>
-                        <button onclick="appendToInput('8')">8</button>
-                        <button onclick="appendToInput('9')">9</button>
-                        <button onclick="appendToInput('/')">/</button>
-                        <button onclick="appendToInput('4')">4</button>
-                        <button onclick="appendToInput('5')">5</button>
-                        <button onclick="appendToInput('6')">6</button>
-                        <button onclick="appendToInput('*')">*</button>
-                        <button onclick="appendToInput('1')">1</button>
-                        <button onclick="appendToInput('2')">2</button>
-                        <button onclick="appendToInput('3')">3</button>
-                        <button onclick="appendToInput('-')">-</button>
-                        <button onclick="appendToInput('0')">0</button>
-                        <button onclick="appendToInput('.')">.</button>
-                        <button onclick="calculateResult()">=</button>
-                        <button onclick="appendToInput('+')">+</button>
-                        <button onclick="clearInput()">C</button>
-                    </div>
-                    <p id="calc-result"></p>
-                </div>
-            </div>
-
-            <!-- Drawing Board -->
-            <div class="project">
-                <h3>Drawing Board</h3>
-                <canvas id="drawing-board" width="500" height="500"></canvas>
-                <button onclick="clearCanvas()">Clear</button>
-            </div>
+        <!-- Tutorial Tab -->
+        <div id="tutorial" class="tab-content" style="display:none;">
             <details>
-                <summary>Editors</summary>
+                <summary>
+                    Tutorial Videos
+                </summary>
+                <details>
+                    <summary>
+                        <p1>HTML5 Explanation
+                        </p1>
+                    </summary>
+                           <!-- Embedded YouTube Videos -->
+                           <div class="video-container">
+                               <iframe width="560" height="315" 
+                                   src="https://www.youtube.com/embed/7ylhVxiHdnE" 
+                                   title="HTML5 Explanation" 
+                                   frameborder="0" 
+                                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                   allowfullscreen>
+                               </iframe>           
+                           </div>
+                </details>
+                <details>
+                    <summary>
+                        CSS Explanation
+                    </summary>
+                    <!-- Embedded YouTube Video -->
+                <div class="video-container">
+                    <iframe width="560" height="315" 
+                        src="https://www.youtube.com/embed/7B1FVQRCv2c" 
+                        title="YouTube Video" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>            
+                </div>
+                </details>
+                <details>
+                    <summary>
+                        JavaScript Explanation
+                    </summary>
+                    <!-- Embedded YouTube Video -->
+                <div class="video-container">
+                    <iframe width="560" height="315" 
+                        src="https://www.youtube.com/embed/7B1FVQRCv2c" 
+                        title="YouTube Video" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>            
+                </div>
+                </details>
+                <details>
+                    <summary>
+                        Python Explanation
+                    </summary>
+                    <!-- Embedded YouTube Video -->
+                <div class="video-container">
+                    <iframe width="560" height="315" 
+                        src="https://www.youtube.com/embed/EpE_ZP15Sr4" 
+                        title="YouTube Video" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>            
+                </div>
+                </details>
+            </details>
+            <details>
+                <summary>
+                    Notes
+                </summary>
+                <details>
+                    <summary>
+                        HTML5
+                    </summary>
+                    <div class="project">
+                    <a href="Html5.html">HTML5 NOTES</a>
+                    </div>
+                </details>
+                <details>
+                    <summary>
+                        CSS
+                    </summary>
+                    
+                </details>
+                <details>
+                    <summary>
+                        JavaScript
+                    </summary>
+                    
+                </details>
+                <details>
+                    <summary>
+                        Python
+                    </summary>
+                    
+                </details>
+            </details>
+            <h3>Code Editor</h3>
+            <hr>
+            <textarea id="codeEditor" placeholder="Start typing your code here..."></textarea>
+            <button id="saveBtn">Save as .html</button>
+            <button id="runBtn">Run</button>
+
+            <br>
+            <h3>Output</h3>
+            <br>
+            <div id="outputBox" style="width: 100%; height: 400px; border: 1px solid #ccc; overflow: auto; padding: 10px; background-color: #f4f4f4; white-space: pre-wrap;"></div>
+            
+        </div>
+
+        <!-- Project Tab -->
+        <div id="project" class="tab-content" style="display:none;">
+            <h2>Projects</h2>
+            <hr>
+            <br>
+            <h3>EMI Calculator</h3>
+            <form id="emiCalculator">
+                <input type="number" id="loanAmount" placeholder="Loan Amount" required>
+                <input type="number" id="interestRate" placeholder="Interest Rate (%)" required>
+                <input type="number" id="loanTenure" placeholder="Loan Tenure (years)" required>
+                <button type="button" onclick="calculateEMI()">Calculate EMI</button>
+                <p id="emiResult"></p>
+            </form>
+
+            <h3>Commercial Calculator</h3>
+            <div id="commercialCalculator">
+                <input type="number" id="costPrice" placeholder="Cost Price" required>
+                <input type="number" id="sellingPrice" placeholder="Selling Price" required>
+                <input type="number" id="percentage" placeholder="Percentage (%)" required>
+                <button type="button" onclick="calculateProfitMargin()">Calculate Profit Margin</button>
+                <button type="button" onclick="calculateDiscount()">Calculate Discount</button>
+                <button type="button" onclick="calculateMarkup()">Calculate Markup</button>
+                <p id="commercialResult"></p>
+            </div>            
+
+            <h3>Calculator</h3>
+            <div id="normalCalculator">
+                <input type="text" id="normalInput" placeholder="Enter number">
+                <button onclick="performCalculation()">Calculate</button>
+                <p id="normalResult"></p>
+            </div>
+
+            <h3>Digital Calculator</h3>
+            <div id="calculator">
+                <input type="text" id="calculatorInput" disabled>
+                <div class="calculator-buttons">
+                    <button onclick="appendToInput('1')">1</button>
+                    <button onclick="appendToInput('2')">2</button>
+                    <button onclick="appendToInput('3')">3</button>
+                    <button onclick="appendToInput('+')">+</button>
+            
+                    <button onclick="appendToInput('4')">4</button>
+                    <button onclick="appendToInput('5')">5</button>
+                    <button onclick="appendToInput('6')">6</button>
+                    <button onclick="appendToInput('-')">-</button>
+            
+                    <button onclick="appendToInput('7')">7</button>
+                    <button onclick="appendToInput('8')">8</button>
+                    <button onclick="appendToInput('9')">9</button>
+                    <button onclick="appendToInput('*')">*</button>
+            
+                    <button onclick="appendToInput('0')">0</button>
+                    <button onclick="appendToInput('.')">.</button>
+                    <button onclick="clearInput()">C</button>
+                    <button onclick="appendToInput('/')">/</button>
+                </div>
+                <button class="equal" onclick="calculateResult()">=</button>
+            </div>
+            
+            <h3>Special Calculator</h3>
+            <form id="specialCalculator">
+                <input type="number" id="weightPrice" placeholder="Price per Kg" required>
+                <input type="number" id="weight" placeholder="Weight (in grams)" required>
+                <button type="button" onclick="calculateSpecialPrice()">Calculate Price</button>
+                <p id="specialPriceResult"></p>
+            </form>
+
+<details>
+   <summary>Editors</summary>
+                <br>
             <!-- New File Links Section -->
     <div class="project">
         <a href="Front Page maker.html">Front Page maker</a>
     </div>
+    <br>
     <!-- New File Links Section -->
     <div class="project">
         <a href="Joy's Simple Editor.html">Photo Editor</a>
@@ -312,38 +344,24 @@
             <a href="Tic-tac-toe Game by Joy.html">Tic-Tac-Toe</a>
         </div>
     </details>
-        </section>
-
-        <section id="contact" class="tab-content">
-            <h1>Contact Me</h1>
-            <form id="contact-form">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-        
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-        
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" required>
-        
-                <label for="subject">Subject:</label>
-                <input type="text" id="subject" name="subject" required>
-        
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
-        
-                <button type="submit">Send</button>
+</div>
+        <!-- Contact Tab -->
+        <div id="contact" class="tab-content" style="display:none;">
+            <h2>Contact Me</h2>
+            <form id="contactForm" onsubmit="sendEmail(event)">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <input type="text" name="phone" placeholder="Your Phone Number" required>
+                <input type="text" name="subject" placeholder="Subject" required>
+                <textarea name="message" placeholder="Contact Reason" required></textarea>
+                <button type="submit">Submit</button>
             </form>
-        </section>
-        
-
-    <!-- Footer -->
-    <footer>
-        <p10>&copy; 2023 ProgramPros. All rights reserved.</p10>
-        <p11><a href="#terms">Terms and Conditions</a> | <a href="#privacy">Privacy Policy</a></p11>
+        </div>
+    </main>
+     <!-- Footer -->
+     <footer>
+        <p1>&copy; 2023 ProgramPros. All rights reserved.</p1>
+        <p1><a href="#terms">Terms and Conditions</a> | <a href="#privacy">Privacy Policy</a></p1>
     </footer>
-
-    <!-- JavaScript for Tabs and Calculators -->
-    <script src="script.js"></script>
 </body>
 </html>
