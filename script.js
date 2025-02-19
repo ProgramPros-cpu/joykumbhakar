@@ -237,3 +237,8 @@ function updateClock() {
   // Update the clock every second
   setInterval(updateClock, 1000);
   updateClock(); // Initial call to display the clock immediately
+
+
+
+
+  
