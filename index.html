@@ -72,10 +72,71 @@
                     <a href="https://www.facebook.com/share/1HAJ5MpvzE/?mibextid=qi2Omg" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
                 </div>
                 <label class="switch">
-                    <input type="checkbox" id="themeToggle" onchange="toggleDarkMode()">
-                    <span class="slider round"></span>
-                </label>
-                <span class="mode-label">Dark Mode</span>
+                    <input id="input" type="checkbox" checked="darkTheme" />
+                    <div class="slider round">
+                      <div class="sun-moon">
+                        <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                        <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                        <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                        <svg id="light-ray-1" class="light-ray" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                        <svg id="light-ray-2" class="light-ray" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                        <svg id="light-ray-3" class="light-ray" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                  
+                        <svg id="cloud-1" class="cloud-dark" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                        <svg id="cloud-2" class="cloud-dark" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                        <svg id="cloud-3" class="cloud-dark" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                        <svg id="cloud-4" class="cloud-light" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                        <svg id="cloud-5" class="cloud-light" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                        <svg id="cloud-6" class="cloud-light" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="50"></circle>
+                        </svg>
+                      </div>
+                      <div class="stars">
+                        <svg id="star-1" class="star" viewBox="0 0 20 20">
+                          <path
+                            d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                          ></path>
+                        </svg>
+                        <svg id="star-2" class="star" viewBox="0 0 20 20">
+                          <path
+                            d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                          ></path>
+                        </svg>
+                        <svg id="star-3" class="star" viewBox="0 0 20 20">
+                          <path
+                            d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                          ></path>
+                        </svg>
+                        <svg id="star-4" class="star" viewBox="0 0 20 20">
+                          <path
+                            d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                          ></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </label>                  
             </div>
             <main class="content">
         </nav>
@@ -314,21 +375,22 @@
             <br>
             <h3>EMI Calculator</h3>
             <form id="emiCalculator">
-                <input type="number" id="loanAmount" placeholder="Loan Amount" required>
-                <input type="number" id="interestRate" placeholder="Interest Rate (%)" required>
-                <input type="number" id="loanTenure" placeholder="Loan Tenure (years)" required>
-                <button type="button" onclick="calculateEMI()">Calculate EMI</button>
+                <input type="number" class="input" id="loanAmount" placeholder="Loan Amount" required>
+                <input type="number" class="input" id="interestRate" placeholder="Interest Rate (%)" required>
+                <input type="number" class="input" id="loanTenure" placeholder="Loan Tenure (years)" required>
+                <br>
+                <button type="button" class="beautiful-button" onclick="calculateEMI()">Calculate EMI</button>
                 <p id="emiResult"></p>
             </form>
 
             <h3>Commercial Calculator</h3>
             <div id="commercialCalculator">
-                <input type="number" id="costPrice" placeholder="Cost Price" required>
-                <input type="number" id="sellingPrice" placeholder="Selling Price" required>
-                <input type="number" id="percentage" placeholder="Percentage (%)" required>
-                <button type="button" onclick="calculateProfitMargin()">Calculate Profit Margin</button>
-                <button type="button" onclick="calculateDiscount()">Calculate Discount</button>
-                <button type="button" onclick="calculateMarkup()">Calculate Markup</button>
+                <input type="number" class="input" id="costPrice" placeholder="Cost Price" required>
+                <input type="number" class="input" id="sellingPrice" placeholder="Selling Price" required>
+                <input type="number" class="input" id="percentage" placeholder="Percentage (%)" required>
+                <button type="button" class="beautiful-button" onclick="calculateProfitMargin()">Calculate Profit Margin</button>
+                <button type="button" class="beautiful-button" onclick="calculateDiscount()">Calculate Discount</button>
+                <button type="button" class="beautiful-button" onclick="calculateMarkup()">Calculate Markup</button>
                 <p id="commercialResult"></p>
             </div>            
 
@@ -368,11 +430,25 @@
             
             <h3>Special Calculator</h3>
             <form id="specialCalculator">
-                <input type="number" id="weightPrice" placeholder="Price per Kg" required>
-                <input type="number" id="weight" placeholder="Weight (in grams)" required>
-                <button type="button" class="btn" onclick="calculateSpecialPrice()">Calculate Price</button>
+                <input type="number" class="input" id="weightPrice" placeholder="Price per Kg" required>
+                <input type="number" class="input" id="weight" placeholder="Weight (in grams)" required>
+                <button type="button" class="beautiful-button" onclick="calculateSpecialPrice()">Calculate Price</button>
                 <p id="specialPriceResult"></p>
             </form>
+            <br>
+            <hr>
+            <br>
+            <a href="disco.html" style="text-decoration: none;">
+                <div class="beautiful-button">
+                  <div class="backdrop"></div>
+                  <div class="spin spin-blur"></div>
+                  <div class="spin spin-intense"></div>
+                  <div class="button-border">
+                    <div class="spin spin-inside"></div>
+                    <div class="button">Go to Disco</div>
+                  </div>
+                </div>
+              </a>
 
 <details>
    <summary>Editors</summary>
@@ -406,12 +482,12 @@
         <div id="contact" class="tab-content" style="display:none;">
             <h2>Contact Me</h2>
             <form id="contactForm" onsubmit="sendEmail(event)">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <input type="text" name="phone" placeholder="Your Phone Number" required>
-                <input type="text" name="subject" placeholder="Subject" required>
-                <textarea name="message" placeholder="Contact Reason" required></textarea>
-                <button type="submit" class="btn">Submit</button>
+                <input type="text" name="name" class="intu" placeholder="Your Name" required>
+                <input type="email" name="email" class="intu" placeholder="Your Email" required>
+                <input type="text" name="phone" class="intu" placeholder="Your Phone Number" required>
+                <input type="text" name="subject" class="intu" placeholder="Subject" required>
+                <textarea name="message" class="intu" placeholder="Contact Reason" required></textarea>
+                <button type="submit" class="beautiful-button">Submit</button>
             </form>
         </div>
     </main>
