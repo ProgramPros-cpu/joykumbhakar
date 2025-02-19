@@ -154,16 +154,10 @@ input:checked + .slider:before {
     margin-top: 20px;
     padding: 10px;
     font-family: monospace;
-    background-color: #d3d7e6;
+    background-color: #dedfbc;
 }
 
 /* Form styling */
-form input, form textarea, form button {
-    width: 100%;
-    margin: 10px 0;
-    padding: 10px;
-    font-size: 16px;
-}
 
 button {
     background-color: #435f79;
@@ -182,10 +176,12 @@ button:hover {
 
 #commercialCalculator input {
     width: 100%;
-    margin: 10px 0;
+    /* Change from margin: 10px 0; to something smaller */
+    margin: 5px 0; 
     padding: 10px;
     font-size: 16px;
 }
+
 
 #commercialCalculator button {
     width: 100%;
@@ -212,14 +208,14 @@ button:hover {
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     text-align: center;
-    border: 2px solid #ffd700;
+    border: 2px solid #0d538b;
 }
 
 #normalInput {
     width: 80%;
     padding: 10px;
     margin-bottom: 10px;
-    border: 2px solid #ffd700;
+    border: 2px solid #074168;
     border-radius: 5px;
     background-color: #1a1a1a;
     color: #ffd700;
@@ -251,8 +247,8 @@ button:hover {
     margin-top: 20px;
     width: 300px;
     text-align: center;
-    background: rgb(255,89,0);
-background: linear-gradient(61deg, rgba(255,89,0,1) 0%, rgba(255,154,0,1) 50%, rgba(255,162,0,1) 100%);
+    background: rgb(46, 47, 88);
+background: linear-gradient(61deg, rgb(31, 30, 94) 0%, rgb(46, 58, 129) 50%, rgb(34, 40, 63) 100%);
     padding: 20px;
     border-radius: 10px;
 }
@@ -263,7 +259,7 @@ background: linear-gradient(61deg, rgba(255,89,0,1) 0%, rgba(255,154,0,1) 50%, r
     font-size: 24px;
     margin-bottom: 10px;
     text-align: right;
-    border: 2px solid #ccc;
+    border: 2px solid #fdffe2;
     border-radius: 5px;
 }
 
@@ -278,7 +274,7 @@ background: linear-gradient(61deg, rgba(255,89,0,1) 0%, rgba(255,154,0,1) 50%, r
     font-size: 18px;
     cursor: pointer;
     background: rgb(56,53,105);
-background: radial-gradient(circle, rgb(15, 10, 110) 0%, rgba(9, 6, 73, 0.945) 100%);
+background: radial-gradient(circle, rgb(52, 73, 75) 0%, rgba(32, 30, 61, 0.945) 100%);
     color: white;
     border: none;
     border-radius: 5px;
@@ -289,9 +285,10 @@ background: radial-gradient(circle, rgb(15, 10, 110) 0%, rgba(9, 6, 73, 0.945) 1
 }
 
 .equal {
+  border-radius: 20px;
     width: 100%;
     padding: 15px;
-    background-color: #309c49;
+    background-color: #093a94;
     font-size: 24px;
     color: white;
     border: none;
@@ -798,4 +795,176 @@ background: linear-gradient(90deg, rgba(159,163,172,1) 0%, rgb(141, 147, 153) 10
     background: #f0f0f0;
   }
   
+/* button Design */
+.beautiful-button {
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(to bottom, #1b1c3f, #4a4e91);
+   /* Gradient background */
+    color: white;
+   /* White text color */
+    font-family: "Segoe UI", sans-serif;
+   /* Stylish and legible font */
+    font-weight: bold;
+    font-size: 18px;
+   /* Large font size */
+    border: none;
+   /* No border */
+    border-radius: 30px;
+   /* Rounded corners */
+    padding: 14px 28px;
+   /* Large padding */
+    cursor: pointer;
+   /* Cursor on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+   /* Subtle shadow */
+    animation: button-shimmer 2s infinite;
+    transition: all 0.3s ease-in-out;
+   /* Smooth transition */
+  }
   
+  /* Hover animation */
+  .beautiful-button:hover {
+    background: linear-gradient(to bottom, #2c2f63, #5b67b7);
+    animation: button-particles 1s ease-in-out infinite;
+    transform: translateY(-2px);
+  }
+  
+  /* Click animation */
+  .beautiful-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Shimmer animation */
+  @keyframes button-shimmer {
+    0% {
+      background-position: left top;
+    }
+  
+    100% {
+      background-position: right bottom;
+    }
+  }
+  
+  /* Particle animation */
+  @keyframes button-particles {
+    0% {
+      background-position: left top;
+    }
+  
+    100% {
+      background-position: right bottom;
+    }
+  }
+
+  /* input box */
+  .input {
+    /* Reduce the default margin to tighten the spacing */
+    margin: 5px 0;
+    background: none;
+    border: none;
+    outline: none;
+    max-width: 190px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 9999px;
+    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+    color: #fff;
+}
+
+  .intu {
+    position: relative;
+    width: 100%;
+    margin: 12px 5px;
+    --accent-color: #a3e583;
+    border-radius: 5px 5px 0px 0px;
+    box-shadow: 0px 2px 5px rgb(35 35 35 / 30%);
+    max-height: 36px;
+    background-color: #252525;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 200ms;
+    transition-property: background-color;
+    color: #e8e8e8;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px;
+    width: 100%;
+    border-left: none;
+    border-bottom: none;
+    border-right: none;
+    outline: none;
+}
+
+.intu:focus,
+.intu:active {
+    background-color: #353535;
+}
+
+.intu::placeholder {
+    transition: opacity 250ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+    opacity: 1;
+    user-select: none;
+    color: rgba(255, 255, 255, 0.582);
+}
+
+.intu:focus::placeholder {
+    opacity: 0;
+}
+
+.intuWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.intuWrapper:before,
+.intuWrapper:after {
+    content: "";
+    left: 0;
+    right: 0;
+    position: absolute;
+    pointer-events: none;
+    bottom: -1px;
+    z-index: 4;
+    width: 100%;
+    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.intuWrapper:before {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+}
+
+.intuWrapper:focus-within:before {
+    border-bottom: 1px solid var(--accent-color);
+    transform: scaleX(1);
+}
+
+.intuWrapper:after {
+    transform: scaleX(0);
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+    will-change: transform;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.intuWrapper:focus-within:after {
+    transform: scaleX(1);
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    .container {
+        width: 100%;
+        padding: 15px;
+    }
+    
+    .intu {
+        height: 3em;
+        font-size: 1.1rem;
+    }
+}
+
+header{
+    background-color: rgba(105, 255, 18, 0.938);
+}
+  
+  /* Toogle switch */
