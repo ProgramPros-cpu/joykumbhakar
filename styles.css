@@ -245,61 +245,81 @@ button:hover {
     color: #ffd700;
 }
 /* Calculator Styles */
-#calculator {
-    margin-top: 20px;
-    width: 300px;
-    text-align: center;
-    background: rgb(46, 47, 88);
-background: linear-gradient(61deg, rgb(31, 30, 94) 0%, rgb(46, 58, 129) 50%, rgb(34, 40, 63) 100%);
+/* 3D Dark Calculator Styles */
+.thedivone {
+    background: #222;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px #5a575770, -5px -5px 15px #33333360;
+    text-align: center;
 }
 
-#calculatorInput {
-    width: 100%;
-    padding: 15px;
-    font-size: 24px;
+.thedivtwo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 10px;
-    text-align: right;
-    border: 2px solid #fdffe2;
-    border-radius: 5px;
 }
 
-.calculator-buttons {
+.theinput {
+    width: 90%;
+    height: 50px;
+    font-size: 24px;
+    text-align: right;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    background: #333;
+    color: #fff;
+    box-shadow: inset 3px 3px 10px #111, inset -3px -3px 10px #444;
+}
+
+.thedivthree {
+    width: 90%;
+    margin-top: 5px;
+    background: #444;
+    color: #fff;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.thedivfour {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    margin-top: 20px;
 }
 
-.calculator-buttons button {
-    padding: 20px;
-    font-size: 18px;
-    cursor: pointer;
-    background: rgb(56,53,105);
-background: radial-gradient(circle, rgb(52, 73, 75) 0%, rgba(32, 30, 61, 0.945) 100%);
-    color: white;
+.thebuttons {
+    height: 60px;
+    font-size: 20px;
     border: none;
-    border-radius: 5px;
+    outline: none;
+    border-radius: 10px;
+    background: #2a2a2a;
+    color: #fff;
+    box-shadow: 5px 5px 10px #000, -5px -5px 10px #444;
+    transition: all 0.2s;
+    cursor: pointer;
 }
 
-.calculator-buttons button:hover {
-    background-color: #0853a3;
+.thebuttons:active {
+    box-shadow: inset 5px 5px 10px #000, inset -5px -5px 10px #444;
+}
+
+.operator {
+    background: #ff9500;
+}
+
+.clear {
+    background: #ff3b30;
 }
 
 .equal {
-  border-radius: 20px;
-    width: 100%;
-    padding: 15px;
-    background-color: #093a94;
-    font-size: 24px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.equal:hover {
-    background-color: #218838;
+    background: #4cd964;
 }
 /* Dark Mode Styles */
 body.dark {
@@ -975,4 +995,127 @@ header{
   
 .dj{
     text-align: center;
+}
+/* Night mode body background */
+body.night-mode {
+    background-color: #1a1a1a; /* Dark background for night mode */
+}
+
+/* 3D Blurred Container Styling */
+#contact {
+    max-width: 600px;
+    width: 100%;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+    backdrop-filter: blur(10px); /* Blur effect */
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.2), -20px -20px 60px rgba(255, 255, 255, 0.2); /* 3D shadow */
+    transform: perspective(1000px) rotateX(10deg) rotateY(10deg) translateZ(50px); /* 3D effect */
+    transition: all 0.5s ease; /* Smooth transition for night mode and hover */
+}
+
+/* Hover effect to flatten the 3D container */
+#contact:hover {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px); /* Flatten on hover */
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(255, 255, 255, 0.1); /* Subtler shadow on hover */
+}
+
+/* Night mode container styling */
+body.night-mode #contact {
+    background: rgba(0, 0, 0, 0.1); /* Semi-transparent black */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Darker border */
+    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.4), -20px -20px 60px rgba(255, 255, 255, 0.1); /* Darker 3D shadow */
+}
+
+/* Heading styling */
+#contact h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-align: center;
+    transition: color 0.5s ease; /* Smooth transition for night mode */
+}
+
+/* Night mode heading text color */
+body.night-mode #contact h2 {
+    color: #ffffff; /* White text for night mode */
+}
+
+/* Input and textarea styling */
+.intu {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    color: #333333; /* Dark text for light mode */
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    transition: all 0.5s ease; /* Smooth transition for night mode */
+}
+
+.intu:focus {
+    border-color: #b8860b; /* Gold border on focus */
+    outline: none;
+    box-shadow: 0 0 8px rgba(184, 134, 11, 0.3); /* Reduced glow effect */
+    background-color: rgba(255, 255, 255, 0.2); /* Slightly brighter background on focus */
+}
+
+/* Night mode input and textarea styling */
+body.night-mode .intu {
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Darker border */
+    color: #ffffff; /* White text for night mode */
+    background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent dark background */
+}
+
+body.night-mode .intu:focus {
+    border-color: #b8860b; /* Gold border on focus */
+    box-shadow: 0 0 8px rgba(184, 134, 11, 0.3); /* Reduced glow effect */
+    background-color: rgba(0, 0, 0, 0.2); /* Slightly darker background on focus */
+}
+
+/* Larger textarea for "Contact Reason" */
+textarea.intu {
+    height: 150px; /* Increased height */
+    resize: vertical; /* Allow vertical resizing */
+}
+
+/* Placeholder styling */
+.intu::placeholder {
+    color: #999999; /* Light gray for placeholders */
+    font-style: italic;
+    transition: color 0.5s ease; /* Smooth transition for night mode */
+}
+
+/* Night mode placeholder text color */
+body.night-mode .intu::placeholder {
+    color: #666666; /* Darker gray for night mode */
+}
+
+/* Button styling */
+.beautiful-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #b8860b; /* Gold color for luxury */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.5s ease; /* Smooth transition for night mode */
+}
+
+.beautiful-button:hover {
+    background-color: #a67c00; /* Darker gold on hover */
+    transform: translateY(-2px); /* Slight lift */
+    box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3); /* Subtle shadow */
+}
+
+.beautiful-button:active {
+    transform: translateY(0); /* Reset lift on click */
 }
