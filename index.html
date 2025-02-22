@@ -11,6 +11,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+<script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+<script type="text/javascript">
+  (function(){
+      emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user/public key
+  })();
+</script>
 </head>
 <body>
     <!-- Left Sidebar -->
@@ -32,6 +38,7 @@
         <i class="fab fa-facebook"></i> Facebook
       </a>
       <a href="https://x.com/ProgramPros?t=87Qu_oUcH89tXNnUPCiXbQ&s=08" target="_blank">
+        <a href="https://www.threads.net/@bengalianimo" target="_blank">
           <img src="x.png" alt="Threads Icon" width="20" height="20" style="vertical-align: middle; margin-right: 10px;">X
       </a>
       <a href="https://www.threads.net/@bengalianimo" target="_blank">
@@ -398,6 +405,7 @@
             <hr>
             <br>
             <h3>EMI Calculator</h3>
+            <hr>
             <form id="emiCalculator">
                 <input type="number" class="input" id="loanAmount" placeholder="Loan Amount" required>
                 <input type="number" class="input" id="interestRate" placeholder="Interest Rate (%)" required>
@@ -430,30 +438,37 @@
             <br>
             <h3>Digital Calculator</h3>
             <hr>
-            <div id="calculator">
-                <input type="text" id="calculatorInput" disabled>
-                <div class="calculator-buttons">
-                    <button onclick="appendToInput('1')">1</button>
-                    <button onclick="appendToInput('2')">2</button>
-                    <button onclick="appendToInput('3')">3</button>
-                    <button onclick="appendToInput('+')">+</button>
-            
-                    <button onclick="appendToInput('4')">4</button>
-                    <button onclick="appendToInput('5')">5</button>
-                    <button onclick="appendToInput('6')">6</button>
-                    <button onclick="appendToInput('-')">-</button>
-            
-                    <button onclick="appendToInput('7')">7</button>
-                    <button onclick="appendToInput('8')">8</button>
-                    <button onclick="appendToInput('9')">9</button>
-                    <button onclick="appendToInput('*')">*</button>
-            
-                    <button onclick="appendToInput('0')">0</button>
-                    <button onclick="appendToInput('.')">.</button>
-                    <button onclick="clearInput()">C</button>
-                    <button onclick="appendToInput('/')">/</button>
+            <br>
+            <audio id="click-sound" src="click.mp3"></audio>
+            <div class="thedivone">
+                <div class="thedivtwo">
+                  <input type="text" class="theinput" id="display">
+
+                    <select class="thedivthree" id="history">
+                        <option value="">History</option>
+                    </select>
                 </div>
-                <button class="equal" onclick="calculateResult()">=</button>
+                <div class="thedivfour">
+                    <button class="thebuttons clear" onclick="playSound(); clearDisplay()">C</button>
+                    <button class="thebuttons" onclick="playSound(); backspace()">⌫</button>
+                    <button class="thebuttons" onclick="playSound(); appendOperator('/')">/</button>
+                    <button class="thebuttons operator" onclick="playSound(); appendOperator('-')">-</button>
+                    <button class="thebuttons" onclick="playSound(); appendValue('7')">7</button>
+                    <button class="thebuttons" onclick="playSound(); appendValue('8')">8</button>
+                    <button class="thebuttons" onclick="playSound(); appendValue('9')">9</button>
+                    <button class="thebuttons operator" onclick="playSound(); appendOperator('+')">+</button>
+                    <button class="thebuttons" onclick="playSound(); appendValue('4')">4</button>
+                    <button class="thebuttons" onclick="playSound(); appendValue('5')">5</button>
+                    <button class="thebuttons" onclick="playSound(); appendValue('6')">6</button>
+                    <button class="thebuttons" onclick="playSound(); appendOperator('*')">*</button>
+                    <button class="thebuttons" onclick="playSound(); appendValue('1')">1</button>
+                    <button class="thebuttons" onclick="playSound(); appendValue('2')">2</button>
+                    <button class="thebuttons" onclick="playSound(); appendValue('3')">3</button>
+                    <button class="thebuttons equal" onclick="playSound(); calculateResult()">=</button>
+                    <button class="thebuttons" onclick="playSound(); appendValue('0')" style="grid-column: span 2;">0</button>
+                    <button class="thebuttons" onclick="playSound(); appendValue('.')">.</button>
+                    <button class="thebuttons" onclick="playSound(); appendOperator('%')">%</button>
+                </div>
             </div>
             <br>
             <h3>Special Calculator</h3>
@@ -483,7 +498,7 @@
               <br>
               <br>
             
-              <a href="Dj.html" style="text-decoration: none;">
+              <a href="dj.html" style="text-decoration: none;">
                   <div class="beautiful-button">
                     <div class="backdrop"></div>
                     <div class="spin spin-blur"></div>
@@ -537,6 +552,7 @@
             </form>
         </div>
     </main>
+    
      <!-- Footer -->
      <footer>
         <p1>&copy; 2023 ProgramPros. All rights reserved.</p1>
