@@ -8,6 +8,9 @@
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Left Sidebar -->
@@ -16,6 +19,8 @@
       <img src="profile.png" alt="Profile Photo">
       <h1>Joy Kumbhakar</h1>
     </div>
+   <strong><h7> Follow me on </h7></strong> 
+   <hr>
     <div class="social-links">
       <a href="https://www.instagram.com/bengalianimo?igsh=MXBydmhibWJ2bXc2dQ==" target="_blank">
         <i class="fab fa-instagram"></i> Instagram
@@ -25,6 +30,17 @@
       </a>
       <a href="https://www.facebook.com/share/1HAJ5MpvzE/?mibextid=qi2Omg" target="_blank">
         <i class="fab fa-facebook"></i> Facebook
+      </a>
+      <a href="https://x.com/ProgramPros?t=87Qu_oUcH89tXNnUPCiXbQ&s=08" target="_blank">
+        <a href="https://www.threads.net/@bengalianimo" target="_blank">
+          <img src="x.png" alt="Threads Icon" width="20" height="20" style="vertical-align: middle; margin-right: 10px;">X
+      </a>
+      <a href="https://www.threads.net/@bengalianimo" target="_blank">
+        <img src="thread.png" alt="Threads Icon" width="20" height="20" style="vertical-align: middle; margin-right: 10px;">
+        Threads
+      </a>      
+      <a href="https://www.linkedin.com/in/joy-kumbhakar-889b66324?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+        <i class="fab fa-linkedin"></i> LinkedIn
       </a>
     </div>
     <label class="switch">
@@ -221,7 +237,16 @@
         <div id="tutorial" class="tab-content" style="display:none;">
             <h1>Tutorials</h1>
             <hr>
+            <br>
               <div class="tutorialsec">
+                 <!-- My Channel Section (Last Item) -->
+                 <div class="channel-container">
+                  <h2>My Channel</h2>
+                  <img src="channel logo.png" alt="Channel Logo" class="channel-logo" />
+                  <a href="https://www.youtube.com/@ProgramPros-fs4ss" target="_blank">
+                    Visit My YouTube Channel
+                  </a>
+                </div>  
                 <!-- Second Video Section -->
                 <div class="video-container">
                   <iframe src="https://www.youtube.com/embed/7B1FVQRCv2c" 
@@ -244,10 +269,10 @@
                 
                 <!-- My Channel Section (Last Item) -->
                 <div class="channel-container">
-                  <h2>My Channel</h2>
-                  <img src="channel logo.png" alt="Channel Logo" class="channel-logo" />
-                  <a href="https://www.youtube.com/@ProgramPros-fs4ss" target="_blank">
-                    Visit My YouTube Channel
+                  <h2>My 2nd Channel</h2>
+                  <img src="EJoy Tech.jpg" alt="Channel Logo" class="channel-logo" />
+                  <a href="https://www.youtube.com/@ejoytech101" target="_blank">
+                    Visit My 2nd YouTube Channel
                   </a>
                 </div>  
               </div>
@@ -382,8 +407,9 @@
                 <button type="button" class="beautiful-button" onclick="calculateEMI()">Calculate EMI</button>
                 <p id="emiResult"></p>
             </form>
-
+            <br>
             <h3>Commercial Calculator</h3>
+            <hr>
             <div id="commercialCalculator">
                 <input type="number" class="input" id="costPrice" placeholder="Cost Price" required>
                 <input type="number" class="input" id="sellingPrice" placeholder="Selling Price" required>
@@ -393,15 +419,18 @@
                 <button type="button" class="beautiful-button" onclick="calculateMarkup()">Calculate Markup</button>
                 <p id="commercialResult"></p>
             </div>            
-
+              <br>
             <h3>Calculator</h3>
+            <hr>
+            <br>
             <div id="normalCalculator">
                 <input type="text" id="normalInput" placeholder="Enter number">
                 <button onclick="performCalculation()">Calculate</button>
                 <p id="normalResult"></p>
             </div>
-
+            <br>
             <h3>Digital Calculator</h3>
+            <hr>
             <div id="calculator">
                 <input type="text" id="calculatorInput" disabled>
                 <div class="calculator-buttons">
@@ -427,8 +456,10 @@
                 </div>
                 <button class="equal" onclick="calculateResult()">=</button>
             </div>
-            
+            <br>
             <h3>Special Calculator</h3>
+            <hr>
+            <br>
             <form id="specialCalculator">
                 <input type="number" class="input" id="weightPrice" placeholder="Price per Kg" required>
                 <input type="number" class="input" id="weight" placeholder="Weight (in grams)" required>
@@ -438,6 +469,7 @@
             <br>
             <hr>
             <br>
+            <div class="dj">
             <a href="disco.html" style="text-decoration: none;">
                 <div class="beautiful-button">
                   <div class="backdrop"></div>
@@ -445,10 +477,25 @@
                   <div class="spin spin-intense"></div>
                   <div class="button-border">
                     <div class="spin spin-inside"></div>
-                    <div class="button">Go to Disco</div>
+                    <div class="button">Dj Light</div>
                   </div>
                 </div>
               </a>
+              <br>
+              <br>
+            
+              <a href="dj.html" style="text-decoration: none;">
+                  <div class="beautiful-button">
+                    <div class="backdrop"></div>
+                    <div class="spin spin-blur"></div>
+                    <div class="spin spin-intense"></div>
+                    <div class="button-border">
+                      <div class="spin spin-inside"></div>
+                      <div class="button">Dj Mixer</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
 
 <details>
    <summary>Editors</summary>
