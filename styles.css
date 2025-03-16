@@ -3,13 +3,15 @@
     src: url('samsungsharpsans-medium.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
-  }
-  @font-face {
+}
+
+@font-face {
     font-family: 'LalSabuj';
     src: url('LalSabuj_Bold.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-  }
+}
+
 /* Basic Styles */
 * {
     margin: 0;
@@ -22,6 +24,7 @@ body {
     font-family: 'SamsungSharpSans', sans-serif;
     transition: background-color 0.3s, color 0.3s;
 }
+
 .logo {
     color: #ffffff;
     font-size: 24px;
@@ -36,14 +39,15 @@ body {
     position: absolute;
     right: 20px;
 }
+
 .sidebar {
     position: fixed;
     top: 0;
     left: -250px;
     width: 250px;
     height: 100vh;
-    background: rgb(40,57,77);
-background: linear-gradient(90deg, rgba(40,57,77,1) 3%, rgba(44,61,80,1) 16%, rgba(40,57,77,1) 28%, rgba(40,57,77,1) 70%, rgba(44,63,84,1) 84%, rgba(40,57,77,1) 97%);
+    background: rgb(40, 57, 77);
+    background: linear-gradient(90deg, rgba(40, 57, 77, 1) 3%, rgba(44, 61, 80, 1) 16%, rgba(40, 57, 77, 1) 28%, rgba(40, 57, 77, 1) 70%, rgba(44, 63, 84, 1) 84%, rgba(40, 57, 77, 1) 97%);
     color: #ffffff;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.884);
@@ -65,7 +69,8 @@ background: linear-gradient(90deg, rgba(40,57,77,1) 3%, rgba(44,61,80,1) 16%, rg
     height: 100px;
     border-radius: 50%;
     margin-bottom: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.562); /* Added shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.562);
+    /* Added shadow */
 }
 
 .profile-section h3 {
@@ -130,11 +135,11 @@ background: linear-gradient(90deg, rgba(40,57,77,1) 3%, rgba(44,61,80,1) 16%, rg
     transition: 0.3s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: #2196F3;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     transform: translateX(26px);
 }
 
@@ -177,6 +182,7 @@ button {
 button:hover {
     background-color: #35506d;
 }
+
 /* Commercial Calculator Styles */
 #commercialCalculator {
     margin-top: 20px;
@@ -185,7 +191,7 @@ button:hover {
 #commercialCalculator input {
     width: 100%;
     /* Change from margin: 10px 0; to something smaller */
-    margin: 5px 0; 
+    margin: 5px 0;
     padding: 10px;
     font-size: 16px;
 }
@@ -210,6 +216,7 @@ button:hover {
     margin-top: 20px;
     font-size: 18px;
 }
+
 #normalCalculator {
     background-color: #2c2c2c;
     padding: 20px;
@@ -250,10 +257,12 @@ button:hover {
     font-size: 18px;
     color: #ffd700;
 }
+
 /* Calculator Styles */
 /* Calculator Container */
 .calculator {
-    background-color: #162447; /* Dark blue container */
+    background-color: #162447;
+    /* Dark blue container */
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -264,8 +273,10 @@ button:hover {
 #display {
     width: 100%;
     height: 60px;
-    background-color: #0f3460; /* Dark blue display */
-    border: 2px solid #1f4068; /* Slightly lighter border */
+    background-color: #0f3460;
+    /* Dark blue display */
+    border: 2px solid #1f4068;
+    /* Slightly lighter border */
     border-radius: 10px;
     color: #fff;
     font-size: 24px;
@@ -288,34 +299,40 @@ button:hover {
     padding: 20px;
     border-radius: 10px;
     border: none;
-    background-color: #1f4068; /* Dark blue button */
+    background-color: #1f4068;
+    /* Dark blue button */
     color: #fff;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .calculator-button:hover {
-    background-color: #2c5282; /* Lighter blue on hover */
+    background-color: #2c5282;
+    /* Lighter blue on hover */
     transform: translateY(-2px);
 }
 
 .calculator-button:active {
     transform: translateY(0);
-    background-color: #1a3658; /* Darker blue on click */
+    background-color: #1a3658;
+    /* Darker blue on click */
 }
 
 /* Equal Button */
 .equal {
     grid-column: span 2;
-    background-color: #e94560; /* Red for equal button */
+    background-color: #e94560;
+    /* Red for equal button */
 }
 
 .equal:hover {
-    background-color: #ff5c77; /* Brighter red on hover */
+    background-color: #ff5c77;
+    /* Brighter red on hover */
 }
 
 .equal:active {
-    background-color: #d6344f; /* Darker red on click */
+    background-color: #d6344f;
+    /* Darker red on click */
 }
 
 /* Zero Button */
@@ -326,7 +343,8 @@ button:hover {
 /* History Section */
 .history {
     margin-top: 20px;
-    background-color: #0f3460; /* Dark blue background */
+    background-color: #0f3460;
+    /* Dark blue background */
     border-radius: 10px;
     padding: 15px;
 }
@@ -340,9 +358,11 @@ button:hover {
 #history-dropdown {
     width: 100%;
     padding: 10px;
-    border: 2px solid #1f4068; /* Dark blue border */
+    border: 2px solid #1f4068;
+    /* Dark blue border */
     border-radius: 10px;
-    background-color: #162447; /* Dark blue background */
+    background-color: #162447;
+    /* Dark blue background */
     color: #fff;
     font-size: 14px;
     margin-bottom: 10px;
@@ -350,14 +370,16 @@ button:hover {
 }
 
 #history-dropdown option {
-    background-color: #162447; /* Dark blue background */
+    background-color: #162447;
+    /* Dark blue background */
     color: #fff;
 }
 
 .delete-button {
     width: 100%;
     padding: 10px;
-    background-color: #e94560; /* Red for delete button */
+    background-color: #e94560;
+    /* Red for delete button */
     border: none;
     border-radius: 10px;
     color: #fff;
@@ -367,30 +389,34 @@ button:hover {
 }
 
 .delete-button:hover {
-    background-color: #ff5c77; /* Brighter red on hover */
+    background-color: #ff5c77;
+    /* Brighter red on hover */
 }
 
 .delete-button:active {
-    background-color: #d6344f; /* Darker red on click */
+    background-color: #d6344f;
+    /* Darker red on click */
 }
+
 /* Dark Mode Styles */
 body.dark {
-    background-color: #05070e;
-    color: #fff;
+    background-color: #041327;
+    color: #ffffff;
 }
 
 body.light {
-    background-color: #cfcfc0;
-    color: #000000;
+    background-color: #c2dceb;
+    color: #10384d;
 }
 
-.switch input:checked + .slider {
+.switch input:checked+.slider {
     background-color: #2196F3;
 }
 
-.switch input:checked + .slider:before {
+.switch input:checked+.slider:before {
     transform: translateX(26px);
 }
+
 /* Code Editor Styles */
 #codeEditor {
     width: 100%;
@@ -403,7 +429,8 @@ body.light {
     background-color: #f4f4f4;
     color: #333;
     margin-top: 20px;
-    white-space: pre-wrap; /* Preserve whitespace formatting */
+    white-space: pre-wrap;
+    /* Preserve whitespace formatting */
     resize: none;
 }
 
@@ -430,58 +457,67 @@ iframe {
 .instagram-link:hover {
     color: #e74c3c;
 }
+
 @font-face {
     font-family: 'LalSabuj';
     src: url('LalSabuj_Bold.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-  }
+}
+
 /* Navigation Styles */
 /* General Navigation Styles */
 nav {
     display: flex;
-    align-items: center; /* Align items in one line */
-    justify-content: space-between; /* Space between logo/menu and hamburger */
-    background-color: #333;
-    padding: 5px 15px; /* Reduce padding to decrease height */
+    align-items: center;
+    /* Align items in one line */
+    justify-content: space-between;
+    /* Space between logo/menu and hamburger */
+    padding: 5px 15px;
+    /* Reduce padding to decrease height */
 }
 
 nav ul {
     list-style: none;
-    display: flex; /* Keep menu items in one line */
+    display: flex;
+    /* Keep menu items in one line */
     padding: 0;
     margin: 0;
 }
 
 nav ul li {
-    margin: 0 10px; /* Reduce spacing to fit better */
+    margin: 0 10px;
+    /* Reduce spacing to fit better */
 }
 
 nav ul li a {
-    color: #fbff00;
+    color: #ffffff;
     text-decoration: none;
-    font-size: 14px; /* Reduce font size if needed */
-    padding: 6px 10px; /* Adjust padding for height */
+    font-size: 14px;
+    /* Reduce font size if needed */
+    padding: 6px 10px;
+    /* Adjust padding for height */
 }
 
 
 nav ul li a.active,
 nav ul li a:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(118, 123, 124, 0.2);
     color: #fff;
 }
 
 /* Mobile Navigation Styles */
 .mobile-nav {
     text-align: right;
-    display: none; /* Hide by default */
+    display: none;
+    /* Hide by default */
 }
 
 .mobile-nav summary {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #ffc400;
+    color: #ffffff;
     cursor: pointer;
     padding: 10px;
     font-size: 18px;
@@ -490,13 +526,15 @@ nav ul li a:hover {
 .mobile-nav summary i {
     font-size: 24px;
 }
-
 .mobile-nav ul {
     flex-direction: column;
-    background-color: #444;
-    border-radius: 5px;
+    background-color: transparent; /* No background color */
+    border-radius: 5px 4px;
     margin-top: 10px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); /* For Safari support */
 }
+
 
 .mobile-nav ul li {
     margin: 0;
@@ -514,104 +552,129 @@ nav ul li a:hover {
 
 /* Desktop Navigation Styles */
 .desktop-nav {
-    display: flex; /* Show by default */
+    display: flex;
+    /* Show by default */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .mobile-nav {
-        display: block; /* Show mobile nav on small screens */
+        display: block;
+        /* Show mobile nav on small screens */
     }
 
     .desktop-nav {
-        display: none; /* Hide desktop nav on small screens */
+        display: none;
+        /* Hide desktop nav on small screens */
     }
 }
 
 /* Tab Content Styles */
 .tab-content {
-    display: none; /* Hide all tab content by default */
-    padding: 20px; /* Add padding inside the tab content */
-    background-color: rgba(255, 255, 255, 0.1); /* Add a semi-transparent background */
-    border-radius: 10px; /* Add rounded corners */
-    margin: 20px 0; /* Add margin for spacing */
+    display: none;
+    /* Hide all tab content by default */
+    padding: 20px;
+    /* Add padding inside the tab content */
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Add a semi-transparent background */
+    border-radius: 10px;
+    /* Add rounded corners */
+    margin: 20px 0;
+    /* Add margin for spacing */
 }
 
 .tab-content.active {
-    display: block; /* Show the active tab content */
+    display: block;
+    /* Show the active tab content */
 }
 
 /* Mobile Styles */
 @media screen and (max-width: 768px) {
+
     /* Convert navigation to a vertical list */
     nav ul {
-        flex-direction: column; /* Stack items vertically */
-        align-items: center; /* Center the items horizontally */
+        flex-direction: column;
+        /* Stack items vertically */
+        align-items: center;
+        /* Center the items horizontally */
     }
 
     nav ul li {
-        margin: 10px 0; /* Add vertical spacing between items */
+        margin: 10px 0;
+        /* Add vertical spacing between items */
     }
 
     /* Use a details element for mobile navigation */
     nav ul li a {
-        padding: 12px 18px; /* Increase padding for easier tapping */
-        font-size: 18px; /* Adjust font size for readability */
+        padding: 12px 18px;
+        /* Increase padding for easier tapping */
+        font-size: 18px;
+        /* Adjust font size for readability */
     }
 
     /* Optional: Add a hamburger menu for small screens */
     .hamburger-menu {
-        display: block; /* Show hamburger menu */
+        display: block;
+        /* Show hamburger menu */
         cursor: pointer;
         font-size: 30px;
         color: #ffa600;
     }
 
     .hamburger-menu.active {
-        color: #fff; /* Change hamburger color when active */
+        color: #fff;
+        /* Change hamburger color when active */
     }
 
     /* Tab Content Adjustments */
     .tab-content {
-        padding: 15px; /* Adjust padding for smaller screens */
-        margin: 15px 0; /* Adjust margin for spacing */
+        padding: 15px;
+        /* Adjust padding for smaller screens */
+        margin: 15px 0;
+        /* Adjust margin for spacing */
     }
 }
 
-h1{
-font-size: 14pt;
+h1 {
+    font-size: 14pt;
 }
-h2{
-    
+
+h2 {
+
     font-size: 15pt;
     text-align: center;
-border: #0056b3;
-border-radius: 12px;
+    border: #0056b3;
+    border-radius: 12px;
 }
-h3{
+
+h3 {
     text-align: center;
     padding-top: 3pt;
     padding-bottom: 2.5px;
 }
-h4{
+
+h4 {
     background-color: #b4b2b22f;
 
 }
-h5{
+
+h5 {
     font-size: 12pt;
     text-align: center;
 }
-h6{
+
+h6 {
     font-size: 14pt;
     background-color: #8b8a8a23;
 }
-p
-{
+
+p {
     font-size: 11pt;
     text-align: left;
     font-family: 'SamsungSharpSans', sans-serif;
     text-decoration: thin;
 }
+
 .famous-lines {
     display: flex;
     align-items: center;
@@ -624,6 +687,7 @@ p
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
+
 .round-image,
 .Rabindra-image {
     width: 150px;
@@ -655,10 +719,13 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
 /* Style the details tag */
 .newclass {
-    background-color: #58565a00; /* Luxury deep purple */
-    border: 2px solid #00000000; /* Elegant purple border */
+    background-color: #58565a00;
+    /* Luxury deep purple */
+    border: 2px solid #00000000;
+    /* Elegant purple border */
     border-radius: 10px;
     padding: 12px;
     margin: 12px 0;
@@ -670,7 +737,8 @@ summary {
     font-weight: bold;
     cursor: pointer;
     padding: 10px;
-    background-color: #333333; /* Royal purple */
+    background-color: #333333;
+    /* Royal purple */
     color: #ffffff;
     border-radius: 6px;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -678,38 +746,45 @@ summary {
 
 /* Hover effect for summary */
 summary:hover {
-    background-color: #a1a1a1; /* Slightly lighter purple */
+    background-color: #a1a1a1;
+    /* Slightly lighter purple */
     transform: scale(1.02);
 }
 
 /* When details are expanded */
 details[open] {
-    background-color: #5a6879b7; /* Richer deep purple */
+    background-color: #5a6879b7;
+    /* Richer deep purple */
     border-color: #545068;
 }
-.project a{
+
+.project a {
     font-family: Arial;
     color: #000000;
     box-shadow: 5px #0056b3;
     background-color: #ffffff;
     border-radius: 5px;
 }
-a{
+
+a {
     color: #ff7b00;
     text-align: center;
 }
+
 /* Working Clock */
 .clock {
     text-align: center;
-  color: #00ff00;
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-  text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+    color: #00ff00;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
 }
-  /* button */
-  .btn {
-    margin: 5px; /* Reduced margin for less gap */
+
+/* button */
+.btn {
+    margin: 5px;
+    /* Reduced margin for less gap */
     padding: 15px 40px;
     border: none;
     outline: none;
@@ -736,18 +811,16 @@ a{
 /* glow */
 .btn::before {
     content: "";
-    background: linear-gradient(
-        45deg,
-        #FF0000, #ff6600, #c8ff00, #62019b,
-        #00FFD5, #002BFF, #FF00C8, #FF0000
-    );
+    background: linear-gradient(45deg,
+            #FF0000, #ff6600, #c8ff00, #62019b,
+            #00FFD5, #002BFF, #FF00C8, #FF0000);
     position: absolute;
     top: -2px;
     left: -2px;
     background-size: 600%;
     z-index: -1;
     width: calc(100% + 4px);
-    height:  calc(100% + 4px);
+    height: calc(100% + 4px);
     filter: blur(8px);
     animation: glowing 20s linear infinite;
     transition: opacity .3s ease-in-out;
@@ -756,9 +829,17 @@ a{
 }
 
 @keyframes glowing {
-    0% {background-position: 0 0;}
-    50% {background-position: 400% 0;}
-    100% {background-position: 0 0;}
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
 }
 
 /* hover */
@@ -778,35 +859,44 @@ a{
 /* Container for better alignment */
 .button-container {
     display: flex;
-    gap: 10px; /* Reduced gap */
+    gap: 10px;
+    /* Reduced gap */
 }
+
 /* Navigation */
 nav {
     display: flex;
     flex-grow: 1;
 }
+
 .mobile-nav {
     padding-top: -250;
     position: relative;
-    background: none; /* Remove background */
+    background: none;
+    /* Remove background */
 }
 
 .mobile-nav summary {
-    background: none; /* No background on the summary */
+    background: none;
+    /* No background on the summary */
 }
 
 .mobile-nav summary:hover {
-    background: none; /* Ensure no hover background */
+    background: none;
+    /* Ensure no hover background */
 }
+
 /* Container for the tutorial section (videos + channel) */
 .tutorialsec {
     border-radius: 15px;
     display: flex;
     align-items: flex-start;
     gap: 2px;
-    overflow-x: scroll; /* Allows scrolling */
+    overflow-x: scroll;
+    /* Allows scrolling */
     padding-bottom: 2px;
-    scrollbar-width: none; /* Hides scrollbar in Firefox */
+    scrollbar-width: none;
+    /* Hides scrollbar in Firefox */
 }
 
 /* Hides scrollbar in Webkit browsers (Chrome, Edge, Safari) */
@@ -814,29 +904,33 @@ nav {
     display: none;
 }
 
-  
-  /* Shared styling for video and channel boxes */
-  .video-container,
-  .channel-container {
-    flex: 0 0 auto; /* Prevents stretching */
-    width: 320px;   /* Fixed width for each box */
+
+/* Shared styling for video and channel boxes */
+.video-container,
+.channel-container {
+    flex: 0 0 auto;
+    /* Prevents stretching */
+    width: 320px;
+    /* Fixed width for each box */
     padding: 10px;
     box-sizing: border-box;
     text-align: center;
-  }
-  
-  /* Vertical separator between each box except the last one */
-  .tutorialsec > *:not(:last-child) {
+}
+
+/* Vertical separator between each box except the last one */
+.tutorialsec>*:not(:last-child) {
     border-right: 1px solid #cccccc00;
-  }
-  
-  /* Video container styling */
-  .video-container iframe {
+}
+
+/* Video container styling */
+.video-container iframe {
     width: 100%;
-    height: calc(320px * 9 / 16); /* 16:9 aspect ratio (approx. 180px) */
+    height: calc(320px * 9 / 16);
+    /* 16:9 aspect ratio (approx. 180px) */
     border: none;
-  }
-  .video-thumbnail {
+}
+
+.video-thumbnail {
     width: 100%;
     max-width: 560px;
     cursor: pointer;
@@ -847,29 +941,34 @@ nav {
 .video-thumbnail:hover {
     transform: scale(1.05);
 }
-  /* Channel container styling */
-  .channel-container {
+
+/* Channel container styling */
+.channel-container {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center;    /* Center items horizontally */
+    flex-direction: column;
+    /* Stack items vertically */
+    align-items: center;
+    /* Center items horizontally */
     text-align: center;
-  }
-  
-  .channel-container h2 {
+}
+
+.channel-container h2 {
     color: white;
     font-size: 18px;
     margin-bottom: 10px;
-  }
-  
-  .channel-logo {
+}
+
+.channel-logo {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.562);
-    width: 110px;   /* Adjusted size for a smaller logo */
+    width: 110px;
+    /* Adjusted size for a smaller logo */
     height: auto;
     margin-bottom: 10px;
-    border-radius: 50%;  /* Optional: makes the logo circular */
-  }
-  
-  .channel-container a {
+    border-radius: 50%;
+    /* Optional: makes the logo circular */
+}
+
+.channel-container a {
     background-color: #f0f0f000;
     font-family: 'Samsung Sharp Sans', Arial, Helvetica, sans-serif;
     font-style: italic;
@@ -881,77 +980,77 @@ nav {
     padding: 8px 16px;
     border-radius: 5px;
     transition: background 0.3s;
-  }
-  
-  .channel-container a:hover {
+}
+
+.channel-container a:hover {
     background: #e2e1cc;
-  }
-  
+}
+
 /* button Design */
 .beautiful-button {
     position: relative;
     display: inline-block;
     background: linear-gradient(to bottom, #1b1c3f, #4a4e91);
-   /* Gradient background */
+    /* Gradient background */
     color: white;
-   /* White text color */
+    /* White text color */
     font-family: "Segoe UI", sans-serif;
-   /* Stylish and legible font */
+    /* Stylish and legible font */
     font-weight: bold;
     font-size: 18px;
-   /* Large font size */
+    /* Large font size */
     border: none;
-   /* No border */
+    /* No border */
     border-radius: 30px;
-   /* Rounded corners */
+    /* Rounded corners */
     padding: 14px 28px;
-   /* Large padding */
+    /* Large padding */
     cursor: pointer;
-   /* Cursor on hover */
+    /* Cursor on hover */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-   /* Subtle shadow */
+    /* Subtle shadow */
     animation: button-shimmer 2s infinite;
     transition: all 0.3s ease-in-out;
-   /* Smooth transition */
-  }
-  
-  /* Hover animation */
-  .beautiful-button:hover {
+    /* Smooth transition */
+}
+
+/* Hover animation */
+.beautiful-button:hover {
     background: linear-gradient(to bottom, #2c2f63, #5b67b7);
     animation: button-particles 1s ease-in-out infinite;
     transform: translateY(-2px);
-  }
-  
-  /* Click animation */
-  .beautiful-button:active {
+}
+
+/* Click animation */
+.beautiful-button:active {
     transform: scale(0.95);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Shimmer animation */
-  @keyframes button-shimmer {
-    0% {
-      background-position: left top;
-    }
-  
-    100% {
-      background-position: right bottom;
-    }
-  }
-  
-  /* Particle animation */
-  @keyframes button-particles {
-    0% {
-      background-position: left top;
-    }
-  
-    100% {
-      background-position: right bottom;
-    }
-  }
+}
 
-  /* input box */
-  .input {
+/* Shimmer animation */
+@keyframes button-shimmer {
+    0% {
+        background-position: left top;
+    }
+
+    100% {
+        background-position: right bottom;
+    }
+}
+
+/* Particle animation */
+@keyframes button-particles {
+    0% {
+        background-position: left top;
+    }
+
+    100% {
+        background-position: right bottom;
+    }
+}
+
+/* input box */
+.input {
     /* Reduce the default margin to tighten the spacing */
     margin: 5px 0;
     background: none;
@@ -965,7 +1064,7 @@ nav {
     color: #fff;
 }
 
-  .intu {
+.intu {
     position: relative;
     width: 100%;
     margin: 12px 5px;
@@ -1048,23 +1147,22 @@ nav {
         width: 100%;
         padding: 15px;
     }
-    
+
     .intu {
         height: 3em;
         font-size: 1.1rem;
     }
 }
 
-header{
-    background-color: rgba(105, 255, 18, 0.938);
-}
-  
-.dj{
+
+.dj {
     text-align: center;
 }
+
 /* Night mode body background */
 body.night-mode {
-    background-color: #1a1a1a; /* Dark background for night mode */
+    background-color: #1a1a1a;
+    /* Dark background for night mode */
 }
 
 /* Input and textarea styling */
@@ -1072,136 +1170,161 @@ body.night-mode {
     width: 100%;
     padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Light border */
     border-radius: 8px;
     font-size: 16px;
     font-family: 'Montserrat', sans-serif;
-    color: #333333; /* Dark text for light mode */
-    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
-    transition: all 0.5s ease; /* Smooth transition for night mode */
+    color: #333333;
+    /* Dark text for light mode */
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Semi-transparent background */
+    transition: all 0.5s ease;
+    /* Smooth transition for night mode */
 }
 
 .intu:focus {
-    border-color: #b8860b; /* Gold border on focus */
+    border-color: #b8860b;
+    /* Gold border on focus */
     outline: none;
-    box-shadow: 0 0 8px rgba(184, 134, 11, 0.3); /* Reduced glow effect */
-    background-color: rgba(255, 255, 255, 0.2); /* Slightly brighter background on focus */
+    box-shadow: 0 0 8px rgba(184, 134, 11, 0.3);
+    /* Reduced glow effect */
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Slightly brighter background on focus */
 }
 
 /* Night mode input and textarea styling */
 body.night-mode .intu {
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Darker border */
-    color: #ffffff; /* White text for night mode */
-    background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent dark background */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Darker border */
+    color: #ffffff;
+    /* White text for night mode */
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Semi-transparent dark background */
 }
 
 body.night-mode .intu:focus {
-    border-color: #b8860b; /* Gold border on focus */
-    box-shadow: 0 0 8px rgba(184, 134, 11, 0.3); /* Reduced glow effect */
-    background-color: rgba(0, 0, 0, 0.2); /* Slightly darker background on focus */
+    border-color: #b8860b;
+    /* Gold border on focus */
+    box-shadow: 0 0 8px rgba(184, 134, 11, 0.3);
+    /* Reduced glow effect */
+    background-color: rgba(0, 0, 0, 0.2);
+    /* Slightly darker background on focus */
 }
 
 /* Placeholder styling */
 .intu::placeholder {
-    color: #999999; /* Light gray for placeholders */
+    color: #999999;
+    /* Light gray for placeholders */
     font-style: italic;
-    transition: color 0.5s ease; /* Smooth transition for night mode */
+    transition: color 0.5s ease;
+    /* Smooth transition for night mode */
 }
 
 /* Night mode placeholder text color */
 body.night-mode .intu::placeholder {
-    color: #666666; /* Darker gray for night mode */
+    color: #666666;
+    /* Darker gray for night mode */
 }
 
 /* Button styling */
 .beautiful-button {
     width: 100%;
     padding: 15px;
-    background-color: #b8860b; /* Gold color for luxury */
-    color: #ffffff; /* White text */
+    background-color: #b8860b;
+    /* Gold color for luxury */
+    color: #ffffff;
+    /* White text */
     border: none;
     border-radius: 8px;
     font-size: 18px;
-    font-family: 'SamsungSharpSans', sans-serif;;
+    font-family: 'SamsungSharpSans', sans-serif;
+    ;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.5s ease; /* Smooth transition for night mode */
+    transition: all 0.5s ease;
+    /* Smooth transition for night mode */
 }
 
 .beautiful-button:hover {
-    background-color: #a67c00; /* Darker gold on hover */
-    transform: translateY(-2px); /* Slight lift */
-    box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3); /* Subtle shadow */
+    background-color: #a67c00;
+    /* Darker gold on hover */
+    transform: translateY(-2px);
+    /* Slight lift */
+    box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3);
+    /* Subtle shadow */
 }
 
 .beautiful-button:active {
-    transform: translateY(0); /* Reset lift on click */
+    transform: translateY(0);
+    /* Reset lift on click */
 }
+
 .button-85 {
-  padding: 0.6em 2em;
-  border: none;
-  outline: none;
-  color: rgb(255, 255, 255);
-  background: #111;
-  cursor: pointer;
-  position: relative;
-  z-index: 0;
-  border-radius: 10px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 .button-85:before {
-  content: "";
-  background: linear-gradient(
-    45deg,
-    #ff0000,
-    #ff7300,
-    #fffb00,
-    #48ff00,
-    #00ffd5,
-    #002bff,
-    #7a00ff,
-    #ff00c8,
-    #ff0000
-  );
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  background-size: 400%;
-  z-index: -1;
-  filter: blur(5px);
-  -webkit-filter: blur(5px);
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  animation: glowing-button-85 20s linear infinite;
-  transition: opacity 0.3s ease-in-out;
-  border-radius: 10px;
+    content: "";
+    background: linear-gradient(45deg,
+            #ff0000,
+            #ff7300,
+            #fffb00,
+            #48ff00,
+            #00ffd5,
+            #002bff,
+            #7a00ff,
+            #ff00c8,
+            #ff0000);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-85 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
 }
 
 @keyframes glowing-button-85 {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 400% 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
 }
 
 .button-85:after {
-  z-index: -1;
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #222;
-  left: 0;
-  top: 0;
-  border-radius: 10px;
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
 }
 
 
@@ -1212,12 +1335,18 @@ body.night-mode .intu::placeholder {
     max-width: 500px;
     margin: 0 auto;
     padding: 30px;
-    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
-    border-radius: 20px; /* Rounded edges */
-    backdrop-filter: blur(10px); /* Blur effect */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 50px rgba(255, 255, 255, 0.2) inset; /* Depth effect */
-    transform: perspective(1000px) rotateX(10deg) translateZ(50px); /* 3D effect */
+    background: rgba(255, 255, 255, 0.1);
+    /* Semi-transparent background */
+    border-radius: 20px;
+    /* Rounded edges */
+    backdrop-filter: blur(10px);
+    /* Blur effect */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Light border */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 50px rgba(255, 255, 255, 0.2) inset;
+    /* Depth effect */
+    transform: perspective(1000px) rotateX(10deg) translateZ(50px);
+    /* 3D effect */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -1233,7 +1362,8 @@ body.night-mode .intu::placeholder {
     padding: 10px;
     margin: 10px 0;
     border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px; /* Rounded edges */
+    border-radius: 10px;
+    /* Rounded edges */
     background: rgba(255, 255, 255, 0.1);
     color: #31303d;
     font-size: 16px;
@@ -1256,7 +1386,8 @@ body.night-mode .intu::placeholder {
     width: 100%;
     padding: 12px;
     margin-top: 20px;
-    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient background */
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    /* Gradient background */
     border: none;
     border-radius: 10px;
     color: #fff;
@@ -1274,5 +1405,14 @@ body.night-mode .intu::placeholder {
 .oval-form button:active {
     transform: translateY(0);
 }
-/* button style for Calculator */
-/* Button Styles */
+
+.box {
+    background-color: #82808800;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.288);
+    padding: 12pt;
+    border-radius: 5pt;
+}
+header{
+    background: rgb(30, 102, 196);
+   background: linear-gradient(232deg, rgb(59, 40, 168) 0%, rgb(27, 26, 112) 56%, rgba(30,68,179,1) 100%);
+}
