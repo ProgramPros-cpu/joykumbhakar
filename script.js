@@ -1,7 +1,6 @@
 // ------------------------
 // Sidebar and Navigation
 // ------------------------
-
 // Toggle the sidebar
 function toggleMenu() {
     const sidebar = document.getElementById('sidebar');
@@ -323,23 +322,23 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
 // Dark Mode Functionality
 // ------------------------
 
-function toggleDarkMode() {
-    const body = document.body;
+ // Fix: Define the toggleDarkMode function
+ function toggleDarkMode() {
     const themeToggle = document.getElementById('themeToggle');
-
-    if (themeToggle) {
-        if (themeToggle.checked) {
-            body.classList.add('dark');
-            body.classList.remove('light');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            body.classList.add('light');
-            body.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
+    if (themeToggle.checked) {
+      document.body.classList.add('dark');
+      document.body.classList.remove('light');
+    } else {
+      document.body.classList.add('light');
+      document.body.classList.remove('dark');
     }
-}
-
+  }
+  
+  // Test Cases: Log initial theme and subsequent changes.
+  console.log("Initial theme class:", document.body.className);
+  document.getElementById('themeToggle').addEventListener('change', function() {
+    console.log("Theme toggled. Current theme class:", document.body.className);
+  });
 // Apply saved theme preference on page load
 window.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme');
@@ -369,3 +368,4 @@ function updateClock() {
 
 setInterval(updateClock, 1000);
 updateClock();
+
