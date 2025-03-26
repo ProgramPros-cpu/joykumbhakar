@@ -2326,3 +2326,6 @@ h7 {
   color: hsl(281, 100%, 50%);
   text-shadow:  1px rgb(146, 1, 243);
 }
+.Note{
+  color: red;
+}
