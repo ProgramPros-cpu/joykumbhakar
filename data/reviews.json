@@ -1,0 +1,20 @@
+[
+    {
+        "id": "review_1",
+        "userId": "user_12345",
+        "userName": "Admin User",
+        "userAvatar": "images/admin-avatar.jpg",
+        "rating": 5,
+        "text": "This app has completely changed how I manage my private files. The encryption is rock solid and the interface is so intuitive.",
+        "date": "2023-05-15T10:30:00.000Z"
+    },
+    {
+        "id": "review_2",
+        "userId": "user_12345",
+        "userName": "Admin User",
+        "userAvatar": "images/admin-avatar.jpg",
+        "rating": 4,
+        "text": "Great app overall, but would love to see more cloud storage options in the next update.",
+        "date": "2023-04-20T14:15:00.000Z"
+    }
+]

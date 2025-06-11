@@ -1,0 +1,10 @@
+[
+    {
+        "id": "user_12345",
+        "name": "Admin User",
+        "email": "admin@example.com",
+        "password": "secure123",
+        "avatar": "images/admin-avatar.jpg",
+        "joinedDate": "2023-01-01T00:00:00.000Z"
+    }
+]

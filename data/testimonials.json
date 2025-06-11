@@ -1,0 +1,25 @@
+{
+    "testimonials": [
+        {
+            "text": "Secure Folder has been a game-changer for my privacy. As a journalist, I need to protect sensitive documents, and this app gives me peace of mind with its robust encryption.",
+            "name": "Sarah Johnson",
+            "position": "Investigative Journalist",
+            "avatar": "sarah.jpg",
+            "rating": 5
+        },
+        {
+            "text": "I've tried many file protection apps, but none come close to Secure Folder's combination of security and usability. The biometric unlock is seamless and the interface is beautiful.",
+            "name": "Michael Chen",
+            "position": "Security Consultant",
+            "avatar": "michael.jpg",
+            "rating": 4
+        },
+        {
+            "text": "As someone who values privacy, I appreciate how Secure Folder doesn't require any unnecessary permissions. It just works perfectly while keeping my personal photos and documents safe.",
+            "name": "Emma Rodriguez",
+            "position": "Privacy Advocate",
+            "avatar": "emma.jpg",
+            "rating": 5
+        }
+    ]
+}
