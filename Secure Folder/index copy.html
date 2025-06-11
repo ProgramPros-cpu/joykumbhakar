@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Folder | Premium File Protection for Android</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="particles-container" id="particles-js"></div>
+    
+    <!-- Auth Modals -->
+    <div id="auth-modals">
+        <!-- Login Modal -->
+        <div id="login-modal" class="auth-modal">
+            <div class="auth-container">
+                <span class="close-modal">&times;</span>
+                <h2>Login to Your Account</h2>
+                <div id="login-error" class="error-message"></div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" class="switch-to-signup">Sign up</a></p>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                <div class="social-login">
+                    <p>Or login with:</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-btn google"><i class="fab fa-google"></i></a>
+                        <a href="#" class="social-btn facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Modal -->
+        <div id="signup-modal" class="auth-modal">
+            <div class="auth-container">
+                <span class="close-modal">&times;</span>
+                <h2>Create Your Account</h2>
+                <div id="signup-error" class="error-message"></div>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password (min 6 characters)</label>
+                        <input type="password" id="signup-password" minlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm-password">Confirm Password</label>
+                        <input type="password" id="signup-confirm-password" required>
+                    </div>
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="terms-agree" required>
+                        <label for="terms-agree">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                    </div>
+                    <button type="submit" class="btn-primary">Create Account</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" class="switch-to-login">Login</a></p>
+                </div>
+                <div class="social-login">
+                    <p>Or sign up with:</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-btn google"><i class="fab fa-google"></i></a>
+                        <a href="#" class="social-btn facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Forgot Password Modal -->
+        <div id="forgot-password-modal" class="auth-modal">
+            <div class="auth-container">
+                <span class="close-modal">&times;</span>
+                <h2>Reset Your Password</h2>
+                <div id="forgot-error" class="error-message"></div>
+                <div id="forgot-success" class="success-message"></div>
+                <form id="forgot-password-form">
+                    <div class="form-group">
+                        <label for="reset-email">Email</label>
+                        <input type="email" id="reset-email" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Reset Link</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Remember your password? <a href="#" class="switch-to-login">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Center -->
+    <div id="notification-center">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <span class="close-notifications">&times;</span>
+        </div>
+        <div class="notification-list">
+            <!-- Notifications will be loaded here -->
+        </div>
+    </div>
+
+    <header class="glass-nav">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-folder-lock"></i>
+                <span>Secure<span>Folder</span></span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="login-btn" class="btn-secondary">Login</button>
+                <button id="signup-btn" class="btn-primary">Sign Up</button>
+                <div id="user-dropdown" class="user-dropdown" style="display: none;">
+                    <div class="user-avatar">
+                        <img src="images/default-avatar.jpg" alt="User" id="user-avatar-img">
+                        <span id="username-display">User</span>
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="#" id="my-profile-link"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="#" id="my-reviews-link"><i class="fas fa-star"></i> My Reviews</a>
+                        <a href="#" id="notification-link"><i class="fas fa-bell"></i> Notifications <span id="notification-count" class="notification-badge">0</span></a>
+                        <a href="#" id="settings-link"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Ultimate Privacy <span>for Your Sensitive Files</span></h1>
+                    <p class="subtitle">Military-grade encryption meets intuitive design in our premium file protection solution for Android</p>
+                    <div class="cta-buttons">
+                        <a href="#download" class="btn-primary pulse">
+                            <i class="fas fa-download"></i> Download Now
+                        </a>
+                        <a href="#features" class="btn-secondary">
+                            <i class="fas fa-play-circle"></i> Watch Demo
+                        </a>
+                    </div>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="10">0</div>
+                            <div class="stat-label">Downloads</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="4.9">0</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="100">0</div>
+                            <div class="stat-label">% Secure</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="phone-mockup">
+                        <img src="images/phone-mockup.png" alt="Secure Folder App">
+                        <div class="screen-animation">
+                            <img src="images/app-screenshots/screen1.jpg" class="active">
+                            <img src="images/app-screenshots/screen2.jpg">
+                            <img src="images/app-screenshots/screen3.jpg">
+                            <img src="images/app-screenshots/screen4.jpg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="section-header">
+                <h2>Powerful Features</h2>
+                <p>Discover what makes Secure Folder the most trusted file protection app</p>
+            </div>
+            <div class="container">
+                <div class="features-grid">
+                    <!-- Dynamically loaded from features.json -->
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="how-it-works">
+            <div class="section-header">
+                <h2>How Secure Folder Works</h2>
+                <p>Three simple steps to complete privacy</p>
+            </div>
+            <div class="container">
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Install & Setup</h3>
+                            <p>Download from this site and create your master password</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Add Your Files</h3>
+                            <p>Import photos, videos, documents or any sensitive files</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Access Securely</h3>
+                            <p>Your files are now protected with AES-256 encryption</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <div class="download-content">
+                    <h2>Get Secure Folder Now</h2>
+                    <p>Available for all Android devices running 6.0 and above</p>
+                    <div class="download-buttons">
+                        <a href="#" class="download-btn direct-download">
+                            <i class="fas fa-download"></i>
+                            <div class="download-info">
+                                <span>DIRECT</span>
+                                <strong>APK Download</strong>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="version-info">
+                        <span>Latest Version: <strong id="current-version">1.0.1</strong></span>
+                        <span>Updated: <strong id="update-date">June 11, 2025</strong></span>
+                        <span>Size: <strong id="file-size">9.67 MB</strong></span>
+                    </div>
+                </div>
+                <div class="download-image">
+                    <img src="images/default-avatar.png" alt="Download Secure Folder">
+                </div>
+            </div>
+        </section>
+
+                <section id="testimonials" class="testimonials">
+            <div class="section-header">
+                <h2>User Reviews</h2>
+                <p>What our community says about Secure Folder</p>
+            </div>
+            <div class="container">
+                <div class="testimonials-slider">
+                    <!-- Reviews loaded dynamically -->
+                </div>
+                <div class="add-review-section">
+                    <h3>Share Your Experience</h3>
+                    <div id="review-login-prompt" class="review-login-prompt">
+                        <p>Please login to submit a review</p>
+                        <button id="review-login-btn" class="btn-primary">Login</button>
+                    </div>
+                    <form id="review-form" class="review-form" style="display: none;">
+                        <div class="rating-input">
+                            <span>Your Rating:</span>
+                            <div class="stars">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </div>
+                            <input type="hidden" id="review-rating" name="rating" value="0">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="review-text" placeholder="Share your experience with Secure Folder..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="feedback" class="feedback">
+            <div class="section-header">
+                <h2>Send Us Feedback</h2>
+                <p>We'd love to hear from you</p>
+            </div>
+            <div class="container">
+                <div class="feedback-container">
+                    <div class="feedback-image">
+                        <img src="images/feedback-illustration.png" alt="Feedback">
+                    </div>
+                    <div class="feedback-form-container">
+                        <div id="feedback-login-prompt" class="feedback-login-prompt">
+                            <h3>Share your thoughts with us</h3>
+                            <p>Login to submit feedback or report issues</p>
+                            <button id="feedback-login-btn" class="btn-primary">Login</button>
+                        </div>
+                        <form id="feedback-form" class="feedback-form" style="display: none;">
+                            <div class="form-group">
+                                <label for="feedback-type">Feedback Type</label>
+                                <select id="feedback-type" required>
+                                    <option value="">Select type</option>
+                                    <option value="suggestion">Feature Suggestion</option>
+                                    <option value="bug">Bug Report</option>
+                                    <option value="general">General Feedback</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-subject">Subject</label>
+                                <input type="text" id="feedback-subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-message">Message</label>
+                                <textarea id="feedback-message" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-screenshot">Screenshot (optional)</label>
+                                <input type="file" id="feedback-screenshot" accept="image/*">
+                            </div>
+                            <button type="submit" class="btn-primary">Send Feedback</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Profile Modal -->
+        <div id="profile-modal" class="profile-modal">
+            <div class="profile-container">
+                <span class="close-profile-modal">&times;</span>
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img src="images/default-avatar.jpg" alt="User" id="profile-avatar-img">
+                        <label for="avatar-upload" class="avatar-upload-label">
+                            <i class="fas fa-camera"></i>
+                            <input type="file" id="avatar-upload" accept="image/*">
+                        </label>
+                    </div>
+                    <h2 id="profile-name">User Name</h2>
+                    <p id="profile-email">user@example.com</p>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="reviews-count">0</div>
+                        <div class="stat-label">Reviews</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="feedback-count">0</div>
+                        <div class="stat-label">Feedback</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="member-since">0</div>
+                        <div class="stat-label">Days</div>
+                    </div>
+                </div>
+                <div class="profile-reviews">
+                    <h3>My Recent Reviews</h3>
+                    <div class="reviews-list" id="user-reviews-list">
+                        <!-- User reviews will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="logo">
+                        <i class="fas fa-folder-lock"></i>
+                        <span>Secure<span>Folder</span></span>
+                    </div>
+                    <p>The most secure file protection solution for Android devices. Military-grade encryption with intuitive interface.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#download">Download</a></li>
+                        <li><a href="#testimonials">Reviews</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe to our newsletter for latest updates and features</p>
+                    <form id="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Secure Folder. All rights reserved.</p>
+                <div class="footer-lang">
+                    <select id="language-selector">
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="ja">日本語</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </footer>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+       <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="script.js"></script>
+        <script src="scripts/auth.js"></script>
+    <script src="scripts/reviews.js"></script>
+    <script src="scripts/feedback.js"></script>
+    <script src="scripts/notifications.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
