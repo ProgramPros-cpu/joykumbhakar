@@ -127,138 +127,34 @@ class ReviewsSystem {
         const slider = document.querySelector('.testimonials-slider');
         if (!slider) return;
         
-         // After adding review:
-        this.updateAverageRating();
-    }
-    
-    addReviewToSlider(review) {
-        const slider = document.querySelector('.testimonials-slider');
-        if (!slider) return;
-        
-        // Create stars HTML
+        // Create stars based on rating
         let starsHtml = '';
         for (let i = 1; i <= 5; i++) {
             starsHtml += i <= review.rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
         }
         
-        // Create replies HTML if they exist
-        let repliesHtml = '';
-        if (review.replies && review.replies.length > 0) {
-            repliesHtml = review.replies.map(reply => `
-                <div class="review-reply ${reply.isAdmin ? 'admin-reply' : ''}">
-                    <div class="reply-header">
-                        <span class="reply-author">${reply.author}</span>
-                        <span class="reply-date">${new Date(reply.date).toLocaleDateString()}</span>
-                    </div>
-                    <div class="reply-message">${reply.message}</div>
+        const reviewCard = document.createElement('div');
+        reviewCard.className = 'testimonial-card';
+        reviewCard.innerHTML = `
+            <div class="rating-stars">
+                ${starsHtml}
+            </div>
+            <p class="testimonial-text">${review.text}</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">
+                    <img src="${review.userAvatar || 'images/default-avatar.jpg'}" alt="${review.userName}">
                 </div>
-            `).join('');
-        }
-        
-        const reviewItem = document.createElement('div');
-        reviewItem.className = 'review-item';
-        reviewItem.innerHTML = `
-            <div class="review-header">
-                <img src="${review.userAvatar || 'images/default-avatar.jpg'}" alt="${review.userName}" class="review-avatar">
-                <div class="review-author">
-                    <div class="review-author-name">${review.userName}</div>
-                    <div class="review-rating">${starsHtml}</div>
-                    <div class="review-author-date">${new Date(review.date).toLocaleDateString()}</div>
+                <div class="author-info">
+                    <h4>${review.userName}</h4>
+                    <p>Verified User</p>
                 </div>
             </div>
-            <div class="review-message">${review.text}</div>
-            ${repliesHtml}
-            ${auth.currentUser?.id === review.userId ? '' : '<button class="reply-btn" data-review-id="${review.id}">Reply</button>'}
         `;
         
-        // Add reply event listener
-        const replyBtn = reviewItem.querySelector('.reply-btn');
-        if (replyBtn) {
-            replyBtn.addEventListener('click', (e) => {
-                this.showReplyModal(review.id);
-            });
-        }
-        
-        slider.appendChild(reviewItem);
-    }
-    
-    showReplyModal(reviewId) {
-        if (!auth.currentUser) {
-            auth.showModal('login');
-            return;
-        }
-        
-        document.getElementById('reply-review-id').value = reviewId;
-        document.getElementById('reply-message').value = '';
-        document.getElementById('reply-error').style.display = 'none';
-        
-        const modal = document.getElementById('reply-modal');
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    }
-    
-    handleReplySubmit() {
-        const reviewId = document.getElementById('reply-review-id').value;
-        const message = document.getElementById('reply-message').value;
-        const errorElement = document.getElementById('reply-error');
-        
-        if (!message) {
-            this.showError(errorElement, 'Please enter a reply message');
-            return;
-        }
-        
-        // Find the review
-        const reviewIndex = this.reviews.findIndex(r => r.id === reviewId);
-        if (reviewIndex === -1) {
-            this.showError(errorElement, 'Review not found');
-            return;
-        }
-        
-        // Create reply
-        const reply = {
-            id: 'reply_' + Math.random().toString(36).substr(2, 9),
-            author: auth.currentUser.name,
-            message: message,
-            date: new Date().toISOString(),
-            isAdmin: auth.currentUser.email.endsWith('@securefolder.com') // Example admin check
-        };
-        
-        // Add reply to review
-        if (!this.reviews[reviewIndex].replies) {
-            this.reviews[reviewIndex].replies = [];
-        }
-        this.reviews[reviewIndex].replies.push(reply);
-        
-        // Save to localStorage
-        localStorage.setItem('secureFolderReviews', JSON.stringify(this.reviews));
-        
-        // Hide modal
-        document.getElementById('reply-modal').style.display = 'none';
-        document.body.style.overflow = 'auto';
-        
-        // Reload reviews
-        this.loadReviews();
-        
-        // Notify review author if not self-reply
-        if (auth.currentUser.id !== this.reviews[reviewIndex].userId) {
-            notifications.addNotification({
-                title: 'New reply to your review',
-                message: `${auth.currentUser.name} responded to your review`,
-                type: 'reply',
-                read: false,
-                reviewId: reviewId
-            });
-        }
-    }
-    
-    showError(element, message) {
-        if (element) {
-            element.textContent = message;
-            element.style.display = 'block';
-        }
+        // Add to beginning of slider
+        slider.insertBefore(reviewCard, slider.firstChild);
     }
 }
-
 
 // Initialize reviews system
 const reviews = new ReviewsSystem();
