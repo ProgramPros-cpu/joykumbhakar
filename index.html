@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Folder | Premium File Protection for Android</title>
+    <title>SecureThing | Ultimate Privacy Vault for Android</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
@@ -15,6 +15,42 @@
 <body>
     <div class="particles-container" id="particles-js"></div>
     
+    <!-- Chatbot Widget -->
+    <div id="chatbot-container" class="chatbot-container">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <i class="fas fa-robot"></i>
+                <h3>SecureThing Assistant</h3>
+            </div>
+            <button id="minimize-chatbot" class="chatbot-control-btn">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button id="close-chatbot" class="chatbot-control-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <div class="chatbot-message bot-message">
+                <div class="message-content">
+                    <p>Hello! I'm your SecureThing assistant. How can I help you today?</p>
+                    <div class="quick-questions">
+                        <button class="quick-question-btn" data-question="How do I install SecureThing?">How to install?</button>
+                        <button class="quick-question-btn" data-question="What encryption does SecureThing use?">Encryption info</button>
+                        <button class="quick-question-btn" data-question="How to recover my password?">Password recovery</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbot-input-field" placeholder="Type your question...">
+            <button id="send-chatbot-message"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <button id="open-chatbot" class="chatbot-toggle-btn">
+        <i class="fas fa-comments"></i>
+        <span>Need Help?</span>
+    </button>
+
     <!-- Auth Modals -->
     <div id="auth-modals">
         <!-- Login Modal -->
@@ -172,14 +208,15 @@
     <header class="glass-nav">
         <div class="container">
             <div class="logo">
-                <i class="fas fa-folder-lock"></i>
-                <span>Secure<span>Folder</span></span>
+                <i class="fas fa-shield-alt"></i>
+                <span>Secure<span>Thing</span></span>
             </div>
             <nav>
                 <ul>
                     <li><a href="#features">Features</a></li>
                     <li><a href="#how-it-works">How It Works</a></li>
                     <li><a href="#download">Download</a></li>
+                    <li><a href="#versions">Previous Versions</a></li>
                     <li><a href="#testimonials">Reviews</a></li>
                     <li><a href="#faq">FAQ</a></li>
                 </ul>
@@ -212,8 +249,8 @@
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <h1>Ultimate Privacy <span>for Your Sensitive Files</span></h1>
-                    <p class="subtitle">Military-grade encryption meets intuitive design in our premium file protection solution for Android</p>
+                    <h1>All-in-One Privacy Vault <span>for Your Sensitive Data</span></h1>
+                    <p class="subtitle">Military-grade encryption meets intuitive design in our premium security solution for Android</p>
                     <div class="cta-buttons">
                         <a href="#download" class="btn-primary pulse">
                             <i class="fas fa-download"></i> Download Now
@@ -224,7 +261,7 @@
                     </div>
                     <div class="stats">
                         <div class="stat-item">
-                            <div class="stat-number" id="total-downloads" data-count="10">0</div>
+                            <div class="stat-number" id="total-downloads" data-count="25000">0</div>
                             <div class="stat-label">Downloads</div>
                         </div>
                         <div class="stat-item">
@@ -239,7 +276,7 @@
                 </div>
                 <div class="hero-image">
                     <div class="phone-mockup">
-                        <img src="images/phone-mockup.png" alt="Secure Folder App">
+                        <img src="images/phone-mockup.png" alt="SecureThing App">
                         <div class="screen-animation">
                             <img src="images/app-screenshots/screen1.jpg" class="active">
                             <img src="images/app-screenshots/screen2.jpg">
@@ -253,19 +290,60 @@
 
         <section id="features" class="features">
             <div class="section-header">
-                <h2>Powerful Features</h2>
-                <p>Discover what makes Secure Folder the most trusted file protection app</p>
+                <h2>Powerful Security Features</h2>
+                <p>Discover what makes SecureThing the most trusted privacy vault</p>
             </div>
             <div class="container">
                 <div class="features-grid">
-                    <!-- Dynamically loaded from features.json -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-fingerprint"></i>
+                        </div>
+                        <h3>Biometric Protection</h3>
+                        <p>Secure login with fingerprint or face recognition for quick yet secure access to your vault.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>AES-256 Encryption</h3>
+                        <p>Military-grade encryption protects all your files and passwords with unbreakable security.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-import"></i>
+                        </div>
+                        <h3>Multi-Format Support</h3>
+                        <p>Store photos, videos, documents, audio files, and archives - all in one secure place.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3>Password Manager</h3>
+                        <p>Built-in secure vault for storing your passwords and sensitive credentials.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3>Customizable UI</h3>
+                        <p>Personalize themes, wallpapers and appearance to match your style.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-wifi-slash"></i>
+                        </div>
+                        <h3>100% Offline</h3>
+                        <p>Works without internet - your data never leaves your device.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="how-it-works" class="how-it-works">
             <div class="section-header">
-                <h2>How Secure Folder Works</h2>
+                <h2>How SecureThing Works</h2>
                 <p>Three simple steps to complete privacy</p>
             </div>
             <div class="container">
@@ -273,22 +351,22 @@
                     <div class="step">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <h3>Install & Setup</h3>
-                            <p>Download from this site and create your master password</p>
+                            <h3>Download & Setup</h3>
+                            <p>Install the app and create your master password or enable biometric lock</p>
                         </div>
                     </div>
                     <div class="step">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <h3>Add Your Files</h3>
-                            <p>Import photos, videos, documents or any sensitive files</p>
+                            <h3>Add Your Private Data</h3>
+                            <p>Import photos, videos, documents, passwords or any sensitive information</p>
                         </div>
                     </div>
                     <div class="step">
                         <div class="step-number">3</div>
                         <div class="step-content">
                             <h3>Access Securely</h3>
-                            <p>Your files are now protected with AES-256 encryption</p>
+                            <p>Your data is now protected with AES-256 encryption and invisible to others</p>
                         </div>
                     </div>
                 </div>
@@ -298,28 +376,115 @@
         <section id="download" class="download">
             <div class="container">
                 <div class="download-content">
-                    <h2>Get Secure Folder Now</h2>
+                    <h2>Get SecureThing Now</h2>
                     <p>Available for all Android devices running 6.0 and above</p>
                     <div class="download-buttons">
-                            <a href="https://securethings.netlify.app/SecureThing_v1.0.6.apk" class="download-btn direct-download">
+                        <a href="https://securethings.netlify.app/SecureThing_v1.0.6.apk" class="download-btn direct-download">
                             <i class="fas fa-download"></i>
                             <div class="download-info">
-            <span>DIRECT</span>
-            <strong>APK Download</strong>
-        </div>
+                                <span>DIRECT</span>
+                                <strong>APK Download</strong>
+                            </div>
                         </a>
-</div>
-
-<!-- Optional fallback -->
-<p>If your download doesn't start, <a href="https://securethings.netlify.app/SecureThing_v1.0.6.apk" target="_blank">click here for a backup download</a>.</p>
+                    </div>
+                    <p class="download-note">If your download doesn't start, <a href="https://securethings.netlify.app/SecureThing_v1.0.6.apk" target="_blank">click here for a backup download</a>.</p>
                     <div class="version-info">
-                        <span>Latest Version: <strong id="current-version">1.0.3</strong></span>
-                        <span>Updated: <strong id="update-date">July 02, 2025</strong></span>
-                        <span>Size: <strong id="file-size">12.24 MB</strong></span>
+                        <span>Latest Version: <strong id="current-version">1.0.6</strong></span>
+                        <span>Updated: <strong id="update-date">July 15, 2025</strong></span>
+                        <span>Size: <strong id="file-size">14.5 MB</strong></span>
+                    </div>
+                    <div class="security-badges">
+                        <div class="badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Virus Free</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-lock"></i>
+                            <span>No Permissions Required</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-ad"></i>
+                            <span>Ad-Free</span>
+                        </div>
                     </div>
                 </div>
                 <div class="download-image">
-                    <img src="images/download.png" alt="Download Secure Folder">
+                    <img src="images/download.png" alt="Download SecureThing">
+                </div>
+            </div>
+        </section>
+
+        <section id="versions" class="versions">
+            <div class="section-header">
+                <h2>Previous Versions</h2>
+                <p>Download older versions if needed</p>
+            </div>
+            <div class="container">
+                <div class="version-filters">
+                    <div class="filter-group">
+                        <label for="version-sort">Sort by:</label>
+                        <select id="version-sort">
+                            <option value="date-desc">Newest First</option>
+                            <option value="date-asc">Oldest First</option>
+                            <option value="version-desc">Version (High to Low)</option>
+                            <option value="version-asc">Version (Low to High)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="version-search">Search:</label>
+                        <input type="text" id="version-search" placeholder="Version number or date...">
+                    </div>
+                </div>
+                <div class="versions-table-container">
+                    <table class="versions-table">
+                        <thead>
+                            <tr>
+                                <th>Version</th>
+                                <th>Release Date</th>
+                                <th>Size</th>
+                                <th>Changes</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>v1.0.6</td>
+                                <td>July 15, 2025</td>
+                                <td>14.5 MB</td>
+                                <td>Added password generator, improved biometric authentication</td>
+                                <td><a href="https://securethings.netlify.app/SecureThing_v1.0.6.apk" class="btn-small">Download</a></td>
+                            </tr>
+                            <tr>
+                                <td>v1.0.5</td>
+                                <td>June 28, 2025</td>
+                                <td>13.8 MB</td>
+                                <td>Fixed file import issues, added dark mode support</td>
+                                <td><a href="https://securethings.netlify.app/SecureThing_v1.0.5.apk" class="btn-small">Download</a></td>
+                            </tr>
+                            <tr>
+                                <td>v1.0.4</td>
+                                <td>June 10, 2025</td>
+                                <td>13.2 MB</td>
+                                <td>Added password vault, performance improvements</td>
+                                <td><a href="https://securethings.netlify.app/SecureThing_v1.0.4.apk" class="btn-small">Download</a></td>
+                            </tr>
+                            <tr>
+                                <td>v1.0.3</td>
+                                <td>May 25, 2025</td>
+                                <td>12.7 MB</td>
+                                <td>Initial public release with basic file protection</td>
+                                <td><a href="https://securethings.netlify.app/SecureThing_v1.0.3.apk" class="btn-small">Download</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="version-notes">
+                    <h3>Version Compatibility Notes</h3>
+                    <ul>
+                        <li>Versions 1.0.4 and above include the password vault feature</li>
+                        <li>Android 8.0+ required for biometric authentication in all versions</li>
+                        <li>v1.0.3 has basic file protection without password manager</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -327,7 +492,7 @@
         <section id="testimonials" class="testimonials">
             <div class="section-header">
                 <h2>User Reviews</h2>
-                <p>What our community says about Secure Folder</p>
+                <p>What our community says about SecureThing</p>
             </div>
             <div class="container">
                 <div class="testimonials-slider">
@@ -352,10 +517,70 @@
                             <input type="hidden" id="review-rating" name="rating" value="0">
                         </div>
                         <div class="form-group">
-                            <textarea id="review-text" placeholder="Share your experience with Secure Folder..." required></textarea>
+                            <textarea id="review-text" placeholder="Share your experience with SecureThing..." required></textarea>
                         </div>
                         <button type="submit" class="btn-primary">Submit Review</button>
                     </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to common questions</p>
+            </div>
+            <div class="container">
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Is SecureThing really secure?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, SecureThing uses military-grade AES-256 encryption to protect all your files and passwords. The app works completely offline, meaning your data never leaves your device. We don't collect any personal information and there are no backdoors.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What happens if I forget my password?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>For security reasons, we cannot recover your password as all encryption keys are derived from it. However, you can set up biometric authentication (fingerprint/face) as a backup login method in the app settings.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Does the app work on all Android devices?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>SecureThing works on Android 6.0 (Marshmallow) and above. Biometric authentication requires Android 8.0 (Oreo) or later. The app is optimized for both phones and tablets.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I access my files from another device?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Since SecureThing works offline for maximum security, your files are only accessible on the device where they're stored. For cross-device access, you would need to manually export encrypted files and import them on another device.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How is SecureThing different from other vault apps?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>SecureThing combines file protection with password management in one app, uses stronger encryption than most competitors, has no ads or tracking, and offers a clean, customizable interface. Unlike cloud-based solutions, your data stays private on your device.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-contact">
+                    <p>Still have questions? Our support team is ready to help.</p>
+                    <button id="contact-support-btn" class="btn-secondary">Contact Support</button>
                 </div>
             </div>
         </section>
@@ -449,7 +674,6 @@
                 </div>
             </div>
         </div>
-
     </main>
 
     <footer>
@@ -457,10 +681,10 @@
             <div class="footer-content">
                 <div class="footer-about">
                     <div class="logo">
-                        <i class="fas fa-folder-lock"></i>
-                        <span>Secure<span>Folder</span></span>
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure<span>Thing</span></span>
                     </div>
-                    <p>The most secure file protection solution for Android devices. Military-grade encryption with intuitive interface.</p>
+                    <p>The most secure privacy vault solution for Android devices. Military-grade encryption with intuitive interface.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -474,6 +698,7 @@
                         <li><a href="#features">Features</a></li>
                         <li><a href="#how-it-works">How It Works</a></li>
                         <li><a href="#download">Download</a></li>
+                        <li><a href="#versions">Previous Versions</a></li>
                         <li><a href="#testimonials">Reviews</a></li>
                         <li><a href="#faq">FAQ</a></li>
                     </ul>
@@ -497,7 +722,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 Secure Folder. All rights reserved.</p>
+                <p>&copy; 2025 SecureThing. All rights reserved.</p>
                 <div class="footer-lang">
                     <select id="language-selector">
                         <option value="en">English</option>
@@ -519,6 +744,7 @@
     <script src="scripts/feedback.js"></script>
     <script src="scripts/notifications.js"></script>
     <script src="scripts/downloads.js"></script>
+    <script src="scripts/chatbot.js"></script>
     <script src="scripts/main.js"></script>
 </body>
 </html>
