@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#050505">
+    <meta name="theme-color" content="#000000">
     <title>SecureThing | Premium Privacy Vault</title>
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2438/2438078.png">
     
@@ -14,51 +14,55 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- THEME ENGINE --- */
+        /* --- MONOCHROME THEME ENGINE --- */
         :root {
             /* Dark Mode (Default) */
-            --bg-color: #050505;
-            --accent-primary: #3b82f6; 
-            --accent-secondary: #10b981;
+            --bg-color: #000000;
+            --surface-color: #ffffff; /* Contrast element color */
+            --inverse-text: #000000;
             
             --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.6);
+            --text-muted: rgba(255, 255, 255, 0.5);
             
-            /* Liquid Glass */
+            /* High Blur / Low Opacity Glass */
             --glass-bg: rgba(20, 20, 20, 0.4);
-            --glass-blur: 30px;
+            --glass-blur: 50px;
             --glass-shadows: 
-                0px 1px 2px rgba(0,0,0,0.2),
-                0px 20px 40px rgba(0,0,0,0.4),
-                inset 0px 1px 0.5px rgba(255, 255, 255, 0.3),
-                inset 0px -1px 0.5px rgba(0, 0, 0, 0.3);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+                0px 4px 40px rgba(0,0,0,0.5),
+                inset 0px 1px 0px rgba(255, 255, 255, 0.1);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.15);
             
-            --dock-bg: rgba(10, 10, 10, 0.6);
-            --nav-active-glow: rgba(255, 255, 255, 0.15);
+            --dock-bg: rgba(0, 0, 0, 0.8);
+            --nav-active-bg: #ffffff;
+            --nav-active-text: #000000;
             
-            --blob-opacity: 0.5;
-            --blob-blend: hard-light;
+            /* Ambient Mist */
+            --blob-color-1: rgba(255, 255, 255, 0.15);
+            --blob-color-2: rgba(100, 100, 100, 0.15);
+            --blob-blend: screen;
         }
 
         /* Light Mode */
         body.light-mode {
-            --bg-color: #f0f2f5;
-            --text-main: #111827;
-            --text-muted: rgba(0, 0, 0, 0.6);
+            --bg-color: #ffffff;
+            --surface-color: #000000;
+            --inverse-text: #ffffff;
             
-            --glass-bg: rgba(255, 255, 255, 0.6);
+            --text-main: #000000;
+            --text-muted: rgba(0, 0, 0, 0.5);
+            
+            --glass-bg: rgba(255, 255, 255, 0.5);
             --glass-shadows: 
-                0px 4px 6px rgba(0,0,0,0.05),
-                0px 20px 40px rgba(0,0,0,0.1),
-                inset 0px 1px 1px rgba(255, 255, 255, 0.9),
-                inset 0px -1px 1px rgba(0, 0, 0, 0.05);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.8);
+                0px 10px 40px rgba(0,0,0,0.05),
+                inset 0px 1px 0px rgba(255, 255, 255, 0.8);
+            --glass-border: 1px solid rgba(0, 0, 0, 0.08);
             
-            --dock-bg: rgba(255, 255, 255, 0.8);
-            --nav-active-glow: rgba(0, 0, 0, 0.05);
+            --dock-bg: rgba(255, 255, 255, 0.9);
+            --nav-active-bg: #000000;
+            --nav-active-text: #ffffff;
             
-            --blob-opacity: 0.25;
+            --blob-color-1: rgba(0, 0, 0, 0.05);
+            --blob-color-2: rgba(100, 100, 100, 0.05);
             --blob-blend: multiply;
         }
 
@@ -85,128 +89,117 @@
         .glass-interactive::before {
             content: ''; position: absolute; top: 0; left: -100%;
             width: 200%; height: 100%;
-            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.1) 45%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.1) 55%, transparent 100%);
+            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.2) 45%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.2) 55%, transparent 100%);
             transform: skewX(-20deg); transition: left 0.7s ease;
             pointer-events: none; z-index: 2;
         }
         
         .glass-interactive:hover {
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: 0px 10px 20px rgba(0,0,0,0.1), 0px 30px 60px rgba(0,0,0,0.3), inset 0px 1px 0.5px rgba(255, 255, 255, 0.5);
-            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
+            border-color: var(--text-muted);
         }
         .glass-interactive:hover::before { left: 100%; }
         .glass-interactive.no-reflection::before { display: none; }
 
         .glass-input {
-            background: rgba(0,0,0,0.05);
+            background: rgba(125,125,125,0.05);
             border: 1px solid var(--glass-border);
             color: var(--text-main);
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
         .glass-input:focus {
-            background: rgba(0,0,0,0.1);
-            border-color: var(--accent-primary);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05), 0 0 0 2px rgba(59, 130, 246, 0.2);
+            background: rgba(125,125,125,0.1);
+            border-color: var(--text-main);
             outline: none;
         }
-        .light-mode .glass-input { background: rgba(255,255,255,0.4); }
 
-        /* --- TYPOGRAPHY FIX --- */
+        /* --- TYPOGRAPHY --- */
         .text-dynamic { color: var(--text-main); }
         .text-muted-dynamic { color: var(--text-muted); }
         
+        /* Monochrome Gradient */
         .text-gradient {
-            background: linear-gradient(135deg, #ffffff 10%, #93c5fd 100%);
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--text-muted) 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
-        /* High contrast gradient for light mode */
-        body.light-mode .text-gradient {
-            background: linear-gradient(135deg, #1e3a8a 0%, #059669 100%);
-            filter: none;
+
+        /* --- BUTTONS --- */
+        .btn-solid {
+            background-color: var(--surface-color);
+            color: var(--inverse-text);
+            transition: all 0.3s ease;
+        }
+        .btn-solid:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(125,125,125,0.3);
         }
 
         /* --- BACKGROUND --- */
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
             pointer-events: none; z-index: 0; mix-blend-mode: overlay;
         }
         .blob {
-            position: absolute; filter: blur(90px);
-            opacity: var(--blob-opacity); mix-blend-mode: var(--blob-blend);
+            position: absolute; filter: blur(100px);
+            mix-blend-mode: var(--blob-blend);
             animation: float 25s infinite ease-in-out alternate;
             border-radius: 50%; will-change: transform; z-index: -1;
         }
-        .blob-1 { top: -15%; left: -15%; width: 55vw; height: 55vw; background: radial-gradient(circle, var(--accent-primary) 0%, transparent 60%); }
-        .blob-2 { bottom: -15%; right: -15%; width: 65vw; height: 65vw; background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 60%); animation-delay: -7s; }
-        @keyframes float { 0% { transform: translate(0,0); } 100% { transform: translate(30px, 30px); } }
+        .blob-1 { top: -20%; left: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, var(--blob-color-1) 0%, transparent 70%); }
+        .blob-2 { bottom: -20%; right: -10%; width: 70vw; height: 70vw; background: radial-gradient(circle, var(--blob-color-2) 0%, transparent 70%); animation-delay: -5s; }
+        @keyframes float { 0% { transform: translate(0,0); } 100% { transform: translate(20px, 20px); } }
 
         /* --- CALENDAR --- */
         .calendar-container { font-size: 0.75rem; width: 100%; }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
-        .calendar-nav { width: 24px; height: 24px; border-radius: 6px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); transition: 0.2s; }
-        .calendar-nav:hover { background: rgba(255,255,255,0.2); }
+        .calendar-nav { width: 24px; height: 24px; border-radius: 6px; background: rgba(125,125,125,0.1); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); transition: 0.2s; }
+        .calendar-nav:hover { background: rgba(125,125,125,0.2); }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
         .calendar-day-header { text-align: center; color: var(--text-muted); font-size: 0.65rem; font-weight: 600; padding: 4px 0; }
         .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: default; transition: 0.2s; position: relative; font-weight: 500; font-size: 0.7rem; color: var(--text-main); }
-        .calendar-day.today { background: rgba(59, 130, 246, 0.3); color: #93c5fd; box-shadow: 0 0 0 1px #3b82f6; }
-        .calendar-day.available::after { content: ''; position: absolute; bottom: 3px; width: 3px; height: 3px; border-radius: 50%; background: #10b981; }
-        .calendar-day.busy::after { content: ''; position: absolute; bottom: 3px; width: 3px; height: 3px; border-radius: 50%; background: #ef4444; }
-        .calendar-day.other-month { opacity: 0.3; }
+        .calendar-day.today { background: var(--text-main); color: var(--bg-color); font-weight: bold; }
+        .calendar-day.available::after { content: ''; position: absolute; bottom: 3px; width: 3px; height: 3px; border-radius: 50%; background: var(--text-main); opacity: 0.5; }
+        .calendar-day.other-month { opacity: 0.2; }
         
-        /* --- ADMIN PANEL --- */
-        .admin-toggle {
-            position: fixed; bottom: 20px; right: 20px; z-index: 100;
-            width: 50px; height: 50px; border-radius: 50%;
-            background: var(--accent-primary); color: white;
-            display: none; align-items: center; justify-content: center;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(59,130,246,0.4);
-            transition: all 0.3s ease;
-        }
-        .admin-toggle:hover { transform: scale(1.1); }
-        
-        .admin-panel {
-            position: fixed; bottom: 80px; right: 20px; z-index: 100;
-            background: var(--glass-bg); backdrop-filter: blur(20px);
-            border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.1);
-            transform: translateY(20px); opacity: 0; pointer-events: none; transition: 0.3s;
-            width: 250px;
-        }
-        .admin-panel.open { transform: translateY(0); opacity: 1; pointer-events: all; }
-
         /* --- DOCK --- */
         .dock-container {
             background: var(--dock-bg);
             backdrop-filter: blur(40px);
             border: 1px solid var(--glass-border);
             border-radius: 9999px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             padding: 0.75rem;
         }
         .nav-item {
-            color: var(--text-muted); background: var(--glass-bg);
-            backdrop-filter: blur(20px); border: var(--glass-border);
-            box-shadow: var(--glass-shadows); transition: 0.3s;
+            color: var(--text-muted); background: transparent;
+            border-radius: 50%; transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .nav-item:hover, .nav-item.active { color: var(--text-main); background: var(--nav-active-glow); }
+        .nav-item:hover { color: var(--text-main); background: rgba(125,125,125,0.1); }
+        .nav-item.active { 
+            color: var(--nav-active-text); 
+            background: var(--nav-active-bg); 
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
 
         /* --- MODALS --- */
         .modal {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95);
             width: 90%; max-width: 400px; background: var(--glass-bg);
-            backdrop-filter: blur(40px); border-radius: 24px; padding: 30px;
+            backdrop-filter: blur(50px); border-radius: 24px; padding: 30px;
             z-index: 300; opacity: 0; pointer-events: none; transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            border: 1px solid rgba(125,125,125,0.2); box-shadow: 0 40px 80px rgba(0,0,0,0.3);
         }
         .modal.open { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: all; }
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 200; opacity: 0; pointer-events: none; transition: 0.3s; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 200; opacity: 0; pointer-events: none; transition: 0.3s; }
         .overlay.active { opacity: 1; pointer-events: all; }
         
-        .auth-tabs { display: flex; background: rgba(0,0,0,0.1); padding: 4px; border-radius: 12px; margin-bottom: 20px; }
+        .auth-tabs { display: flex; background: rgba(125,125,125,0.1); padding: 4px; border-radius: 12px; margin-bottom: 20px; }
         .auth-tab { flex: 1; text-align: center; padding: 8px; border-radius: 8px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; }
-        .auth-tab.active { background: var(--text-main); color: var(--bg-color); font-weight: 600; }
+        .auth-tab.active { background: var(--surface-color); color: var(--inverse-text); font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
         /* --- LAYOUT --- */
         .home-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
@@ -215,15 +208,25 @@
         .hero-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
         .hidden-section { display: none; }
         .fade-enter-active { animation: fadeUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); filter: blur(5px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
         
-        /* Phone Mockup */
-        .phone-frame { width: 240px; height: 480px; background: #000; border-radius: 36px; border: 8px solid #1f2937; position: relative; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
-        .phone-screen { width: 100%; height: 100%; background: #111827; display: flex; flex-direction: column; padding: 16px; }
+        /* Phone Mockup - Monochrome */
+        .phone-frame { width: 240px; height: 480px; background: var(--bg-color); border-radius: 36px; border: 4px solid var(--text-muted); position: relative; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); }
+        .phone-screen { width: 100%; height: 100%; background: var(--glass-bg); display: flex; flex-direction: column; padding: 16px; }
         
         /* Utils */
         ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(125,125,125,0.2); border-radius: 10px; }
+        
+        /* Code Editor Monochrome */
+        .code-textarea {
+            width: 100%; height: 300px;
+            background: rgba(0, 0, 0, 0.05);
+            border: none; padding: 1rem;
+            color: var(--text-main); font-family: 'Courier New', monospace;
+            font-size: 0.8rem; resize: none; outline: none;
+        }
     </style>
 </head>
 <body class="antialiased h-screen flex flex-col">
@@ -240,22 +243,22 @@
         <!-- Header -->
         <header class="flex items-center justify-between mb-8 fade-enter-active px-2">
             <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center border-2 border-white/10 shadow-lg">
-                    <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                <div class="w-10 h-10 rounded-full bg-transparent border border-white/20 flex items-center justify-center">
+                    <i data-lucide="shield" class="w-5 h-5 text-dynamic"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-xl leading-tight text-dynamic">SecureThing</h3>
-                    <p class="text-sm text-muted-dynamic font-medium">Privacy Vault</p>
+                    <h3 class="font-bold text-lg leading-tight text-dynamic tracking-tight">SecureThing</h3>
+                    <p class="text-xs text-muted-dynamic font-medium uppercase tracking-widest">Privacy Vault</p>
                 </div>
             </div>
 
             <div class="flex gap-4">
-                <button onclick="toggleAccount()" class="nav-item w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 group">
-                    <i data-lucide="user" class="w-6 h-6"></i>
+                <button onclick="toggleAccount()" class="nav-item w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300">
+                    <i data-lucide="user" class="w-5 h-5"></i>
                 </button>
-                <button onclick="toggleTheme()" class="nav-item w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 group">
-                    <i data-lucide="sun" class="w-6 h-6 hidden dark-icon transition-transform group-hover:rotate-12"></i>
-                    <i data-lucide="moon" class="w-6 h-6 light-icon transition-transform group-hover:-rotate-12"></i>
+                <button onclick="toggleTheme()" class="nav-item w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300">
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark-icon"></i>
+                    <i data-lucide="moon" class="w-5 h-5 light-icon"></i>
                 </button>
             </div>
         </header>
@@ -266,52 +269,50 @@
                 
                 <!-- Main Card -->
                 <div class="hero-main h-full">
-                    <div class="glass-panel p-6 md:p-12 flex flex-col justify-between relative overflow-hidden group h-full min-h-[500px]">
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    <div class="glass-panel p-8 md:p-12 flex flex-col justify-between relative overflow-hidden group h-full min-h-[550px]">
                         
                         <div>
-                            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-semibold text-blue-400 mb-6 backdrop-blur-md shadow-sm">
-                                <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.6)]"></span> 
-                                v1.0.6 Stable
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] uppercase font-bold tracking-widest text-muted-dynamic mb-8">
+                                <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span> 
+                                System Online v1.0.6
                             </div>
                             
-                            <!-- Updated Gradient Text for Light Mode Compatibility -->
-                            <h1 class="text-4xl md:text-6xl font-bold tracking-tighter mb-6 leading-tight text-dynamic">
+                            <h1 class="text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-none text-dynamic">
                                 <span class="text-gradient">Ultimate Privacy</span><br>
-                                Under One Roof.
+                                <span class="text-muted-dynamic font-light">Under One Roof.</span>
                             </h1>
                             
-                            <p class="text-lg text-muted-dynamic max-w-xl leading-relaxed font-light mb-8">
-                                Military-grade AES-256 encryption wrapped in a beautiful interface. Keep photos, passwords, and documents safe locally.
+                            <p class="text-lg text-muted-dynamic max-w-xl leading-relaxed font-light mb-10">
+                                Military-grade AES-256 encryption wrapped in a minimalist interface. Keep photos, passwords, and documents safe locally.
                             </p>
                         </div>
 
-                        <!-- Stats Strip -->
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 border-t border-white/10 pt-6">
+                        <!-- Minimal Stats -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 border-t border-dashed border-white/10 pt-8">
                             <div>
-                                <div class="text-xl md:text-2xl font-bold text-dynamic">25k+</div>
-                                <div class="text-xs text-muted-dynamic uppercase tracking-wider">Users</div>
+                                <div class="text-xl font-bold text-dynamic">25k+</div>
+                                <div class="text-[10px] text-muted-dynamic uppercase tracking-widest">Users</div>
                             </div>
                             <div>
-                                <div class="text-xl md:text-2xl font-bold text-dynamic">4.9</div>
-                                <div class="text-xs text-muted-dynamic uppercase tracking-wider">Rating</div>
+                                <div class="text-xl font-bold text-dynamic">4.9</div>
+                                <div class="text-[10px] text-muted-dynamic uppercase tracking-widest">Rating</div>
                             </div>
                             <div>
-                                <div class="text-xl md:text-2xl font-bold text-dynamic">100%</div>
-                                <div class="text-xs text-muted-dynamic uppercase tracking-wider">Offline</div>
+                                <div class="text-xl font-bold text-dynamic">100%</div>
+                                <div class="text-[10px] text-muted-dynamic uppercase tracking-widest">Offline</div>
                             </div>
                             <div>
-                                <div class="text-xl md:text-2xl font-bold text-dynamic">0</div>
-                                <div class="text-xs text-muted-dynamic uppercase tracking-wider">Ads</div>
+                                <div class="text-xl font-bold text-dynamic">Zero</div>
+                                <div class="text-[10px] text-muted-dynamic uppercase tracking-widest">Ads</div>
                             </div>
                         </div>
 
                         <div class="flex gap-4 flex-wrap mt-auto">
-                            <button onclick="switchTab('download')" class="glass-interactive px-8 py-3.5 bg-blue-600 text-white rounded-full font-semibold text-sm transition-all shadow-[0_8px_20px_rgba(59,130,246,0.3)] hover:shadow-[0_12px_24px_rgba(59,130,246,0.4)] relative overflow-hidden">
-                                Download Now
+                            <button onclick="switchTab('download')" class="btn-solid px-8 py-4 rounded-full font-bold text-sm transition-all relative overflow-hidden flex items-center gap-2">
+                                Download Now <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </button>
-                            <button onclick="switchTab('features')" class="glass-interactive px-8 py-3.5 rounded-full border-2 border-white/10 text-dynamic font-semibold text-sm transition-all hover:bg-white/5">
-                                Explore Features
+                            <button onclick="switchTab('features')" class="px-8 py-4 rounded-full border border-white/20 text-dynamic font-bold text-sm transition-all hover:bg-white/5">
+                                Documentation
                             </button>
                         </div>
                     </div>
@@ -320,126 +321,126 @@
                 <!-- Sidebar Widgets -->
                 <div class="hero-sidebar">
                     
-                    <!-- 1. Release Calendar (Restored Logic) -->
-                    <div class="glass-panel p-4 flex flex-col items-center justify-center text-center">
-                        <div class="text-xs text-muted-dynamic mb-2 font-medium tracking-widest uppercase">Update Schedule</div>
+                    <!-- 1. Release Calendar -->
+                    <div class="glass-panel p-6 flex flex-col items-center justify-center text-center">
+                        <div class="text-[10px] text-muted-dynamic mb-4 font-bold tracking-widest uppercase">System Status</div>
                         
-                        <div id="availability-status" class="availability-status flex items-center gap-2 px-3 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400 text-xs font-bold mb-4">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                            <span id="availability-text">Stable Release</span>
+                        <div class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-dynamic text-xs font-bold mb-6">
+                            <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
+                            <span>Stable Release</span>
                         </div>
                         
                         <div class="calendar-container">
                             <div class="calendar-header">
-                                <button class="calendar-nav" onclick="changeMonth(-1)"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-                                <div class="font-bold text-dynamic text-sm" id="calendar-title">July 2025</div>
-                                <button class="calendar-nav" onclick="changeMonth(1)"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                                <button class="calendar-nav" onclick="changeMonth(-1)"><i data-lucide="chevron-left" class="w-3 h-3"></i></button>
+                                <div class="font-bold text-dynamic text-xs tracking-widest uppercase" id="calendar-title">July 2025</div>
+                                <button class="calendar-nav" onclick="changeMonth(1)"><i data-lucide="chevron-right" class="w-3 h-3"></i></button>
                             </div>
                             <div class="calendar-grid">
                                 <div class="calendar-day-header">S</div><div class="calendar-day-header">M</div><div class="calendar-day-header">T</div><div class="calendar-day-header">W</div><div class="calendar-day-header">T</div><div class="calendar-day-header">F</div><div class="calendar-day-header">S</div>
-                                <!-- Populated by JS -->
+                                <!-- JS will populate -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- 2. Tech Stack (Adapted) -->
-                    <div class="glass-panel p-4 flex flex-col justify-center items-center text-center gap-3">
-                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-400 to-cyan-500 flex items-center justify-center text-white shadow-xl shadow-emerald-500/20 rotate-3">
+                    <!-- 2. Tech Stack -->
+                    <div class="glass-panel p-6 flex flex-col justify-center items-center text-center gap-4">
+                        <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-dynamic">
                             <i data-lucide="code-2" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <h3 class="text-dynamic font-bold text-base mb-1">Built With</h3>
-                            <div class="flex flex-wrap justify-center gap-2 mt-2">
-                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-muted-dynamic">Java</span>
-                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-muted-dynamic">Kotlin</span>
-                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-muted-dynamic">AES-GCM</span>
+                            <h3 class="text-dynamic font-bold text-sm uppercase tracking-widest mb-2">Protocols</h3>
+                            <div class="flex flex-wrap justify-center gap-2">
+                                <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-muted-dynamic font-medium">AES-256</span>
+                                <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-muted-dynamic font-medium">PBKDF2</span>
+                                <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-muted-dynamic font-medium">LocalAuth</span>
                             </div>
                         </div>
-                        <button onclick="switchTab('code-editor')" class="glass-interactive w-full py-2 rounded-xl bg-white text-black font-bold text-xs shadow-lg transition-transform hover:scale-[1.02]">
-                            View Security Audit
+                        <button onclick="switchTab('code-editor')" class="w-full py-3 rounded-xl border border-dashed border-white/20 text-muted-dynamic font-mono text-xs hover:text-dynamic hover:border-white/40 transition-colors">
+                            audit_security.sh
                         </button>
                     </div>
 
                     <!-- 3. Contact Widget -->
-                    <div class="glass-panel p-4 flex flex-col justify-between gap-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-white">
+                    <div class="glass-panel p-6 flex flex-col justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-dynamic">
                                 <i data-lucide="life-buoy" class="w-5 h-5"></i>
                             </div>
                             <div class="text-left">
-                                <p class="text-xs text-muted-dynamic uppercase tracking-widest font-semibold">Help Center</p>
-                                <h3 class="text-dynamic font-bold text-sm">Need Support?</h3>
+                                <p class="text-[10px] text-muted-dynamic uppercase tracking-widest font-bold">Support</p>
+                                <h3 class="text-dynamic font-bold text-sm">Need Help?</h3>
                             </div>
                         </div>
-                        <button onclick="switchTab('contact')" class="glass-interactive w-full py-2 flex items-center justify-center gap-2 bg-white/5 border border-white/10 rounded-xl text-xs font-semibold text-dynamic transition-colors">
-                            <i data-lucide="message-circle" class="w-3 h-3"></i> Contact Us
+                        <button onclick="switchTab('contact')" class="w-full py-3 flex items-center justify-center gap-2 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-dynamic hover:bg-white/10 transition-colors">
+                            Contact Us
                         </button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION: FEATURES GRID -->
+        <!-- SECTION: FEATURES -->
         <section id="features" class="hidden-section fade-enter">
             <div class="max-w-6xl mx-auto">
-                <div class="mb-8 px-2">
-                    <h2 class="text-3xl font-bold text-dynamic tracking-tight">Modules</h2>
-                    <p class="text-muted-dynamic mt-1">Complete offline protection suite.</p>
+                <div class="mb-10 px-2 text-center md:text-left">
+                    <h2 class="text-4xl font-bold text-dynamic tracking-tighter">Modules</h2>
+                    <p class="text-muted-dynamic mt-2 font-light">Complete offline protection suite.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Feature Items -->
-                    <div class="glass-panel glass-interactive p-6 group cursor-default">
-                        <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 mb-4"><i data-lucide="fingerprint" class="w-5 h-5"></i></div>
+                    <div class="glass-panel glass-interactive p-8 group cursor-default">
+                        <i data-lucide="fingerprint" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
                         <h3 class="text-lg font-bold text-dynamic mb-2">Biometric Lock</h3>
-                        <p class="text-sm text-muted-dynamic">Unlock via fingerprint/face.</p>
+                        <p class="text-sm text-muted-dynamic leading-relaxed">Hardware-backed fingerprint or face recognition access control.</p>
                     </div>
-                    <div class="glass-panel glass-interactive p-6 group cursor-default">
-                        <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4"><i data-lucide="lock" class="w-5 h-5"></i></div>
-                        <h3 class="text-lg font-bold text-dynamic mb-2">AES-256</h3>
-                        <p class="text-sm text-muted-dynamic">Military-grade encryption.</p>
+                    <div class="glass-panel glass-interactive p-8 group cursor-default">
+                        <i data-lucide="lock" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
+                        <h3 class="text-lg font-bold text-dynamic mb-2">AES-256 Core</h3>
+                        <p class="text-sm text-muted-dynamic leading-relaxed">Industry standard encryption makes files mathematically impossible to crack.</p>
                     </div>
-                    <div class="glass-panel glass-interactive p-6 group cursor-default">
-                        <div class="w-10 h-10 rounded-lg bg-pink-500/20 flex items-center justify-center text-pink-400 mb-4"><i data-lucide="key" class="w-5 h-5"></i></div>
+                    <div class="glass-panel glass-interactive p-8 group cursor-default">
+                        <i data-lucide="key" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
                         <h3 class="text-lg font-bold text-dynamic mb-2">Password Mgr</h3>
-                        <p class="text-sm text-muted-dynamic">Auto-fill & generator.</p>
+                        <p class="text-sm text-muted-dynamic leading-relaxed">Securely store and auto-fill credentials. Offline generator included.</p>
                     </div>
-                    <div class="glass-panel glass-interactive p-6 group cursor-default">
-                        <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 mb-4"><i data-lucide="wifi-off" class="w-5 h-5"></i></div>
-                        <h3 class="text-lg font-bold text-dynamic mb-2">Offline</h3>
-                        <p class="text-sm text-muted-dynamic">No internet required.</p>
+                    <div class="glass-panel glass-interactive p-8 group cursor-default">
+                        <i data-lucide="wifi-off" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
+                        <h3 class="text-lg font-bold text-dynamic mb-2">100% Offline</h3>
+                        <p class="text-sm text-muted-dynamic leading-relaxed">Zero internet permissions required. Your data never leaves the device.</p>
                     </div>
-                    <div class="glass-panel glass-interactive p-6 group cursor-default">
-                        <div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-400 mb-4"><i data-lucide="eye-off" class="w-5 h-5"></i></div>
+                    <div class="glass-panel glass-interactive p-8 group cursor-default">
+                        <i data-lucide="eye-off" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
                         <h3 class="text-lg font-bold text-dynamic mb-2">Stealth Mode</h3>
-                        <p class="text-sm text-muted-dynamic">Fake PIN decoy vault.</p>
+                        <p class="text-sm text-muted-dynamic leading-relaxed">Disguise app icon or use a fake PIN to open a decoy vault.</p>
                     </div>
-                    <div class="glass-panel glass-interactive p-6 group cursor-default">
-                        <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4"><i data-lucide="share-2" class="w-5 h-5"></i></div>
+                    <div class="glass-panel glass-interactive p-8 group cursor-default">
+                        <i data-lucide="share-2" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
                         <h3 class="text-lg font-bold text-dynamic mb-2">Secure Share</h3>
-                        <p class="text-sm text-muted-dynamic">Encrypted file sharing.</p>
+                        <p class="text-sm text-muted-dynamic leading-relaxed">Share encrypted files safely. Only recipients with the key can view.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION: CODE EDITOR (Security Audit) -->
+        <!-- SECTION: CODE EDITOR -->
         <section id="code-editor" class="hidden-section fade-enter">
             <div class="max-w-5xl mx-auto">
-                <div class="mb-8 px-2">
-                    <h2 class="text-3xl font-bold text-dynamic tracking-tight">Encryption Audit</h2>
-                    <p class="text-muted-dynamic mt-1">Verify our logic. Run this simulation to see how data is locked.</p>
+                <div class="mb-10 px-2">
+                    <h2 class="text-4xl font-bold text-dynamic tracking-tighter">Encryption Audit</h2>
+                    <p class="text-muted-dynamic mt-2 font-light">Verify the logic. Run the simulation.</p>
                 </div>
                 
-                <div class="glass-panel p-0 overflow-hidden flex flex-col md:flex-row h-[500px]">
+                <div class="glass-panel p-0 overflow-hidden flex flex-col md:flex-row h-[500px] border border-white/10">
                     <div class="w-full md:w-1/2 flex flex-col border-b md:border-b-0 md:border-r border-white/10">
-                        <div class="flex items-center justify-between p-4 bg-black/20 border-b border-white/10">
-                            <span class="text-xs font-mono text-blue-300">core_crypto.js</span>
+                        <div class="flex items-center justify-between p-4 bg-white/5 border-b border-white/10">
+                            <span class="text-[10px] font-mono text-muted-dynamic uppercase tracking-widest">core_crypto.js</span>
                             <div class="flex gap-2">
-                                <button onclick="resetCode()" class="text-xs text-red-400 hover:text-red-300">Reset</button>
-                                <button onclick="runCode()" class="px-3 py-1 bg-green-500/20 text-green-400 rounded text-xs font-bold border border-green-500/30 hover:bg-green-500/30">Run</button>
+                                <button onclick="resetCode()" class="text-xs text-muted-dynamic hover:text-dynamic">Reset</button>
+                                <button onclick="runCode()" class="px-4 py-1 bg-white text-black rounded text-[10px] font-bold uppercase tracking-widest hover:opacity-90">Run</button>
                             </div>
                         </div>
-                        <textarea id="code-area" class="code-textarea flex-1 p-4" spellcheck="false">
+                        <textarea id="code-area" class="code-textarea flex-1 p-6 leading-relaxed" spellcheck="false">
 // AES-256 Encryption Simulation
 const algorithm = 'AES-GCM';
 const keyLength = 256;
@@ -472,8 +473,8 @@ function toHex(arr) {
 }
                         </textarea>
                     </div>
-                    <div class="w-full md:w-1/2 bg-[#0a0a0a] p-4 font-mono text-xs text-emerald-400 overflow-y-auto" id="console-output">
-                        > System Ready.<br>
+                    <div class="w-full md:w-1/2 bg-black/50 p-6 font-mono text-xs text-muted-dynamic overflow-y-auto" id="console-output">
+                        <span class="text-dynamic">> System Ready.</span><br>
                         > Waiting for execution...
                     </div>
                 </div>
@@ -482,37 +483,37 @@ function toHex(arr) {
 
         <!-- SECTION: CONTACT -->
         <section id="contact" class="hidden-section fade-enter">
-            <div class="max-w-3xl mx-auto">
-                <div class="mb-8 px-2">
-                    <h2 class="text-3xl font-bold text-dynamic tracking-tight">Contact Support</h2>
-                    <p class="text-muted-dynamic mt-1">24/7 priority support for SecureThing users.</p>
+            <div class="max-w-2xl mx-auto">
+                <div class="mb-10 px-2 text-center">
+                    <h2 class="text-4xl font-bold text-dynamic tracking-tighter">Support</h2>
+                    <p class="text-muted-dynamic mt-2 font-light">Priority assistance for users.</p>
                 </div>
                 
-                <div class="glass-panel p-8">
+                <div class="glass-panel p-8 md:p-12">
                     <form class="space-y-6" onsubmit="event.preventDefault(); alert('Ticket Submitted!');">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-medium text-dynamic mb-2">Name</label>
-                                <input type="text" class="glass-input w-full px-4 py-3 rounded-xl" placeholder="Your Name">
+                                <label class="block text-xs font-bold text-muted-dynamic uppercase tracking-widest mb-2">Name</label>
+                                <input type="text" class="glass-input w-full px-4 py-3 rounded-lg" placeholder="Your Name">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-dynamic mb-2">Email</label>
-                                <input type="email" class="glass-input w-full px-4 py-3 rounded-xl" placeholder="name@example.com">
+                                <label class="block text-xs font-bold text-muted-dynamic uppercase tracking-widest mb-2">Email</label>
+                                <input type="email" class="glass-input w-full px-4 py-3 rounded-lg" placeholder="name@example.com">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-dynamic mb-2">Topic</label>
-                            <select class="glass-input w-full px-4 py-3 rounded-xl">
-                                <option>General Inquiry</option>
-                                <option>Bug Report</option>
+                            <label class="block text-xs font-bold text-muted-dynamic uppercase tracking-widest mb-2">Topic</label>
+                            <select class="glass-input w-full px-4 py-3 rounded-lg">
+                                <option>Technical Issue</option>
                                 <option>Feature Request</option>
+                                <option>Bug Report</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-dynamic mb-2">Message</label>
-                            <textarea rows="4" class="glass-input w-full px-4 py-3 rounded-xl" placeholder="How can we help?"></textarea>
+                            <label class="block text-xs font-bold text-muted-dynamic uppercase tracking-widest mb-2">Message</label>
+                            <textarea rows="4" class="glass-input w-full px-4 py-3 rounded-lg" placeholder="Describe your issue..."></textarea>
                         </div>
-                        <button class="glass-interactive w-full py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg">Submit Ticket</button>
+                        <button class="btn-solid w-full py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg">Submit Ticket</button>
                     </form>
                 </div>
             </div>
@@ -520,75 +521,62 @@ function toHex(arr) {
 
         <!-- SECTION: DOWNLOAD -->
         <section id="download" class="hidden-section fade-enter">
-            <div class="max-w-4xl mx-auto text-center">
-                <div class="glass-panel p-12 relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
-                    <h2 class="text-4xl font-bold text-dynamic mb-6">Get SecureThing</h2>
-                    <div class="flex justify-center gap-4 mb-8">
-                        <a href="https://downloadsecurething.netlify.app/SecureThing_v1.0.6.1.apk" class="glass-interactive px-8 py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg flex items-center gap-2 hover:bg-blue-500">
+            <div class="max-w-4xl mx-auto text-center h-full flex items-center justify-center">
+                <div class="glass-panel p-12 md:p-20 relative overflow-hidden w-full">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-20"></div>
+                    <h2 class="text-5xl font-bold text-dynamic mb-8 tracking-tighter">Get SecureThing</h2>
+                    <div class="flex flex-col items-center gap-6">
+                        <a href="https://downloadsecurething.netlify.app/SecureThing_v1.0.6.1.apk" class="btn-solid px-10 py-5 rounded-full font-bold text-sm uppercase tracking-widest shadow-2xl flex items-center gap-3">
                             <i data-lucide="download" class="w-5 h-5"></i> Download v1.0.6
                         </a>
+                        <button class="text-xs font-mono text-muted-dynamic border-b border-dashed border-muted-dynamic pb-1 hover:text-dynamic transition-colors">
+                            View Source Code on GitHub
+                        </button>
                     </div>
-                    <div class="flex justify-center gap-8 text-sm text-muted-dynamic">
-                        <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i> Virus Free</span>
-                        <span class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> No Ads</span>
+                    <div class="flex justify-center gap-8 mt-12 text-[10px] uppercase tracking-widest text-muted-dynamic font-bold">
+                        <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> Virus Free</span>
+                        <span class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4"></i> No Ads</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="mt-12 text-center text-sm text-muted-dynamic">
+        <footer class="mt-12 text-center text-xs text-muted-dynamic uppercase tracking-widest opacity-50">
             <p>&copy; 2025 SecureThing Inc.</p>
         </footer>
     </main>
 
     <!-- FLOATING DOCK -->
-    <nav class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-auto">
-        <div class="dock-container flex items-center gap-2 p-2">
-            <button onclick="switchTab('home')" class="nav-item active w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center" data-target="home"><i data-lucide="home" class="w-5 h-5"></i></button>
-            <button onclick="switchTab('features')" class="nav-item w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center" data-target="features"><i data-lucide="layers" class="w-5 h-5"></i></button>
-            <button onclick="switchTab('code-editor')" class="nav-item w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center" data-target="code-editor"><i data-lucide="code" class="w-5 h-5"></i></button>
-            <button onclick="switchTab('contact')" class="nav-item w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center" data-target="contact"><i data-lucide="mail" class="w-5 h-5"></i></button>
-            <button onclick="switchTab('download')" class="nav-item w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center" data-target="download"><i data-lucide="download" class="w-5 h-5"></i></button>
+    <nav class="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-auto">
+        <div class="dock-container flex items-center gap-4 px-4 py-2">
+            <button onclick="switchTab('home')" class="nav-item active w-12 h-12 flex items-center justify-center" data-target="home"><i data-lucide="home" class="w-5 h-5"></i></button>
+            <button onclick="switchTab('features')" class="nav-item w-12 h-12 flex items-center justify-center" data-target="features"><i data-lucide="layers" class="w-5 h-5"></i></button>
+            <button onclick="switchTab('code-editor')" class="nav-item w-12 h-12 flex items-center justify-center" data-target="code-editor"><i data-lucide="code" class="w-5 h-5"></i></button>
+            <button onclick="switchTab('contact')" class="nav-item w-12 h-12 flex items-center justify-center" data-target="contact"><i data-lucide="mail" class="w-5 h-5"></i></button>
+            <button onclick="switchTab('download')" class="nav-item w-12 h-12 flex items-center justify-center" data-target="download"><i data-lucide="download" class="w-5 h-5"></i></button>
         </div>
     </nav>
 
     <!-- MODALS -->
     <!-- Account Modal -->
     <div class="modal" id="account-modal">
-        <div class="text-center mb-6">
-            <h3 class="text-2xl font-bold text-dynamic">Welcome</h3>
-            <p class="text-sm text-muted-dynamic">Sign in to sync preferences</p>
+        <div class="text-center mb-8">
+            <h3 class="text-2xl font-bold text-dynamic tracking-tight">Welcome</h3>
+            <p class="text-xs text-muted-dynamic uppercase tracking-widest mt-2">Sign in to sync preferences</p>
         </div>
         <div class="auth-tabs">
             <div class="auth-tab active" onclick="this.parentElement.children[1].classList.remove('active'); this.classList.add('active'); document.getElementById('email-form').style.display='block'; document.getElementById('mobile-form').style.display='none';">Email</div>
             <div class="auth-tab" onclick="this.parentElement.children[0].classList.remove('active'); this.classList.add('active'); document.getElementById('email-form').style.display='none'; document.getElementById('mobile-form').style.display='block';">Mobile</div>
         </div>
         <div id="email-form">
-            <input type="email" class="glass-input w-full px-4 py-3 rounded-xl mb-4" placeholder="Email">
-            <input type="password" class="glass-input w-full px-4 py-3 rounded-xl mb-4" placeholder="Password">
+            <input type="email" class="glass-input w-full px-4 py-3 rounded-xl mb-4" placeholder="Email Address">
+            <input type="password" class="glass-input w-full px-4 py-3 rounded-xl mb-6" placeholder="Password">
         </div>
         <div id="mobile-form" style="display:none;">
             <input type="tel" class="glass-input w-full px-4 py-3 rounded-xl mb-4" placeholder="+1 (555) 000-0000">
-            <input type="text" class="glass-input w-full px-4 py-3 rounded-xl mb-4" placeholder="SMS Code">
+            <input type="text" class="glass-input w-full px-4 py-3 rounded-xl mb-6" placeholder="SMS Code">
         </div>
-        <button class="glass-interactive no-reflection w-full py-3 bg-blue-600 text-white rounded-xl font-bold shadow-lg" onclick="closeAllPanels()">Sign In</button>
-    </div>
-
-    <!-- Admin Button & Panel -->
-    <div class="admin-toggle" id="admin-toggle" style="display:flex;" onclick="document.getElementById('admin-panel').classList.toggle('open');">
-        <i data-lucide="settings" class="w-5 h-5"></i>
-    </div>
-    
-    <div class="admin-panel" id="admin-panel">
-        <div class="flex items-center gap-2 mb-4 font-bold text-dynamic text-sm">
-            <i data-lucide="calendar" class="w-4 h-4"></i> Availability Manager
-        </div>
-        <input type="date" class="glass-input w-full p-2 rounded mb-4 text-xs">
-        <div class="flex gap-2">
-            <button class="flex-1 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded text-xs" onclick="alert('Set Available');">Available</button>
-            <button class="flex-1 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded text-xs" onclick="alert('Set Busy');">Busy</button>
-        </div>
+        <button class="btn-solid w-full py-3 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg" onclick="closeAllPanels()">Sign In</button>
     </div>
 
     <!-- SCRIPTS -->
@@ -641,7 +629,6 @@ function toHex(arr) {
 
         function closeAllPanels() {
             document.getElementById('account-modal').classList.remove('open');
-            document.getElementById('admin-panel').classList.remove('open');
             document.querySelector('.overlay').classList.remove('active');
         }
 
@@ -651,13 +638,11 @@ function toHex(arr) {
         function renderCalendar(date) {
             const grid = document.querySelector('.calendar-grid');
             const title = document.getElementById('calendar-title');
-            
-            // Keep headers
             const headers = Array.from(grid.querySelectorAll('.calendar-day-header'));
             grid.innerHTML = '';
             headers.forEach(h => grid.appendChild(h));
 
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
             title.textContent = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
 
             const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -677,7 +662,7 @@ function toHex(arr) {
                 div.className = 'calendar-day';
                 div.textContent = i;
                 if(i === today.getDate() && date.getMonth() === today.getMonth()) div.classList.add('today');
-                if(i % 3 === 0) div.classList.add('available'); // Mock Data
+                if(i % 3 === 0) div.classList.add('available'); 
                 grid.appendChild(div);
             }
         }
@@ -689,27 +674,18 @@ function toHex(arr) {
         // Code Editor Logic
         function runCode() {
             const output = document.getElementById('console-output');
-            const code = document.getElementById('code-area').value;
             output.innerHTML = "> Executing...<br>";
-            
-            try {
-                // Unsafe eval is fine for this specific frontend-only demo context
-                // In prod, use a worker or specific parser.
-                // We will just mock the output for safety here.
+            setTimeout(() => {
+                output.innerHTML += "> Initializing Crypto Engine...<br>";
                 setTimeout(() => {
-                    output.innerHTML += "> Initializing Crypto Engine...<br>";
-                    setTimeout(() => {
-                        output.innerHTML += "> Salt: a4f8...<br>> IV: 9b2c...<br>";
-                        output.innerHTML += "> <span class='text-emerald-400'>STATUS: SECURED</span><br>";
-                    }, 500);
-                }, 300);
-            } catch(e) {
-                output.innerHTML += `<span class='text-red-400'>Error: ${e.message}</span>`;
-            }
+                    output.innerHTML += "> Salt: a4f8...<br>> IV: 9b2c...<br>";
+                    output.innerHTML += "> <span style='color:var(--text-main); font-weight:bold'>STATUS: SECURED</span><br>";
+                }, 500);
+            }, 300);
         }
         function resetCode() {
             document.getElementById('code-area').value = `// AES-256 Encryption Simulation\nconst algorithm = 'AES-GCM';\nconsole.log("Ready...");`;
-            document.getElementById('console-output').innerHTML = "> System Ready.";
+            document.getElementById('console-output').innerHTML = "<span class='text-dynamic'>> System Ready.</span>";
         }
     </script>
 </body>
