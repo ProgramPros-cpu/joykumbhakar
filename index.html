@@ -3,421 +3,939 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#000000">
-    <title>SecureThing | Premium Privacy Vault</title>
+    <meta name="theme-color" content="#ffffff">
+    <title>SecureThing | Liquid Privacy Vault</title>
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2438/2438078.png">
     
     <!-- Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { 
+            getAuth, 
+            GoogleAuthProvider, 
+            signInWithPopup, 
+            signOut, 
+            onAuthStateChanged,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword 
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            getDocs, 
+            query, 
+            orderBy, 
+            serverTimestamp, 
+            deleteDoc, 
+            doc, 
+            updateDoc,
+            onSnapshot 
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const firebaseConfig = {
+  apiKey: "AIzaSyDqEJFsNoPVMLl9DCstAnbWCFY6vfyDPgY",
+  authDomain: "things-bd7ed.firebaseapp.com",
+  projectId: "things-bd7ed",
+  storageBucket: "things-bd7ed.firebasestorage.app",
+  messagingSenderId: "468825091680",
+  appId: "1:468825091680:web:480917ad54775d7185dd05",
+  measurementId: "G-T4E0JGN9TP"
+};
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        // Make Firebase available globally
+        window.firebaseAuth = auth;
+        window.firebaseDb = db;
+        window.firebaseProvider = provider;
+        window.firebaseSignInWithPopup = signInWithPopup;
+        window.firebaseSignOut = signOut;
+        window.firebaseOnAuthStateChanged = onAuthStateChanged;
+        window.firebaseSignInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.firebaseCreateUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.firebaseAddDoc = addDoc;
+        window.firebaseGetDocs = getDocs;
+        window.firebaseCollection = collection;
+        window.firebaseQuery = query;
+        window.firebaseOrderBy = orderBy;
+        window.firebaseServerTimestamp = serverTimestamp;
+        window.firebaseDeleteDoc = deleteDoc;
+        window.firebaseDoc = doc;
+        window.firebaseUpdateDoc = updateDoc;
+        window.firebaseOnSnapshot = onSnapshot;
+    </script>
 
     <style>
-        /* --- MONOCHROME THEME ENGINE --- */
+        /* --- LIQUID THEME ENGINE (Light Mode Default) --- */
         :root {
-            /* Dark Mode (Default) */
-            --bg-color: #000000;
-            --surface-color: #ffffff; /* Contrast element color */
-            --inverse-text: #000000;
+            /* Light Mode Variables (Base) */
+            --bg-color: #f3f4f6;
+            --text-main: #111827;
+            --text-muted: rgba(0, 0, 0, 0.7);
             
-            --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.5);
-            
-            /* High Blur / Low Opacity Glass */
-            --glass-bg: rgba(20, 20, 20, 0.4);
+            /* Liquid Glass Variables */
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-highlight: rgba(255, 255, 255, 0.95);
             --glass-blur: 50px;
-            --glass-shadows: 
-                0px 4px 40px rgba(0,0,0,0.5),
-                inset 0px 1px 0px rgba(255, 255, 255, 0.1);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.15);
-            
-            --dock-bg: rgba(0, 0, 0, 0.8);
-            --nav-active-bg: #ffffff;
-            --nav-active-text: #000000;
-            
-            /* Ambient Mist */
-            --blob-color-1: rgba(255, 255, 255, 0.15);
-            --blob-color-2: rgba(100, 100, 100, 0.15);
-            --blob-blend: screen;
-        }
-
-        /* Light Mode */
-        body.light-mode {
-            --bg-color: #ffffff;
-            --surface-color: #000000;
-            --inverse-text: #ffffff;
-            
-            --text-main: #000000;
-            --text-muted: rgba(0, 0, 0, 0.5);
-            
-            --glass-bg: rgba(255, 255, 255, 0.5);
-            --glass-shadows: 
-                0px 10px 40px rgba(0,0,0,0.05),
-                inset 0px 1px 0px rgba(255, 255, 255, 0.8);
-            --glass-border: 1px solid rgba(0, 0, 0, 0.08);
+            --glass-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05), inset 0 0 20px rgba(255, 255, 255, 0.5);
             
             --dock-bg: rgba(255, 255, 255, 0.9);
-            --nav-active-bg: #000000;
-            --nav-active-text: #ffffff;
+            --accent-glow: rgba(0, 0, 0, 0.05);
+
+            /* Gradient Definitions - Stronger for Light Mode */
+            --gradient-start: #000000;
+            --gradient-end: #777777;
             
-            --blob-color-1: rgba(0, 0, 0, 0.05);
-            --blob-color-2: rgba(100, 100, 100, 0.05);
-            --blob-blend: multiply;
+            /* Blobs (Softer for Light Mode) */
+            --blob-1: #c7d2fe; /* Soft Indigo */
+            --blob-2: #fbcfe8; /* Soft Pink */
+            --blob-3: #a5f3fc; /* Soft Cyan */
+            
+            /* Emboss Shadows */
+            --emboss-light: rgba(255,255,255,0.9);
+            --emboss-dark: rgba(0,0,0,0.2);
+        }
+
+        /* Dark Mode Override */
+        body.dark-mode {
+            --bg-color: #050505;
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.15);
+            --glass-blur: 50px;
+            --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.2);
+            
+            --dock-bg: rgba(15, 15, 15, 0.6);
+            --accent-glow: rgba(255, 255, 255, 0.1);
+
+            /* Gradient Definitions - Stronger for Dark Mode */
+            --gradient-start: #ffffff;
+            --gradient-end: #888888;
+            
+            /* Blobs (Vibrant for Dark Mode) */
+            --blob-1: #4f46e5;
+            --blob-2: #ec4899;
+            --blob-3: #06b6d4;
+
+            /* Emboss Shadows */
+            --emboss-light: rgba(255,255,255,0.1);
+            --emboss-dark: rgba(0,0,0,0.5);
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
+            transition: background-color 0.5s ease, color 0.5s ease;
             overflow-x: hidden;
-            transition: background-color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.5s;
         }
 
-        /* --- UI ELEMENTS --- */
+        /* --- MOBILE RESPONSIVE FIXES --- */
+        @media (max-width: 768px) {
+            /* Fix header spacing */
+            header {
+                margin-bottom: 1.5rem !important;
+                padding: 0 0.5rem;
+            }
+            
+            /* Fix main content padding */
+            main {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+                padding-top: 0.5rem !important;
+                padding-bottom: 7rem !important;
+            }
+            
+            /* Fix hero section layout */
+            .home-grid {
+                gap: 1rem !important;
+            }
+            
+            .hero-main {
+                min-height: 400px !important;
+                padding: 1.5rem !important;
+            }
+            
+            .hero-main h1 {
+                font-size: 2.5rem !important;
+                line-height: 1.1 !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .hero-main p {
+                font-size: 1rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+            
+            /* Fix button layout */
+            .btn-group {
+                flex-direction: column;
+                gap: 0.75rem !important;
+            }
+            
+            .btn-group button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            /* Fix sidebar widgets */
+            .hero-sidebar {
+                gap: 1rem !important;
+            }
+            
+            .sidebar-widget {
+                padding: 1.25rem !important;
+            }
+            
+            /* Fix features grid */
+            .features-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            .feature-card {
+                padding: 1.5rem !important;
+            }
+            
+            /* Fix code editor layout */
+            .code-editor-container {
+                flex-direction: column !important;
+                height: auto !important;
+            }
+            
+            .code-panel, .terminal-panel {
+                width: 100% !important;
+                min-height: 300px;
+            }
+            
+            /* Fix reviews section */
+            .reviews-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 1rem !important;
+            }
+            
+            .review-input {
+                padding: 1.25rem !important;
+            }
+            
+            /* Fix download section */
+            .download-section {
+                height: auto !important;
+                min-height: 50vh;
+                padding: 2rem 0 !important;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                gap: 0.75rem !important;
+            }
+            
+            .download-buttons a {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Extra small screen fixes */
+            .hero-main h1 {
+                font-size: 2rem !important;
+            }
+            
+            .hero-main p {
+                font-size: 0.9rem !important;
+            }
+            
+            .glass-panel {
+                border-radius: 1.5rem !important;
+            }
+            
+            .dock-container {
+                padding: 0.5rem !important;
+                gap: 0.25rem !important;
+            }
+            
+            .nav-item {
+                width: 3rem !important;
+                height: 3rem !important;
+            }
+        }
+
+        /* --- STAR RATING COMPONENT (Updated) --- */
+        .rating {
+            display: inline-flex;
+            flex-direction: row-reverse;
+            align-items: center;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.3s, transform 0.3s, text-shadow 0.3s;
+            padding: 0 2px;
+        }
+
+        .rating label:before {
+            content: '\2605';
+            font-size: 28px;
+            line-height: 1;
+        }
+
+        .rating input:checked ~ label,
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: #ffc300;
+            transform: scale(1.15);
+            text-shadow: 0 0 15px rgba(255, 195, 0, 0.4);
+        }
+        
+        .rating input:checked ~ label {
+            animation: bounce 0.4s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1.15); }
+        }
+
+        /* --- LIQUID BACKGROUND BLOBS --- */
+        .liquid-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0; pointer-events: none; overflow: hidden;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: morph 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, border-radius;
+        }
+        body.dark-mode .blob { opacity: 0.4; }
+
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--blob-1); animation-delay: 0s; }
+        .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: var(--blob-2); animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 40%; width: 40vw; height: 40vw; background: var(--blob-3); animation-delay: -10s; opacity: 0.4; }
+
+        @keyframes morph {
+            0% { transform: translate(0, 0) scale(1); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            33% { transform: translate(30px, -50px) scale(1.1); border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%; }
+            66% { transform: translate(-20px, 20px) scale(0.9); border-radius: 67% 33% 47% 53% / 37% 59% 41% 63%; }
+            100% { transform: translate(0, 0) scale(1); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+        }
+
+        /* --- GLOBAL GRADIENTS & EMBOSS --- */
+        .grad-text {
+            background: linear-gradient(135deg, var(--gradient-start) 30%, var(--gradient-end) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            font-weight: 800;
+        }
+        
+        .emboss-3d {
+            filter: drop-shadow(-2px -2px 4px var(--emboss-light))
+                    drop-shadow(2px 2px 4px var(--emboss-dark));
+        }
+
+        /* --- LIQUID GLASS PANELS --- */
         .glass-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            border: var(--glass-border);
-            box-shadow: var(--glass-shadows);
-            border-radius: 1.75rem;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative; overflow: hidden;
+            backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            border-left: 1px solid var(--glass-highlight);
+            box-shadow: var(--glass-shadow);
+            border-radius: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
 
-        .glass-interactive::before {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 200%; height: 100%;
-            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.2) 45%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.2) 55%, transparent 100%);
-            transform: skewX(-20deg); transition: left 0.7s ease;
-            pointer-events: none; z-index: 2;
-        }
-        
         .glass-interactive:hover {
-            transform: translateY(-2px);
-            box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
+            transform: translateY(-5px) scale(1.02);
+            background: linear-gradient(135deg, var(--glass-bg), var(--accent-glow));
             border-color: var(--text-muted);
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.15), inset 0 0 30px rgba(255, 255, 255, 0.7);
         }
-        .glass-interactive:hover::before { left: 100%; }
-        .glass-interactive.no-reflection::before { display: none; }
+        body.dark-mode .glass-interactive:hover {
+             box-shadow: 0 30px 60px -12px rgba(0,0,0,0.4), inset 0 0 30px rgba(0, 0, 0, 0.4);
+        }
 
         .glass-input {
-            background: rgba(125,125,125,0.05);
+            background: rgba(125,125,125,0.08);
             border: 1px solid var(--glass-border);
             color: var(--text-main);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
         }
         .glass-input:focus {
-            background: rgba(125,125,125,0.1);
+            background: rgba(125,125,125,0.15);
             border-color: var(--text-main);
             outline: none;
-        }
-
-        /* --- TYPOGRAPHY --- */
-        .text-dynamic { color: var(--text-main); }
-        .text-muted-dynamic { color: var(--text-muted); }
-        
-        /* Monochrome Gradient */
-        .text-gradient {
-            background: linear-gradient(135deg, var(--text-main) 30%, var(--text-muted) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            box-shadow: 0 0 0 3px var(--glass-border);
         }
 
         /* --- BUTTONS --- */
         .btn-solid {
-            background-color: var(--surface-color);
-            color: var(--inverse-text);
+            background: linear-gradient(135deg, var(--text-main), var(--text-muted));
+            color: var(--bg-color);
+            border: none;
+            box-shadow: 0 10px 20px -10px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-weight: 800;
         }
-        .btn-solid:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(125,125,125,0.3);
+        .btn-solid::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent);
+            z-index: -1; transition: opacity 0.3s; opacity: 0;
+        }
+        .btn-solid:hover { transform: translateY(-3px); box-shadow: 0 15px 30px -10px rgba(0,0,0,0.3); }
+        .btn-solid:hover::before { opacity: 1; }
+        .btn-solid:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--glass-border);
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            font-weight: 700;
+        }
+        .btn-outline:hover {
+            background: var(--glass-highlight);
+            border-color: var(--text-main);
+            transform: translateY(-2px);
         }
 
-        /* --- BACKGROUND --- */
-        .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 0; mix-blend-mode: overlay;
-        }
-        .blob {
-            position: absolute; filter: blur(100px);
-            mix-blend-mode: var(--blob-blend);
-            animation: float 25s infinite ease-in-out alternate;
-            border-radius: 50%; will-change: transform; z-index: -1;
-        }
-        .blob-1 { top: -20%; left: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, var(--blob-color-1) 0%, transparent 70%); }
-        .blob-2 { bottom: -20%; right: -10%; width: 70vw; height: 70vw; background: radial-gradient(circle, var(--blob-color-2) 0%, transparent 70%); animation-delay: -5s; }
-        @keyframes float { 0% { transform: translate(0,0); } 100% { transform: translate(20px, 20px); } }
-
-        /* --- CALENDAR --- */
-        .calendar-container { font-size: 0.75rem; width: 100%; }
-        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
-        .calendar-nav { width: 24px; height: 24px; border-radius: 6px; background: rgba(125,125,125,0.1); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); transition: 0.2s; }
-        .calendar-nav:hover { background: rgba(125,125,125,0.2); }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-        .calendar-day-header { text-align: center; color: var(--text-muted); font-size: 0.65rem; font-weight: 600; padding: 4px 0; }
-        .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: default; transition: 0.2s; position: relative; font-weight: 500; font-size: 0.7rem; color: var(--text-main); }
-        .calendar-day.today { background: var(--text-main); color: var(--bg-color); font-weight: bold; }
-        .calendar-day.available::after { content: ''; position: absolute; bottom: 3px; width: 3px; height: 3px; border-radius: 50%; background: var(--text-main); opacity: 0.5; }
-        .calendar-day.other-month { opacity: 0.2; }
-        
-        /* --- DOCK --- */
+         /* --- DOCK --- */
         .dock-container {
             background: var(--dock-bg);
-            backdrop-filter: blur(40px);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
             border: 1px solid var(--glass-border);
-            border-radius: 9999px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-top: 1px solid var(--glass-highlight);
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
             padding: 0.75rem;
+            display: flex; gap: 0.75rem;
         }
         .nav-item {
-            color: var(--text-muted); background: transparent;
-            border-radius: 50%; transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            color: var(--text-muted);
+            background: transparent;
+            border-radius: 20px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
         }
-        .nav-item:hover { color: var(--text-main); background: rgba(125,125,125,0.1); }
+        .nav-item:hover { color: var(--text-main); background: rgba(125,125,125,0.15); }
         .nav-item.active { 
-            color: var(--nav-active-text); 
-            background: var(--nav-active-bg); 
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            color: var(--bg-color); 
+            background: var(--text-main); 
+            transform: translateY(-6px);
+            box-shadow: 0 12px 25px -5px rgba(0,0,0,0.3);
         }
-
-        /* --- MODALS --- */
-        .modal {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95);
-            width: 90%; max-width: 400px; background: var(--glass-bg);
-            backdrop-filter: blur(50px); border-radius: 24px; padding: 30px;
-            z-index: 300; opacity: 0; pointer-events: none; transition: 0.3s;
-            border: 1px solid rgba(125,125,125,0.2); box-shadow: 0 40px 80px rgba(0,0,0,0.3);
-        }
-        .modal.open { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: all; }
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 200; opacity: 0; pointer-events: none; transition: 0.3s; }
-        .overlay.active { opacity: 1; pointer-events: all; }
-        
-        .auth-tabs { display: flex; background: rgba(125,125,125,0.1); padding: 4px; border-radius: 12px; margin-bottom: 20px; }
-        .auth-tab { flex: 1; text-align: center; padding: 8px; border-radius: 8px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; }
-        .auth-tab.active { background: var(--surface-color); color: var(--inverse-text); font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-
-        /* --- LAYOUT --- */
-        .home-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 900px) { .home-grid { grid-template-columns: 2.2fr 1fr; } }
-        
-        .hero-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        /* --- UTILS --- */
         .hidden-section { display: none; }
-        .fade-enter-active { animation: fadeUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); filter: blur(5px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+        .fade-enter-active { animation: fadeUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(40px) scale(0.96); filter: blur(12px); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+
+        /* Review Items */
+        .review-card {
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1.5rem; margin-bottom: 1.5rem;
+        }
+        .review-card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
-        /* Phone Mockup - Monochrome */
-        .phone-frame { width: 240px; height: 480px; background: var(--bg-color); border-radius: 36px; border: 4px solid var(--text-muted); position: relative; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); }
-        .phone-screen { width: 100%; height: 100%; background: var(--glass-bg); display: flex; flex-direction: column; padding: 16px; }
+        .admin-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
         
-        /* Utils */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(125,125,125,0.2); border-radius: 10px; }
-        
-        /* Code Editor Monochrome */
+        .user-badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-size: 0.6rem;
+            font-weight: 700;
+        }
+
+        /* Code Editor */
         .code-textarea {
-            width: 100%; height: 300px;
-            background: rgba(0, 0, 0, 0.05);
-            border: none; padding: 1rem;
-            color: var(--text-main); font-family: 'Courier New', monospace;
-            font-size: 0.8rem; resize: none; outline: none;
+            width: 100%; height: 350px;
+            background: rgba(125, 125, 125, 0.08);
+            border: none; padding: 2rem;
+            color: var(--text-main); font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem; resize: none; outline: none; line-height: 1.7;
+            font-weight: 500;
+        }
+        body.dark-mode .code-textarea { background: rgba(0,0,0,0.3); color: #e5e5e5; }
+        
+        /* Syntax Highlight Simulation classes (Adaptive) */
+        .token-keyword { color: #8b5cf6; font-weight: 800; }
+        .token-string { color: #10b981; font-weight: 600; }
+        .token-func { color: #3b82f6; font-weight: 700; }
+        .token-comment { color: #9ca3af; font-style: italic; }
+        
+        body.dark-mode .token-keyword { color: #d946ef; }
+        body.dark-mode .token-string { color: #4ade80; }
+        body.dark-mode .token-func { color: #60a5fa; }
+        body.dark-mode .token-comment { color: #94a3b8; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* Toast Notification */
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
+        .toast {
+            background: var(--dock-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-left: 4px solid var(--text-main);
+            color: var(--text-main);
+            padding: 16px 24px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transform: translateX(120%);
+            animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes slideIn { to { transform: translateX(0); } }
+        @keyframes slideOut { to { transform: translateX(120%); opacity: 0; } }
+        
+        /* Logo Scanning Animation */
+        .scan-line {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--text-main);
+            box-shadow: 0 0 10px var(--text-main);
+            opacity: 0.5;
+            animation: scan 3s ease-in-out infinite;
+        }
+        @keyframes scan {
+            0%, 100% { top: 0; opacity: 0; }
+            50% { top: 100%; opacity: 1; }
+        }
+
+        /* NEW IMPROVEMENTS */
+        
+        /* Enhanced hover effects without rotation */
+        .logo-container {
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+        
+        .feature-icon {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        /* Improved focus states for accessibility */
+        button:focus, 
+        input:focus, 
+        textarea:focus, 
+        select:focus {
+            outline: 2px solid var(--text-main);
+            outline-offset: 2px;
+        }
+        
+        /* Enhanced loading states */
+        .loading-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Improved text selection */
+        ::selection {
+            background-color: var(--text-main);
+            color: var(--bg-color);
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Enhanced button animations */
+        .btn-solid:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn-outline:active {
+            transform: translateY(-1px);
+        }
+        
+        /* Improved form elements */
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1.5em;
+            padding-right: 2.5rem;
+        }
+        
+        /* Enhanced visual feedback for interactive elements */
+        .interactive-feedback:active {
+            transform: scale(0.98);
+        }
+        
+        /* Admin Panel Styles */
+        .admin-panel {
+            border-left: 4px solid #10b981;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Loading spinner */
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid var(--text-main);
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body class="antialiased h-screen flex flex-col">
+<body class="antialiased h-screen flex flex-col relative">
 
-    <div class="noise-overlay"></div>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
+    <!-- Global SVG Gradient Definition for Icons & Logo -->
+    <svg width="0" height="0" class="absolute">
+        <defs>
+            <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" class="stop-color-1" stop-color="var(--gradient-start)" />
+                <stop offset="100%" class="stop-color-2" stop-color="var(--gradient-end)" />
+            </linearGradient>
+        </defs>
+    </svg>
 
-    <div class="overlay" onclick="closeAllPanels()"></div>
+    <!-- Liquid Background -->
+    <div class="liquid-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <!-- Noise Texture -->
+        <div style="position: absolute; inset:0; background: url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' opacity=\'0.06\'/%3E%3C/svg%3E'); opacity:0.4; mix-blend-mode: overlay;"></div>
+    </div>
 
-    <!-- MAIN CONTENT SCROLL AREA -->
-    <main class="flex-1 overflow-y-auto relative z-10 px-4 md:px-8 pt-12 pb-36 max-w-6xl mx-auto w-full scroll-smooth">
-        
-        <!-- Header -->
-        <header class="flex items-center justify-between mb-8 fade-enter-active px-2">
-            <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-full bg-transparent border border-white/20 flex items-center justify-center">
-                    <i data-lucide="shield" class="w-5 h-5 text-dynamic"></i>
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Admin Login Modal -->
+    <div id="admin-login-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-overlay">
+        <div class="glass-panel p-8 max-w-md w-full relative">
+            <button onclick="closeAdminLogin()" class="absolute top-4 right-4 text-muted hover:text-main interactive-feedback">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 mx-auto mb-4 bg-emerald-500/20 rounded-2xl flex items-center justify-center">
+                    <i data-lucide="shield" class="w-8 h-8 text-emerald-500"></i>
+                </div>
+                <h3 class="text-2xl font-black grad-text mb-2">Admin Login</h3>
+                <p class="text-sm text-muted">Secure administrator access</p>
+            </div>
+            
+            <form id="admin-login-form" class="space-y-4">
+                <div>
+                    <input type="email" id="admin-email" class="glass-input w-full p-3 rounded-xl" placeholder="Admin Email" required>
                 </div>
                 <div>
-                    <h3 class="font-bold text-lg leading-tight text-dynamic tracking-tight">SecureThing</h3>
-                    <p class="text-xs text-muted-dynamic font-medium uppercase tracking-widest">Privacy Vault</p>
+                    <input type="password" id="admin-password" class="glass-input w-full p-3 rounded-xl" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn-solid w-full py-3 rounded-xl font-black interactive-feedback flex items-center justify-center">
+                    <span id="admin-login-text">Access Admin Panel</span>
+                    <div id="admin-login-spinner" class="loader hidden"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 overflow-y-auto relative z-10 px-4 md:px-8 pt-4 md:pt-8 pb-28 md:pb-32 max-w-7xl mx-auto w-full scroll-smooth">
+        
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-6 md:mb-10 fade-enter-active px-1">
+            <div class="flex items-center gap-3 md:gap-4 group cursor-pointer">
+                <!-- LOGO with Biometric Animation -->
+                <div class="logo-container w-10 h-10 md:w-14 md:h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center shadow-xl relative overflow-hidden backdrop-blur-xl emboss-3d">
+                     <!-- Scanning Line Effect -->
+                     <div class="scan-line"></div>
+                     <!-- Fingerprint SVG -->
+                    <i data-lucide="fingerprint" class="w-7 h-7 md:w-10 md:h-10 text-indigo-600 dark:text-indigo-400"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg md:text-2xl leading-none grad-text">SecureThing</h3>
+                    <p class="text-[10px] md:text-xs text-muted font-bold uppercase tracking-widest mt-0.5 md:mt-1 opacity-80 group-hover:opacity-100 transition-opacity grad-text">Liquid Vault v1.0.7</p>
                 </div>
             </div>
 
-            <div class="flex gap-4">
-                <button onclick="toggleAccount()" class="nav-item w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300">
-                    <i data-lucide="user" class="w-5 h-5"></i>
+            <div class="flex gap-2 md:gap-4">
+                <div id="auth-status" class="hidden md:flex items-center gap-2 text-xs font-mono text-muted font-bold"></div>
+                
+                <!-- Admin Access Button -->
+                <button onclick="openAdminLogin()" class="nav-item w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center border border-emerald-500/20 bg-emerald-500/10 hover:bg-emerald-500/20 shadow-md emboss-3d interactive-feedback" title="Admin Access">
+                    <i data-lucide="shield" class="w-4 h-4 md:w-6 md:h-6 text-emerald-500"></i>
                 </button>
-                <button onclick="toggleTheme()" class="nav-item w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300">
-                    <i data-lucide="sun" class="w-5 h-5 hidden dark-icon"></i>
-                    <i data-lucide="moon" class="w-5 h-5 light-icon"></i>
+                
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleThemeManual()" class="nav-item w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center border border-white/10 bg-white/10 hover:bg-white/20 shadow-md emboss-3d interactive-feedback">
+                    <i data-lucide="sun" class="w-4 h-4 md:w-6 md:h-6 hidden dark-icon"></i>
+                    <i data-lucide="moon" class="w-4 h-4 md:w-6 md:h-6 light-icon"></i>
                 </button>
             </div>
         </header>
 
         <!-- SECTION: HOME -->
         <section id="home" class="active-section fade-enter-active">
-            <div class="home-grid">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
                 
-                <!-- Main Card -->
-                <div class="hero-main h-full">
-                    <div class="glass-panel p-8 md:p-12 flex flex-col justify-between relative overflow-hidden group h-full min-h-[550px]">
+                <!-- Main Hero -->
+                <div class="md:col-span-8 h-full">
+                    <div class="glass-panel p-6 md:p-10 lg:p-16 flex flex-col justify-between relative overflow-hidden h-full min-h-[400px] md:min-h-[550px] group">
                         
                         <div>
-                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] uppercase font-bold tracking-widest text-muted-dynamic mb-8">
-                                <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span> 
-                                System Online v1.0.6
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-white/10 border border-white/20 text-[10px] uppercase font-black tracking-widest text-muted mb-6 md:mb-10 backdrop-blur-xl shadow-sm">
+                                <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_15px_rgba(52,211,153,0.6)]"></span> 
+                                <span class="grad-text">System Operational</span>
                             </div>
                             
-                            <h1 class="text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-none text-dynamic">
-                                <span class="text-gradient">Ultimate Privacy</span><br>
-                                <span class="text-muted-dynamic font-light">Under One Roof.</span>
+                            <h1 class="text-3xl md:text-6xl lg:text-8xl font-black tracking-tighter mb-4 md:mb-8 leading-[0.9]">
+                                <span class="grad-text">Ultimate Privacy</span><br>
+                                <span class="text-muted font-bold opacity-70 grad-text text-2xl md:text-6xl lg:text-8xl">Flows Like Water.</span>
                             </h1>
                             
-                            <p class="text-lg text-muted-dynamic max-w-xl leading-relaxed font-light mb-10">
-                                Military-grade AES-256 encryption wrapped in a minimalist interface. Keep photos, passwords, and documents safe locally.
+                            <p class="text-base md:text-xl text-muted max-w-xl leading-relaxed font-medium mb-6 md:mb-12 grad-text opacity-80">
+                                Military-grade AES-256 encryption wrapped in a responsive liquid glass interface. Secure your digital life locally with elegance.
                             </p>
                         </div>
 
-                        <!-- Minimal Stats -->
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 border-t border-dashed border-white/10 pt-8">
-                            <div>
-                                <div class="text-xl font-bold text-dynamic">25k+</div>
-                                <div class="text-[10px] text-muted-dynamic uppercase tracking-widest">Users</div>
-                            </div>
-                            <div>
-                                <div class="text-xl font-bold text-dynamic">4.9</div>
-                                <div class="text-[10px] text-muted-dynamic uppercase tracking-widest">Rating</div>
-                            </div>
-                            <div>
-                                <div class="text-xl font-bold text-dynamic">100%</div>
-                                <div class="text-[10px] text-muted-dynamic uppercase tracking-widest">Offline</div>
-                            </div>
-                            <div>
-                                <div class="text-xl font-bold text-dynamic">Zero</div>
-                                <div class="text-[10px] text-muted-dynamic uppercase tracking-widest">Ads</div>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4 flex-wrap mt-auto">
-                            <button onclick="switchTab('download')" class="btn-solid px-8 py-4 rounded-full font-bold text-sm transition-all relative overflow-hidden flex items-center gap-2">
-                                Download Now <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        <div class="flex flex-col sm:flex-row gap-3 md:gap-6 flex-wrap mt-auto btn-group">
+                            <button onclick="switchTab('download')" class="btn-solid px-6 py-4 md:px-10 md:py-5 rounded-2xl font-black text-sm flex items-center gap-2 md:gap-3 emboss-3d interactive-feedback">
+                                Download App <i data-lucide="arrow-right" class="w-4 h-4 md:w-5 md:h-5"></i>
                             </button>
-                            <button onclick="switchTab('features')" class="px-8 py-4 rounded-full border border-white/20 text-dynamic font-bold text-sm transition-all hover:bg-white/5">
-                                Documentation
+                            <button onclick="switchTab('reviews')" class="btn-outline px-6 py-4 md:px-10 md:py-5 rounded-2xl font-black text-sm emboss-3d interactive-feedback">
+                                Community Hub
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Sidebar Widgets -->
-                <div class="hero-sidebar">
-                    
-                    <!-- 1. Release Calendar -->
-                    <div class="glass-panel p-6 flex flex-col items-center justify-center text-center">
-                        <div class="text-[10px] text-muted-dynamic mb-4 font-bold tracking-widest uppercase">System Status</div>
-                        
-                        <div class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-dynamic text-xs font-bold mb-6">
-                            <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
-                            <span>Stable Release</span>
+                <!-- Right Sidebar -->
+                <div class="md:col-span-4 flex flex-col gap-4 md:gap-8 hero-sidebar">
+                    <!-- Status Widget -->
+                    <div class="glass-panel p-6 md:p-10 flex flex-col items-center justify-center text-center sidebar-widget">
+                        <div class="relative mb-4 md:mb-6 emboss-3d">
+                            <div class="absolute inset-0 bg-current opacity-15 blur-2xl rounded-full"></div>
+                            <i data-lucide="activity" class="w-8 h-8 md:w-12 md:h-12 relative z-10"></i>
                         </div>
-                        
-                        <div class="calendar-container">
-                            <div class="calendar-header">
-                                <button class="calendar-nav" onclick="changeMonth(-1)"><i data-lucide="chevron-left" class="w-3 h-3"></i></button>
-                                <div class="font-bold text-dynamic text-xs tracking-widest uppercase" id="calendar-title">July 2025</div>
-                                <button class="calendar-nav" onclick="changeMonth(1)"><i data-lucide="chevron-right" class="w-3 h-3"></i></button>
-                            </div>
-                            <div class="calendar-grid">
-                                <div class="calendar-day-header">S</div><div class="calendar-day-header">M</div><div class="calendar-day-header">T</div><div class="calendar-day-header">W</div><div class="calendar-day-header">T</div><div class="calendar-day-header">F</div><div class="calendar-day-header">S</div>
-                                <!-- JS will populate -->
-                            </div>
-                        </div>
+                        <div class="text-2xl md:text-4xl font-black grad-text" id="live-sessions">25,402</div>
+                        <div class="text-xs text-muted font-bold uppercase tracking-widest mt-1 md:mt-2 grad-text">Encrypted Sessions</div>
                     </div>
 
-                    <!-- 2. Tech Stack -->
-                    <div class="glass-panel p-6 flex flex-col justify-center items-center text-center gap-4">
-                        <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-dynamic">
-                            <i data-lucide="code-2" class="w-6 h-6"></i>
+                    <!-- Pwd Gen Widget -->
+                    <div class="glass-panel p-5 md:p-8 flex-1 flex flex-col gap-4 md:gap-6 sidebar-widget">
+                        <h4 class="text-xs md:text-sm font-black text-muted uppercase tracking-widest mb-1 md:mb-2 grad-text">Quick Generator</h4>
+                        <div class="flex items-center gap-2 md:gap-3">
+                            <input type="text" id="gen-pwd-output" class="glass-input w-full p-2 md:p-3 text-xs md:text-sm font-mono rounded-lg md:rounded-xl text-center font-bold" readonly placeholder="Click Generate">
+                            <button onclick="copyToClipboard('gen-pwd-output')" class="p-2 md:p-3 rounded-lg md:rounded-xl btn-outline hover:bg-white/10 emboss-3d interactive-feedback" title="Copy">
+                                <i data-lucide="copy" class="w-4 h-4 md:w-5 md:h-5"></i>
+                            </button>
                         </div>
-                        <div>
-                            <h3 class="text-dynamic font-bold text-sm uppercase tracking-widest mb-2">Protocols</h3>
-                            <div class="flex flex-wrap justify-center gap-2">
-                                <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-muted-dynamic font-medium">AES-256</span>
-                                <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-muted-dynamic font-medium">PBKDF2</span>
-                                <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-muted-dynamic font-medium">LocalAuth</span>
-                            </div>
-                        </div>
-                        <button onclick="switchTab('code-editor')" class="w-full py-3 rounded-xl border border-dashed border-white/20 text-muted-dynamic font-mono text-xs hover:text-dynamic hover:border-white/40 transition-colors">
-                            audit_security.sh
+                        <button onclick="generatePassword()" class="btn-solid w-full py-2 md:py-3 rounded-lg md:rounded-xl text-xs md:text-sm font-black uppercase tracking-widest flex items-center justify-center gap-2 md:gap-3 emboss-3d interactive-feedback">
+                             <i data-lucide="refresh-cw" class="w-3 h-3 md:w-4 md:h-4"></i> Generate Secure Key
                         </button>
-                    </div>
-
-                    <!-- 3. Contact Widget -->
-                    <div class="glass-panel p-6 flex flex-col justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-dynamic">
-                                <i data-lucide="life-buoy" class="w-5 h-5"></i>
-                            </div>
-                            <div class="text-left">
-                                <p class="text-[10px] text-muted-dynamic uppercase tracking-widest font-bold">Support</p>
-                                <h3 class="text-dynamic font-bold text-sm">Need Help?</h3>
-                            </div>
+                        <div class="flex justify-between text-[10px] md:text-xs text-muted px-1 md:px-2 font-bold grad-text opacity-70">
+                            <span>24 chars</span>
+                            <span>Special Chars</span>
                         </div>
-                        <button onclick="switchTab('contact')" class="w-full py-3 flex items-center justify-center gap-2 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-dynamic hover:bg-white/10 transition-colors">
-                            Contact Us
-                        </button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION: FEATURES -->
+        <!-- SECTION: REVIEWS -->
+        <section id="reviews" class="hidden-section fade-enter">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-6 md:mb-10 px-1 flex flex-col md:flex-row justify-between md:items-end gap-4 md:gap-6 reviews-header">
+                    <div>
+                        <h2 class="text-3xl md:text-5xl font-black grad-text tracking-tighter">Community Hub</h2>
+                        <p class="text-muted mt-2 md:mt-3 font-bold grad-text opacity-80">Join the conversation. Shape the future.</p>
+                    </div>
+                    <button id="login-btn" class="btn-solid px-6 py-3 md:px-8 md:py-4 rounded-full text-xs font-black uppercase tracking-widest shadow-lg emboss-3d w-full md:w-auto interactive-feedback flex items-center justify-center">
+                        <span id="login-btn-text">Sign In w/ Google</span>
+                        <div id="login-btn-spinner" class="loader hidden"></div>
+                    </button>
+                </div>
+
+                <!-- Admin Stats Panel (Visible only to admin) -->
+                <div id="admin-stats" class="glass-panel p-5 md:p-6 mb-6 hidden admin-panel">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-black grad-text flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-emerald-500"></i>
+                            Admin Dashboard
+                        </h3>
+                        <span class="admin-badge px-3 py-1 rounded-full text-xs font-black">ADMIN MODE</span>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div>
+                            <div class="text-2xl font-black grad-text" id="total-reviews">0</div>
+                            <div class="text-xs text-muted font-bold">Total Reviews</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-black grad-text" id="bug-reports">0</div>
+                            <div class="text-xs text-muted font-bold">Bug Reports</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-black grad-text" id="feature-requests">0</div>
+                            <div class="text-xs text-muted font-bold">Feature Requests</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-black grad-text" id="avg-rating">0.0</div>
+                            <div class="text-xs text-muted font-bold">Avg Rating</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div id="review-input-container" class="glass-panel p-5 md:p-8 mb-6 md:mb-10 hidden transform transition-all duration-500 review-input">
+                    <div class="flex gap-4 md:gap-6 mb-4 md:mb-6">
+                        <img id="user-avatar" src="" class="w-10 h-10 md:w-14 md:h-14 rounded-2xl border-2 border-white/30 shadow-lg emboss-3d">
+                        <div class="flex-1 flex flex-col justify-center">
+                            <div class="text-base md:text-lg font-black grad-text" id="user-name">User</div>
+                            <div class="text-[10px] md:text-xs text-muted font-bold uppercase tracking-wider grad-text opacity-70">Verified User</div>
+                        </div>
+                    </div>
+                    <textarea id="review-text" class="glass-input w-full p-4 md:p-5 rounded-xl md:rounded-2xl mb-4 md:mb-6 h-24 md:h-32 text-sm font-medium" placeholder="Share your experience, report a bug, or suggest a new feature..."></textarea>
+                    
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
+                        <div class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 w-full md:w-auto">
+                            <!-- Star Rating Input -->
+                            <div class="rating mb-2 md:mb-0">
+                                <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
+                                <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
+                                <input type="radio" id="star3" name="rating" value="3"><label for="star3"></label>
+                                <input type="radio" id="star2" name="rating" value="2"><label for="star2"></label>
+                                <input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
+                            </div>
+
+                            <select id="review-type" class="glass-input px-4 py-2 md:px-6 md:py-3 rounded-lg md:rounded-xl text-xs font-black uppercase cursor-pointer w-full md:min-w-[160px]">
+                                <option value="Review">⭐ General Review</option>
+                                <option value="Bug">🐛 Bug Report</option>
+                                <option value="Feature">💡 Feature Request</option>
+                            </select>
+                        </div>
+                        <button id="submit-review" class="btn-solid px-6 py-2 md:px-10 md:py-3 rounded-xl md:rounded-2xl text-xs font-black uppercase tracking-widest emboss-3d w-full md:w-auto mt-2 md:mt-0 interactive-feedback flex items-center justify-center">
+                            <span id="submit-review-text">Publish Post</span>
+                            <div id="submit-review-spinner" class="loader hidden"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Reviews Feed -->
+                <div id="reviews-feed" class="flex flex-col gap-4 md:gap-8">
+                    <div class="glass-panel p-8 md:p-16 text-center animate-pulse">
+                        <div class="inline-block p-4 md:p-6 rounded-full bg-white/10 mb-4 md:mb-6 emboss-3d">
+                            <i data-lucide="loader-2" class="w-6 h-6 md:w-8 md:h-8 animate-spin"></i>
+                        </div>
+                        <p class="text-muted text-sm font-bold grad-text">Loading reviews...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      <!-- SECTION: FEATURES -->
         <section id="features" class="hidden-section fade-enter">
             <div class="max-w-6xl mx-auto">
-                <div class="mb-10 px-2 text-center md:text-left">
-                    <h2 class="text-4xl font-bold text-dynamic tracking-tighter">Modules</h2>
-                    <p class="text-muted-dynamic mt-2 font-light">Complete offline protection suite.</p>
+                <div class="mb-8 md:mb-16 text-center">
+                    <h2 class="text-4xl md:text-6xl font-black grad-text tracking-tighter mb-4 md:mb-6">Liquid Architecture</h2>
+                    <p class="text-muted max-w-2xl mx-auto font-bold grad-text opacity-80 px-4">Built on three pillars of modern security.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Feature Items -->
-                    <div class="glass-panel glass-interactive p-8 group cursor-default">
-                        <i data-lucide="fingerprint" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
-                        <h3 class="text-lg font-bold text-dynamic mb-2">Biometric Lock</h3>
-                        <p class="text-sm text-muted-dynamic leading-relaxed">Hardware-backed fingerprint or face recognition access control.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 features-grid">
+                    <!-- Biometric Core -->
+                    <div class="glass-panel glass-interactive p-6 md:p-12 flex flex-col items-center text-center group feature-card">
+                        <div class="feature-icon w-14 h-14 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-indigo-500/20 backdrop-blur-xl flex items-center justify-center mb-6 md:mb-8 mx-auto shadow-lg border border-white/20 emboss-3d">
+                            <i data-lucide="fingerprint" class="w-7 h-7 md:w-10 md:h-10 text-indigo-600 dark:text-indigo-400"></i>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-black mb-3 md:mb-4 grad-text">Biometric Core</h3>
+                        <p class="text-sm text-muted leading-relaxed font-medium grad-text opacity-80">Direct hardware integration with TouchID and FaceID API for instant, secure access.</p>
                     </div>
-                    <div class="glass-panel glass-interactive p-8 group cursor-default">
-                        <i data-lucide="lock" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
-                        <h3 class="text-lg font-bold text-dynamic mb-2">AES-256 Core</h3>
-                        <p class="text-sm text-muted-dynamic leading-relaxed">Industry standard encryption makes files mathematically impossible to crack.</p>
+
+                    <!-- Deep Vault -->
+                    <div class="glass-panel glass-interactive p-6 md:p-12 flex flex-col items-center text-center group feature-card">
+                        <div class="feature-icon w-14 h-14 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-pink-500/20 backdrop-blur-xl flex items-center justify-center mb-6 md:mb-8 mx-auto shadow-lg border border-white/20 emboss-3d">
+                            <i data-lucide="file-key" class="w-7 h-7 md:w-10 md:h-10 text-pink-600 dark:text-pink-400"></i>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-black mb-3 md:mb-4 grad-text">Deep Vault</h3>
+                        <p class="text-sm text-muted leading-relaxed font-medium grad-text opacity-80">Files are encrypted individually using unique salt/IV pairs. The vault remains sealed.</p>
                     </div>
-                    <div class="glass-panel glass-interactive p-8 group cursor-default">
-                        <i data-lucide="key" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
-                        <h3 class="text-lg font-bold text-dynamic mb-2">Password Mgr</h3>
-                        <p class="text-sm text-muted-dynamic leading-relaxed">Securely store and auto-fill credentials. Offline generator included.</p>
-                    </div>
-                    <div class="glass-panel glass-interactive p-8 group cursor-default">
-                        <i data-lucide="wifi-off" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
-                        <h3 class="text-lg font-bold text-dynamic mb-2">100% Offline</h3>
-                        <p class="text-sm text-muted-dynamic leading-relaxed">Zero internet permissions required. Your data never leaves the device.</p>
-                    </div>
-                    <div class="glass-panel glass-interactive p-8 group cursor-default">
-                        <i data-lucide="eye-off" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
-                        <h3 class="text-lg font-bold text-dynamic mb-2">Stealth Mode</h3>
-                        <p class="text-sm text-muted-dynamic leading-relaxed">Disguise app icon or use a fake PIN to open a decoy vault.</p>
-                    </div>
-                    <div class="glass-panel glass-interactive p-8 group cursor-default">
-                        <i data-lucide="share-2" class="w-8 h-8 text-dynamic mb-6 opacity-80"></i>
-                        <h3 class="text-lg font-bold text-dynamic mb-2">Secure Share</h3>
-                        <p class="text-sm text-muted-dynamic leading-relaxed">Share encrypted files safely. Only recipients with the key can view.</p>
+
+                    <!-- Air-Gapped Mode -->
+                    <div class="glass-panel glass-interactive p-6 md:p-12 flex flex-col items-center text-center group feature-card">
+                        <div class="feature-icon w-14 h-14 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-cyan-500/20 backdrop-blur-xl flex items-center justify-center mb-6 md:mb-8 mx-auto shadow-lg border border-white/20 emboss-3d">
+                            <i data-lucide="cloud-off" class="w-7 h-7 md:w-10 md:h-10 text-cyan-700 dark:text-cyan-400"></i>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-black mb-3 md:mb-4 grad-text">Air-Gapped Mode</h3>
+                        <p class="text-sm text-muted leading-relaxed font-medium grad-text opacity-80">100% offline functionality. Zero analytics, zero tracking, zero data egress.</p>
                     </div>
                 </div>
             </div>
@@ -425,182 +943,555 @@
 
         <!-- SECTION: CODE EDITOR -->
         <section id="code-editor" class="hidden-section fade-enter">
-            <div class="max-w-5xl mx-auto">
-                <div class="mb-10 px-2">
-                    <h2 class="text-4xl font-bold text-dynamic tracking-tighter">Encryption Audit</h2>
-                    <p class="text-muted-dynamic mt-2 font-light">Verify the logic. Run the simulation.</p>
-                </div>
-                
-                <div class="glass-panel p-0 overflow-hidden flex flex-col md:flex-row h-[500px] border border-white/10">
-                    <div class="w-full md:w-1/2 flex flex-col border-b md:border-b-0 md:border-r border-white/10">
-                        <div class="flex items-center justify-between p-4 bg-white/5 border-b border-white/10">
-                            <span class="text-[10px] font-mono text-muted-dynamic uppercase tracking-widest">core_crypto.js</span>
-                            <div class="flex gap-2">
-                                <button onclick="resetCode()" class="text-xs text-muted-dynamic hover:text-dynamic">Reset</button>
-                                <button onclick="runCode()" class="px-4 py-1 bg-white text-black rounded text-[10px] font-bold uppercase tracking-widest hover:opacity-90">Run</button>
-                            </div>
-                        </div>
-                        <textarea id="code-area" class="code-textarea flex-1 p-6 leading-relaxed" spellcheck="false">
-// AES-256 Encryption Simulation
-const algorithm = 'AES-GCM';
-const keyLength = 256;
-
-async function secureData(input) {
-  console.log("> Initializing Crypto Engine...");
-  
-  // 1. Generate Salt
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  console.log("> Salt Generated: " + toHex(salt).substring(0,12) + "...");
-  
-  // 2. Generate IV
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-  console.log("> IV Generated: " + toHex(iv).substring(0,12) + "...");
-  
-  // 3. Encrypt (Simulated)
-  console.log("> Encrypting: " + input);
-  return {
-    status: "SECURED",
-    algo: algorithm,
-    cipher: btoa(input).split('').reverse().join('') + "=="
-  };
-}
-
-// Execute
-secureData("MySecretPassword123");
-
-function toHex(arr) {
-  return Array.from(arr).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-                        </textarea>
+             <div class="max-w-6xl mx-auto h-full">
+                <div class="mb-6 md:mb-10 px-1 flex flex-col md:flex-row justify-between md:items-end gap-4 md:gap-6">
+                    <div>
+                        <h2 class="text-3xl md:text-5xl font-black grad-text tracking-tighter">Encryption Audit</h2>
+                        <p class="text-muted mt-2 md:mt-3 font-bold grad-text opacity-80">Transparent security. Verify the logic yourself.</p>
                     </div>
-                    <div class="w-full md:w-1/2 bg-black/50 p-6 font-mono text-xs text-muted-dynamic overflow-y-auto" id="console-output">
-                        <span class="text-dynamic">> System Ready.</span><br>
-                        > Waiting for execution...
+                    <div class="flex gap-3 md:gap-4">
+                        <button onclick="resetCode()" class="btn-outline px-4 py-2 md:px-6 md:py-3 rounded-lg md:rounded-xl text-xs font-black uppercase tracking-widest emboss-3d interactive-feedback">Reset</button>
+                        <button onclick="runCode()" class="btn-solid px-5 py-2 md:px-8 md:py-3 rounded-lg md:rounded-xl text-xs font-black uppercase tracking-widest emboss-3d interactive-feedback">Run Simulation</button>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- SECTION: CONTACT -->
-        <section id="contact" class="hidden-section fade-enter">
-            <div class="max-w-2xl mx-auto">
-                <div class="mb-10 px-2 text-center">
-                    <h2 class="text-4xl font-bold text-dynamic tracking-tighter">Support</h2>
-                    <p class="text-muted-dynamic mt-2 font-light">Priority assistance for users.</p>
-                </div>
                 
-                <div class="glass-panel p-8 md:p-12">
-                    <form class="space-y-6" onsubmit="event.preventDefault(); alert('Ticket Submitted!');">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs font-bold text-muted-dynamic uppercase tracking-widest mb-2">Name</label>
-                                <input type="text" class="glass-input w-full px-4 py-3 rounded-lg" placeholder="Your Name">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-muted-dynamic uppercase tracking-widest mb-2">Email</label>
-                                <input type="email" class="glass-input w-full px-4 py-3 rounded-lg" placeholder="name@example.com">
-                            </div>
+                <div class="glass-panel p-0 overflow-hidden flex flex-col lg:flex-row border-2 border-white/20 shadow-2xl code-editor-container">
+                    <div class="w-full lg:w-3/5 flex flex-col border-b-2 lg:border-b-0 lg:border-r-2 border-white/20 relative code-panel">
+                        <div class="absolute top-0 right-0 flex z-10">
+                            <button onclick="copyToClipboard('code-display')" class="p-2 md:p-3 text-muted hover:text-main bg-white/10 backdrop-blur-md emboss-3d interactive-feedback" title="Copy Code"><i data-lucide="copy" class="w-3 h-3 md:w-4 md:h-4"></i></button>
+                            <div class="p-2 md:p-3 text-[10px] md:text-xs text-muted font-mono font-bold bg-white/20 rounded-bl-lg md:rounded-bl-xl backdrop-blur-md grad-text">JS (ES6)</div>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-muted-dynamic uppercase tracking-widest mb-2">Topic</label>
-                            <select class="glass-input w-full px-4 py-3 rounded-lg">
-                                <option>Technical Issue</option>
-                                <option>Feature Request</option>
-                                <option>Bug Report</option>
-                            </select>
+                        <!-- Mocked Syntax Highlighting Area -->
+                        <div id="code-display" class="code-textarea flex-1 p-4 md:p-6 lg:p-8 leading-relaxed overflow-auto" spellcheck="false" contenteditable="true">
+                            <!-- Populated by JS -->
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-muted-dynamic uppercase tracking-widest mb-2">Message</label>
-                            <textarea rows="4" class="glass-input w-full px-4 py-3 rounded-lg" placeholder="Describe your issue..."></textarea>
+                    </div>
+                    <div class="w-full lg:w-2/5 bg-white/5 dark:bg-black/40 p-4 md:p-6 lg:p-8 font-mono text-xs text-muted overflow-y-auto flex flex-col terminal-panel" id="console-output">
+                        <div class="border-b-2 border-white/20 pb-2 md:pb-3 mb-4 md:mb-6 text-xs font-black uppercase tracking-widest opacity-60 grad-text">Terminal Output</div>
+                        <div id="terminal-content" class="font-bold">
+                            <span class='grad-text'>> System Ready.</span><br>
+                            > Waiting for execution...
                         </div>
-                        <button class="btn-solid w-full py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg">Submit Ticket</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- SECTION: DOWNLOAD -->
-        <section id="download" class="hidden-section fade-enter">
-            <div class="max-w-4xl mx-auto text-center h-full flex items-center justify-center">
-                <div class="glass-panel p-12 md:p-20 relative overflow-hidden w-full">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-20"></div>
-                    <h2 class="text-5xl font-bold text-dynamic mb-8 tracking-tighter">Get SecureThing</h2>
-                    <div class="flex flex-col items-center gap-6">
-                        <a href="https://downloadsecurething.netlify.app/SecureThing_v1.0.6.1.apk" class="btn-solid px-10 py-5 rounded-full font-bold text-sm uppercase tracking-widest shadow-2xl flex items-center gap-3">
-                            <i data-lucide="download" class="w-5 h-5"></i> Download v1.0.6
-                        </a>
-                        <button class="text-xs font-mono text-muted-dynamic border-b border-dashed border-muted-dynamic pb-1 hover:text-dynamic transition-colors">
-                            View Source Code on GitHub
-                        </button>
-                    </div>
-                    <div class="flex justify-center gap-8 mt-12 text-[10px] uppercase tracking-widest text-muted-dynamic font-bold">
-                        <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> Virus Free</span>
-                        <span class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4"></i> No Ads</span>
+        <section id="download" class="hidden-section fade-enter download-section">
+            <div class="max-w-4xl mx-auto text-center h-auto min-h-[50vh] md:h-[65vh] flex items-center justify-center py-8 md:py-0">
+                <div class="glass-panel p-8 md:p-16 w-full relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                    <div class="relative z-10">
+                        <div class="w-20 h-20 md:w-32 md:h-32 mx-auto mb-6 md:mb-10 bg-white/10 rounded-2xl md:rounded-[2rem] flex items-center justify-center border-2 border-white/20 shadow-2xl emboss-3d transition-transform group-hover:scale-105">
+                            <i data-lucide="download-cloud" class="w-10 h-10 md:w-14 md:h-14 opacity-90"></i>
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-black grad-text mb-6 md:mb-10 tracking-tighter">Get SecureThing</h2>
+                        <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 download-buttons">
+                            <a href="https://downloadsecurething.netlify.app/SecureThing_v1.0.6.1.apk" class="btn-solid px-8 py-4 md:px-12 md:py-6 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl inline-flex items-center gap-3 md:gap-4 w-full md:w-auto justify-center emboss-3d interactive-feedback">
+                                <i data-lucide="android" class="w-5 h-5 md:w-6 md:h-6"></i> Download APK v1.0.6.1
+                            </a>
+                            <a href="#" class="btn-outline px-8 py-4 md:px-12 md:py-6 rounded-2xl font-black text-sm uppercase tracking-widest inline-flex items-center gap-3 md:gap-4 w-full md:w-auto justify-center emboss-3d interactive-feedback">
+                                <i data-lucide="github" class="w-5 h-5 md:w-6 md:h-6"></i> Source Code
+                            </a>
+                        </div>
+                        <p class="mt-8 md:mt-12 text-xs text-muted font-bold uppercase tracking-widest grad-text opacity-70">
+                            SHA-256: 8f4b...29a1 &bull; Verified Build
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="mt-12 text-center text-xs text-muted-dynamic uppercase tracking-widest opacity-50">
-            <p>&copy; 2025 SecureThing Inc.</p>
-        </footer>
     </main>
 
     <!-- FLOATING DOCK -->
-    <nav class="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-auto">
-        <div class="dock-container flex items-center gap-4 px-4 py-2">
-            <button onclick="switchTab('home')" class="nav-item active w-12 h-12 flex items-center justify-center" data-target="home"><i data-lucide="home" class="w-5 h-5"></i></button>
-            <button onclick="switchTab('features')" class="nav-item w-12 h-12 flex items-center justify-center" data-target="features"><i data-lucide="layers" class="w-5 h-5"></i></button>
-            <button onclick="switchTab('code-editor')" class="nav-item w-12 h-12 flex items-center justify-center" data-target="code-editor"><i data-lucide="code" class="w-5 h-5"></i></button>
-            <button onclick="switchTab('contact')" class="nav-item w-12 h-12 flex items-center justify-center" data-target="contact"><i data-lucide="mail" class="w-5 h-5"></i></button>
-            <button onclick="switchTab('download')" class="nav-item w-12 h-12 flex items-center justify-center" data-target="download"><i data-lucide="download" class="w-5 h-5"></i></button>
+    <nav class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 w-auto px-4">
+        <div class="dock-container">
+            <button onclick="switchTab('home')" class="nav-item active w-12 h-12 md:w-16 md:h-16 flex items-center justify-center emboss-3d interactive-feedback" data-target="home" title="Home">
+                <i data-lucide="home" class="w-5 h-5 md:w-7 md:h-7"></i>
+            </button>
+            <button onclick="switchTab('reviews')" class="nav-item w-12 h-12 md:w-16 md:h-16 flex items-center justify-center emboss-3d interactive-feedback" data-target="reviews" title="Reviews">
+                <i data-lucide="message-square" class="w-5 h-5 md:w-7 md:h-7"></i>
+            </button>
+            <button onclick="switchTab('features')" class="nav-item w-12 h-12 md:w-16 md:h-16 flex items-center justify-center emboss-3d interactive-feedback" data-target="features" title="Features">
+                <i data-lucide="layers" class="w-5 h-5 md:w-7 md:h-7"></i>
+            </button>
+            <button onclick="switchTab('code-editor')" class="nav-item w-12 h-12 md:w-16 md:h-16 flex items-center justify-center emboss-3d interactive-feedback" data-target="code-editor" title="Audit Code">
+                <i data-lucide="code" class="w-5 h-5 md:w-7 md:h-7"></i>
+            </button>
+            <button onclick="switchTab('download')" class="nav-item w-12 h-12 md:w-16 md:h-16 flex items-center justify-center emboss-3d interactive-feedback" data-target="download" title="Download">
+                <i data-lucide="download" class="w-5 h-5 md:w-7 md:h-7"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- MODALS -->
-    <!-- Account Modal -->
-    <div class="modal" id="account-modal">
-        <div class="text-center mb-8">
-            <h3 class="text-2xl font-bold text-dynamic tracking-tight">Welcome</h3>
-            <p class="text-xs text-muted-dynamic uppercase tracking-widest mt-2">Sign in to sync preferences</p>
-        </div>
-        <div class="auth-tabs">
-            <div class="auth-tab active" onclick="this.parentElement.children[1].classList.remove('active'); this.classList.add('active'); document.getElementById('email-form').style.display='block'; document.getElementById('mobile-form').style.display='none';">Email</div>
-            <div class="auth-tab" onclick="this.parentElement.children[0].classList.remove('active'); this.classList.add('active'); document.getElementById('email-form').style.display='none'; document.getElementById('mobile-form').style.display='block';">Mobile</div>
-        </div>
-        <div id="email-form">
-            <input type="email" class="glass-input w-full px-4 py-3 rounded-xl mb-4" placeholder="Email Address">
-            <input type="password" class="glass-input w-full px-4 py-3 rounded-xl mb-6" placeholder="Password">
-        </div>
-        <div id="mobile-form" style="display:none;">
-            <input type="tel" class="glass-input w-full px-4 py-3 rounded-xl mb-4" placeholder="+1 (555) 000-0000">
-            <input type="text" class="glass-input w-full px-4 py-3 rounded-xl mb-6" placeholder="SMS Code">
-        </div>
-        <button class="btn-solid w-full py-3 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg" onclick="closeAllPanels()">Sign In</button>
-    </div>
-
-    <!-- SCRIPTS -->
+    <!-- UI LOGIC & THEME ENGINE -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            initCalendar();
-            
-            // Initial Theme
-            const isLight = document.body.classList.contains('light-mode');
-            document.querySelector('.light-icon').classList.toggle('hidden', isLight);
-            document.querySelector('.dark-icon').classList.toggle('hidden', !isLight);
-        });
+        // Firebase Authentication and Database Logic
+        let currentUser = null;
+        let isAdmin = false;
+        const ADMIN_EMAIL = "joykumbhakar101@gmail.com";
+        let reviewsUnsubscribe = null;
 
+        // Initialize Firebase Auth State Listener
+        function initializeAuth() {
+            window.firebaseOnAuthStateChanged(window.firebaseAuth, (user) => {
+                currentUser = user;
+                isAdmin = user && user.email === ADMIN_EMAIL;
+                updateAuthUI(user);
+                
+                if (user) {
+                    setupRealtimeReviews();
+                    if (isAdmin) {
+                        loadAdminStats();
+                    }
+                } else {
+                    // Unsubscribe from realtime updates when signed out
+                    if (reviewsUnsubscribe) {
+                        reviewsUnsubscribe();
+                        reviewsUnsubscribe = null;
+                    }
+                }
+            });
+        }
+
+        // Update UI based on auth state
+        function updateAuthUI(user) {
+            const loginBtn = document.getElementById('login-btn');
+            const loginBtnText = document.getElementById('login-btn-text');
+            const loginBtnSpinner = document.getElementById('login-btn-spinner');
+            const inputContainer = document.getElementById('review-input-container');
+            const userAvatar = document.getElementById('user-avatar');
+            const userName = document.getElementById('user-name');
+            const authStatus = document.getElementById('auth-status');
+            const adminStats = document.getElementById('admin-stats');
+
+            if (user) {
+                // User is signed in
+                loginBtnText.textContent = "Sign Out";
+                loginBtnSpinner.classList.add('hidden');
+                loginBtn.onclick = handleSignOut;
+                inputContainer.classList.remove('hidden');
+                
+                if (user.photoURL) {
+                    userAvatar.src = user.photoURL;
+                } else {
+                    userAvatar.src = "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.displayName || user.email) + "&background=random";
+                }
+                
+                userName.textContent = user.displayName || user.email.split('@')[0];
+                
+                if (authStatus) {
+                    if (isAdmin) {
+                        authStatus.innerHTML = `<span class="admin-badge px-2 py-1 rounded text-xs">ADMIN</span> ${user.displayName || user.email.split('@')[0]}`;
+                    } else {
+                        authStatus.innerHTML = `<span class="user-badge px-2 py-1 rounded text-xs">USER</span> ${user.displayName || user.email.split('@')[0]}`;
+                    }
+                }
+                
+                // Show/hide admin stats
+                if (adminStats) {
+                    if (isAdmin) {
+                        adminStats.classList.remove('hidden');
+                    } else {
+                        adminStats.classList.add('hidden');
+                    }
+                }
+                
+                showToast(`Welcome back, ${user.displayName || user.email.split('@')[0]}!`, 'success');
+            } else {
+                // User is signed out
+                loginBtnText.textContent = "Sign In w/ Google";
+                loginBtnSpinner.classList.add('hidden');
+                loginBtn.onclick = handleGoogleSignIn;
+                inputContainer.classList.add('hidden');
+                
+                if (authStatus) {
+                    authStatus.textContent = '';
+                }
+                
+                if (adminStats) {
+                    adminStats.classList.add('hidden');
+                }
+                
+                // Clear reviews feed and show login prompt
+                const feed = document.getElementById('reviews-feed');
+                feed.innerHTML = `
+                    <div class="glass-panel p-8 md:p-12 text-center">
+                        <i data-lucide="log-in" class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 opacity-50 emboss-3d"></i>
+                        <h3 class="text-lg md:text-xl font-black grad-text mb-2">Sign In to Join the Community</h3>
+                        <p class="text-muted text-sm font-bold grad-text opacity-80">Connect with Google to share your experience and read reviews from other users.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+        }
+
+        // Handle Google Sign In
+        async function handleGoogleSignIn() {
+            const loginBtnText = document.getElementById('login-btn-text');
+            const loginBtnSpinner = document.getElementById('login-btn-spinner');
+            
+            try {
+                loginBtnText.textContent = "Signing In...";
+                loginBtnSpinner.classList.remove('hidden');
+                
+                const result = await window.firebaseSignInWithPopup(window.firebaseAuth, window.firebaseProvider);
+                showToast('Successfully signed in!', 'success');
+            } catch (error) {
+                console.error('Sign in error:', error);
+                showToast('Failed to sign in. Please try again.', 'error');
+                loginBtnText.textContent = "Sign In w/ Google";
+                loginBtnSpinner.classList.add('hidden');
+            }
+        }
+
+        // Handle Admin Login
+        async function handleAdminLogin(email, password) {
+            const adminLoginText = document.getElementById('admin-login-text');
+            const adminLoginSpinner = document.getElementById('admin-login-spinner');
+            
+            try {
+                adminLoginText.textContent = "Verifying...";
+                adminLoginSpinner.classList.remove('hidden');
+                
+                const result = await window.firebaseSignInWithEmailAndPassword(window.firebaseAuth, email, password);
+                showToast('Admin access granted!', 'success');
+                closeAdminLogin();
+            } catch (error) {
+                console.error('Admin login error:', error);
+                if (error.code === 'auth/user-not-found') {
+                    // Create admin account if it doesn't exist
+                    try {
+                        await window.firebaseCreateUserWithEmailAndPassword(window.firebaseAuth, email, password);
+                        showToast('Admin account created successfully!', 'success');
+                        closeAdminLogin();
+                    } catch (createError) {
+                        showToast('Failed to create admin account.', 'error');
+                    }
+                } else {
+                    showToast('Invalid admin credentials.', 'error');
+                }
+            } finally {
+                adminLoginText.textContent = "Access Admin Panel";
+                adminLoginSpinner.classList.add('hidden');
+            }
+        }
+
+        // Handle Sign Out
+        async function handleSignOut() {
+            const loginBtnText = document.getElementById('login-btn-text');
+            const loginBtnSpinner = document.getElementById('login-btn-spinner');
+            
+            try {
+                loginBtnText.textContent = "Signing Out...";
+                loginBtnSpinner.classList.remove('hidden');
+                
+                await window.firebaseSignOut(window.firebaseAuth);
+                showToast('Successfully signed out!', 'success');
+            } catch (error) {
+                console.error('Sign out error:', error);
+                showToast('Failed to sign out. Please try again.', 'error');
+                loginBtnText.textContent = "Sign Out";
+                loginBtnSpinner.classList.add('hidden');
+            }
+        }
+
+        // Setup realtime reviews listener
+        function setupRealtimeReviews() {
+            const q = window.firebaseQuery(
+                window.firebaseCollection(window.firebaseDb, "reviews"),
+                window.firebaseOrderBy("timestamp", "desc")
+            );
+            
+            reviewsUnsubscribe = window.firebaseOnSnapshot(q, (snapshot) => {
+                const feed = document.getElementById('reviews-feed');
+                
+                if (snapshot.empty) {
+                    feed.innerHTML = `
+                        <div class='glass-panel p-8 md:p-12 text-center text-muted'>
+                            <i data-lucide="message-circle" class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 opacity-50 emboss-3d"></i>
+                            <h3 class="text-lg md:text-xl font-black grad-text mb-2">No Reviews Yet</h3>
+                            <p class="font-bold grad-text text-sm md:text-base">Be the first to share your experience!</p>
+                        </div>
+                    `;
+                    lucide.createIcons();
+                    return;
+                }
+
+                feed.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const review = doc.data();
+                    const reviewElement = createReviewElement(review, doc.id);
+                    feed.appendChild(reviewElement);
+                });
+                
+                lucide.createIcons();
+                applyGradientToIcons();
+                
+                if (isAdmin) {
+                    loadAdminStats();
+                }
+            }, (error) => {
+                console.error('Error loading reviews:', error);
+                const feed = document.getElementById('reviews-feed');
+                feed.innerHTML = `
+                    <div class='glass-panel p-8 md:p-12 text-center text-red-500'>
+                        <i data-lucide="alert-circle" class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 emboss-3d"></i>
+                        <p class="font-bold">Failed to load reviews. Please try again later.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+            });
+        }
+
+        // Load admin statistics
+        async function loadAdminStats() {
+            try {
+                const q = window.firebaseQuery(
+                    window.firebaseCollection(window.firebaseDb, "reviews")
+                );
+                
+                const querySnapshot = await window.firebaseGetDocs(q);
+                let totalReviews = 0;
+                let bugReports = 0;
+                let featureRequests = 0;
+                let totalRating = 0;
+                let ratedReviews = 0;
+
+                querySnapshot.forEach((doc) => {
+                    const review = doc.data();
+                    totalReviews++;
+                    
+                    if (review.type === 'Bug') bugReports++;
+                    if (review.type === 'Feature') featureRequests++;
+                    if (review.rating && review.rating > 0) {
+                        totalRating += review.rating;
+                        ratedReviews++;
+                    }
+                });
+
+                document.getElementById('total-reviews').textContent = totalReviews;
+                document.getElementById('bug-reports').textContent = bugReports;
+                document.getElementById('feature-requests').textContent = featureRequests;
+                document.getElementById('avg-rating').textContent = ratedReviews > 0 ? (totalRating / ratedReviews).toFixed(1) : '0.0';
+                
+            } catch (error) {
+                console.error('Error loading admin stats:', error);
+            }
+        }
+
+        // Create review element
+        function createReviewElement(review, docId) {
+            const card = document.createElement('div');
+            card.className = "glass-panel p-5 md:p-8 review-card fade-enter-active group relative";
+            
+            let adminActions = "";
+            if (isAdmin) {
+                adminActions = `
+                    <div class="mt-4 md:mt-6 pt-4 md:pt-6 border-t-2 border-white/20 flex flex-col gap-2 md:gap-3 bg-black/5 dark:bg-black/20 p-4 md:p-6 rounded-xl md:rounded-2xl">
+                        <div class="text-[10px] md:text-xs text-muted uppercase tracking-widest font-black grad-text">Admin Controls</div>
+                        <div class="flex flex-col md:flex-row gap-2 md:gap-3">
+                            <input type="text" id="reply-${docId}" class="glass-input text-xs p-2 md:p-3 rounded-lg md:rounded-xl w-full font-bold" placeholder="Type official response..." value="${review.adminReply || ''}">
+                            <input type="text" id="img-${docId}" class="glass-input text-xs p-2 md:p-3 rounded-lg md:rounded-xl w-full md:w-1/3 font-bold" placeholder="Image URL (optional)" value="${review.adminScreenshot || ''}">
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0 mt-1 md:mt-2">
+                            <button onclick="deleteReview('${docId}')" class="text-red-500 hover:text-red-400 text-xs uppercase font-black px-2 py-1 md:px-3 md:py-2 rounded-lg hover:bg-red-500/10 transition-colors w-full md:w-auto text-center">Delete Post</button>
+                            <button onclick="replyToReview('${docId}')" class="btn-solid px-4 py-1 md:px-6 md:py-2 rounded-lg md:rounded-xl text-xs uppercase font-black emboss-3d w-full md:w-auto mt-2 md:mt-0 text-center">${review.adminReply ? 'Update Reply' : 'Send Reply'}</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            let badgeColor = "bg-gray-500/10 border border-gray-500/20 text-muted";
+            let icon = "message-square";
+            if (review.type === 'Bug') { 
+                badgeColor = "bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400"; 
+                icon = "bug"; 
+            }
+            if (review.type === 'Feature') { 
+                badgeColor = "bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400"; 
+                icon = "lightbulb"; 
+            }
+
+            // Generate Stars
+            let starsHtml = '';
+            if (review.rating > 0) {
+                starsHtml = '<div class="flex text-[#ffc300] text-base md:text-lg mt-1">';
+                for (let i = 0; i < review.rating; i++) starsHtml += '★';
+                starsHtml += '</div>';
+            }
+
+            // Format timestamp
+            const timestamp = review.timestamp ? 
+                new Date(review.timestamp.toDate()).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) : 'Just now';
+
+            card.innerHTML = `
+                <div class="flex flex-col md:flex-row justify-between items-start gap-3 md:gap-0 mb-4 md:mb-6">
+                    <div class="flex items-center gap-3 md:gap-4 w-full md:w-auto">
+                        <img src="${review.photo}" alt="${review.name}" class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl border-2 border-white/20 shadow-md emboss-3d">
+                        <div class="flex-1 md:flex-none">
+                            <div class="text-sm md:text-base font-black grad-text">${review.name}</div>
+                            ${starsHtml}
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-[10px] uppercase tracking-widest px-2 py-1 md:px-3 md:py-1 rounded-lg ${badgeColor} inline-flex items-center gap-1 font-bold">
+                                    <i data-lucide="${icon}" class="w-3 h-3"></i> ${review.type}
+                                </span>
+                                ${review.uid === currentUser?.uid ? '<span class="user-badge text-[10px] px-2 py-1 rounded-lg font-bold">YOU</span>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-[10px] text-muted opacity-60 font-mono bg-white/10 px-2 py-1 md:px-3 md:py-1 rounded-lg font-bold w-full md:w-auto text-center md:text-left">
+                        ${timestamp}
+                    </div>
+                </div>
+                <p class="text-sm text-main/90 leading-relaxed pl-1 font-medium">${review.text}</p>
+                
+                ${review.adminReply ? `
+                    <div class="mt-4 md:mt-6 bg-gradient-to-r from-emerald-500/10 to-transparent p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-emerald-500/40 ml-2">
+                        <div class="flex items-center gap-2 mb-2 md:mb-3">
+                            <i data-lucide="shield-check" class="w-4 h-4 md:w-5 md:h-5 text-emerald-600 dark:text-emerald-400 emboss-3d"></i>
+                            <span class="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Developer Response</span>
+                        </div>
+                        <p class="text-sm text-main/80 italic font-medium">"${review.adminReply}"</p>
+                        ${review.adminScreenshot ? `<img src="${review.adminScreenshot}" class="mt-3 md:mt-4 rounded-lg md:rounded-xl border-2 border-white/20 w-full max-w-md shadow-xl emboss-3d">` : ''}
+                    </div>
+                ` : ''}
+
+                ${adminActions}
+            `;
+            
+            return card;
+        }
+
+        // Submit review
+        async function submitReview() {
+            if (!currentUser) {
+                showToast('Please sign in to post a review', 'error');
+                return;
+            }
+
+            const reviewText = document.getElementById('review-text');
+            const reviewType = document.getElementById('review-type');
+            const ratingInput = document.querySelector('input[name="rating"]:checked');
+            const submitBtnText = document.getElementById('submit-review-text');
+            const submitBtnSpinner = document.getElementById('submit-review-spinner');
+
+            if (!reviewText.value.trim()) {
+                showToast('Please write something first!', 'error');
+                return;
+            }
+
+            if (!ratingInput) {
+                showToast('Please select a rating', 'error');
+                return;
+            }
+
+            const ratingValue = parseInt(ratingInput.value);
+            submitBtnText.textContent = "Publishing...";
+            submitBtnSpinner.classList.remove('hidden');
+
+            try {
+                await window.firebaseAddDoc(window.firebaseCollection(window.firebaseDb, "reviews"), {
+                    text: reviewText.value.trim(),
+                    type: reviewType.value,
+                    rating: ratingValue,
+                    uid: currentUser.uid,
+                    name: currentUser.displayName || currentUser.email.split('@')[0],
+                    photo: currentUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.displayName || currentUser.email)}&background=random`,
+                    timestamp: window.firebaseServerTimestamp(),
+                    adminReply: null,
+                    adminScreenshot: null
+                });
+
+                reviewText.value = "";
+                // Reset stars
+                const stars = document.querySelectorAll('input[name="rating"]');
+                stars.forEach(s => s.checked = false);
+                
+                showToast('Review published successfully!', 'success');
+            } catch (error) {
+                console.error('Error submitting review:', error);
+                showToast('Failed to publish review. Please try again.', 'error');
+            }
+
+            submitBtnText.textContent = "Publish Post";
+            submitBtnSpinner.classList.add('hidden');
+        }
+
+        // Admin functions
+        async function replyToReview(docId) {
+            const replyText = document.getElementById(`reply-${docId}`).value;
+            const imgUrl = document.getElementById(`img-${docId}`).value;
+            
+            if (!replyText) {
+                showToast('Please enter a reply message', 'error');
+                return;
+            }
+
+            try {
+                await window.firebaseUpdateDoc(window.firebaseDoc(window.firebaseDb, "reviews", docId), {
+                    adminReply: replyText.trim(),
+                    adminScreenshot: imgUrl.trim() || null
+                });
+                
+                showToast('Reply sent successfully', 'success');
+            } catch (error) {
+                console.error('Error replying to review:', error);
+                showToast('Failed to send reply', 'error');
+            }
+        }
+
+        async function deleteReview(docId) {
+            if (confirm('Are you sure you want to delete this review?')) {
+                try {
+                    await window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDb, "reviews", docId));
+                    showToast('Review deleted successfully', 'success');
+                } catch (error) {
+                    console.error('Error deleting review:', error);
+                    showToast('Failed to delete review', 'error');
+                }
+            }
+        }
+
+        // Admin modal functions
+        function openAdminLogin() {
+            document.getElementById('admin-login-modal').classList.remove('hidden');
+            // Clear any pre-filled credentials for security
+            document.getElementById('admin-email').value = '';
+            document.getElementById('admin-password').value = '';
+            lucide.createIcons();
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('admin-login-modal').classList.add('hidden');
+        }
+
+        // Make functions globally available
+        window.replyToReview = replyToReview;
+        window.deleteReview = deleteReview;
+        window.openAdminLogin = openAdminLogin;
+        window.closeAdminLogin = closeAdminLogin;
+
+        // Tab Logic
         function switchTab(tabId) {
-            const sections = ['home', 'features', 'code-editor', 'contact', 'download'];
-            document.querySelectorAll('.nav-item[data-target]').forEach(btn => {
+            const sections = ['home', 'reviews', 'features', 'code-editor', 'download'];
+            document.querySelectorAll('.nav-item').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.target === tabId);
             });
             sections.forEach(id => {
                 const el = document.getElementById(id);
                 if (id === tabId) {
                     el.classList.remove('hidden-section');
-                    requestAnimationFrame(() => el.classList.add('fade-enter-active'));
+                    void el.offsetWidth;
+                    el.classList.add('fade-enter-active');
                 } else {
                     el.classList.remove('fade-enter-active');
                     el.classList.add('hidden-section');
@@ -608,85 +1499,187 @@ function toHex(arr) {
             });
         }
 
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            const isLight = document.body.classList.contains('light-mode');
-            document.querySelector('.light-icon').classList.toggle('hidden', isLight);
-            document.querySelector('.dark-icon').classList.toggle('hidden', !isLight);
-        }
+        // --- NEW THEME LOGIC ---
+        const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-        function toggleAccount() {
-            const modal = document.getElementById('account-modal');
-            const overlay = document.querySelector('.overlay');
-            if(modal.classList.contains('open')) {
-                modal.classList.remove('open');
-                overlay.classList.remove('active');
+        function handleThemeChange(e) {
+            if (e.matches) {
+                document.body.classList.add('dark-mode');
             } else {
-                modal.classList.add('open');
-                overlay.classList.add('active');
+                document.body.classList.remove('dark-mode');
             }
+            updateIcons();
         }
 
-        function closeAllPanels() {
-            document.getElementById('account-modal').classList.remove('open');
-            document.querySelector('.overlay').classList.remove('active');
+        // Manual Toggle
+        function toggleThemeManual() {
+            document.body.classList.toggle('dark-mode');
+            updateIcons();
         }
 
-        // Calendar Logic
-        let currentDate = new Date();
-        function initCalendar() { renderCalendar(currentDate); }
-        function renderCalendar(date) {
-            const grid = document.querySelector('.calendar-grid');
-            const title = document.getElementById('calendar-title');
-            const headers = Array.from(grid.querySelectorAll('.calendar-day-header'));
-            grid.innerHTML = '';
-            headers.forEach(h => grid.appendChild(h));
-
-            const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
-            title.textContent = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
-
-            const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-            const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-            const startingDay = firstDay.getDay();
-            const totalDays = lastDay.getDate();
-
-            for(let i=0; i<startingDay; i++) {
-                const div = document.createElement('div');
-                div.className = 'calendar-day opacity-0';
-                grid.appendChild(div);
-            }
-
-            const today = new Date();
-            for(let i=1; i<=totalDays; i++) {
-                const div = document.createElement('div');
-                div.className = 'calendar-day';
-                div.textContent = i;
-                if(i === today.getDate() && date.getMonth() === today.getMonth()) div.classList.add('today');
-                if(i % 3 === 0) div.classList.add('available'); 
-                grid.appendChild(div);
-            }
-        }
-        function changeMonth(dir) {
-            currentDate.setMonth(currentDate.getMonth() + dir);
-            renderCalendar(currentDate);
+        function updateIcons() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.querySelector('.light-icon').classList.toggle('hidden', !isDark);
+            document.querySelector('.dark-icon').classList.toggle('hidden', isDark);
+            
+            // Re-apply gradient colors based on new theme
+            const root = getComputedStyle(document.body);
+            const start = root.getPropertyValue('--gradient-start').trim();
+            const end = root.getPropertyValue('--gradient-end').trim();
+            
+            const stop1 = document.querySelector('.stop-color-1');
+            const stop2 = document.querySelector('.stop-color-2');
+            
+            if(stop1) stop1.setAttribute('stop-color', start);
+            if(stop2) stop2.setAttribute('stop-color', end);
         }
 
-        // Code Editor Logic
-        function runCode() {
-            const output = document.getElementById('console-output');
-            output.innerHTML = "> Executing...<br>";
+        function applyGradientToIcons() {
             setTimeout(() => {
-                output.innerHTML += "> Initializing Crypto Engine...<br>";
+                document.querySelectorAll('.lucide').forEach(icon => {
+                    // Skip logo which has its own gradient
+                    if(!icon.closest('svg').querySelector('stop[stop-color="#06b6d4"]')) {
+                         icon.style.stroke = "url(#icon-gradient)";
+                    }
+                });
+            }, 50);
+        }
+
+        // --- GENERATOR LOGIC ---
+        function generatePassword() {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+            let pwd = "";
+            for (let i = 0; i < 24; i++) {
+                pwd += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('gen-pwd-output').value = pwd;
+        }
+
+        function copyToClipboard(id) {
+            const el = document.getElementById(id);
+            if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                 el.select();
+                 document.execCommand('copy');
+            } else {
+                // For contenteditable divs
+                const range = document.createRange();
+                range.selectNode(el);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+            }
+            showToast("Copied to clipboard", "success");
+        }
+
+        // Code Simulator with Syntax Highlighting Mockup
+        const rawCode = `// AES-256 GCM Implementation
+const algorithm = 'AES-GCM';
+const keyLength = 256;
+
+async function secureData(input) {
+  // 1. Generate Crypographic Salt
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  
+  // 2. Generate Initialization Vector (IV)
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  
+  // 3. Encrypt (Simulated)
+  return {
+    status: "SECURED",
+    algo: algorithm,
+    cipher: btoa(input).split('').reverse().join('')
+  };
+}
+
+// System Check
+secureData("MySecretPassword123");`;
+
+        // Simple Regex Highlighter for visual effect
+        function highlightCode(code) {
+            return code
+                .replace(/\/\/.*/g, '<span class="token-comment">$&</span>')
+                .replace(/'[^']*'/g, '<span class="token-string">$&</span>')
+                .replace(/"[^"]*"/g, '<span class="token-string">$&</span>')
+                .replace(/\b(const|let|var|async|function|return|new)\b/g, '<span class="token-keyword">$&</span>')
+                .replace(/\b(console|crypto|Uint8Array|btoa)\b/g, '<span class="token-func">$&</span>');
+        }
+
+        function runCode() {
+            const term = document.getElementById('terminal-content');
+            term.innerHTML = "<span class='grad-text font-bold'>> Initializing Enclave...</span><br>";
+            setTimeout(() => {
+                term.innerHTML += "> <span style='color:#3b82f6'>Generating 256-bit Key...</span><br>";
                 setTimeout(() => {
-                    output.innerHTML += "> Salt: a4f8...<br>> IV: 9b2c...<br>";
-                    output.innerHTML += "> <span style='color:var(--text-main); font-weight:bold'>STATUS: SECURED</span><br>";
-                }, 500);
+                    term.innerHTML += "> <span style='color:#10b981'>Salt:</span> 8f4b29a1...<br>";
+                    term.innerHTML += "> <span style='color:#10b981'>IV:</span> 9b2c4d1e...<br>";
+                    setTimeout(() => {
+                        term.innerHTML += "> <span class='grad-text font-bold'>STATUS: ENCRYPTED</span><br>";
+                        showToast("Audit Complete: System Secure", "success");
+                    }, 600);
+                }, 400);
             }, 300);
         }
+
         function resetCode() {
-            document.getElementById('code-area').value = `// AES-256 Encryption Simulation\nconst algorithm = 'AES-GCM';\nconsole.log("Ready...");`;
-            document.getElementById('console-output').innerHTML = "<span class='text-dynamic'>> System Ready.</span>";
+            document.getElementById('code-display').innerHTML = highlightCode(rawCode);
+            document.getElementById('terminal-content').innerHTML = "<span class='grad-text font-bold'>> System Ready.</span>";
         }
+
+        // Toast Notification
+        window.showToast = (msg, type = 'info') => {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            if (type === 'error') toast.style.borderLeftColor = '#ef4444';
+            if (type === 'success') toast.style.borderLeftColor = '#10b981';
+            
+            toast.textContent = msg;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            resetCode();
+            
+            // Listen for system theme changes
+            handleThemeChange(darkModeMediaQuery);
+            darkModeMediaQuery.addListener(handleThemeChange);
+
+            const observer = new MutationObserver(() => {
+                applyGradientToIcons();
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+            applyGradientToIcons();
+            
+            // Generate initial password
+            generatePassword();
+            
+            // Initialize Firebase Auth
+            initializeAuth();
+            
+            // Set up review submission
+            document.getElementById('submit-review').addEventListener('click', submitReview);
+            
+            // Set up admin login form
+            document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('admin-email').value;
+                const password = document.getElementById('admin-password').value;
+                handleAdminLogin(email, password);
+            });
+            
+            // Load reviews when reviews tab is clicked
+            document.querySelector('[data-target="reviews"]').addEventListener('click', () => {
+                if (currentUser) {
+                    loadReviews();
+                }
+            });
+        });
     </script>
 </body>
 </html>
