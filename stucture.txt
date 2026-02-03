@@ -1,0 +1,110 @@
+securething-vault/
+├── app/
+│   ├── src/main/
+│   │   ├── java/com/securething/vault/
+│   │   │   ├── di/
+│   │   │   │   └── AppModule.kt
+│   │   │   ├── auth/
+│   │   │   │   ├── BiometricAuth.kt
+│   │   │   │   ├── PinAuthActivity.kt
+│   │   │   │   ├── RegisterActivity.kt
+│   │   │   │   └── WelcomeActivity.kt
+│   │   │   ├── encryption/
+│   │   │   │   ├── AESEncryption.kt
+│   │   │   │   └── FileEncryptionManager.kt
+│   │   │   ├── ui/
+│   │   │   │   ├── main/
+│   │   │   │   │   ├── MainActivity.kt
+│   │   │   │   │   └── MainViewModel.kt
+│   │   │   │   ├── home/
+│   │   │   │   │   ├── HomeFragment.kt
+│   │   │   │   │   ├── HomeViewModel.kt
+│   │   │   │   │   ├── FileAdapter.kt
+│   │   │   │   │   └── FileDetailsDialog.kt
+│   │   │   │   ├── history/
+│   │   │   │   │   ├── HistoryFragment.kt
+│   │   │   │   │   └── HistoryViewModel.kt
+│   │   │   │   ├── import/
+│   │   │   │   │   ├── ImportFragment.kt
+│   │   │   │   │   └── ImportViewModel.kt
+│   │   │   │   ├── passwords/
+│   │   │   │   │   ├── PasswordsFragment.kt
+│   │   │   │   │   ├── PasswordAdapter.kt
+│   │   │   │   │   ├── AddPasswordDialog.kt
+│   │   │   │   │   └── PasswordGeneratorDialog.kt
+│   │   │   │   ├── wallet/
+│   │   │   │   │   ├── WalletFragment.kt
+│   │   │   │   │   ├── CardAdapter.kt
+│   │   │   │   │   └── AddCardDialog.kt
+│   │   │   │   └── settings/
+│   │   │   │       ├── SettingsFragment.kt
+│   │   │   │       └── UpdateChecker.kt
+│   │   │   ├── data/
+│   │   │   │   ├── local/
+│   │   │   │   │   ├── AppDatabase.kt
+│   │   │   │   │   ├── LocalStorage.kt
+│   │   │   │   │   ├── dao/
+│   │   │   │   │   │   ├── FileDao.kt
+│   │   │   │   │   │   ├── PasswordDao.kt
+│   │   │   │   │   │   ├── CardDao.kt
+│   │   │   │   │   │   └── HistoryDao.kt
+│   │   │   │   │   └── repository/
+│   │   │   │   │       ├── FileRepository.kt
+│   │   │   │   │       ├── PasswordRepository.kt
+│   │   │   │   │       ├── CardRepository.kt
+│   │   │   │   │       └── HistoryRepository.kt
+│   │   │   │   └── models/
+│   │   │   │       ├── User.kt
+│   │   │   │       ├── StoredFile.kt
+│   │   │   │       ├── PasswordItem.kt
+│   │   │   │       ├── Card.kt
+│   │   │   │       └── FailedLoginAttempt.kt
+│   │   │   └── utils/
+│   │   │       ├── Constants.kt
+│   │   │       ├── Extensions.kt
+│   │   │       ├── SecurityUtils.kt
+│   │   │       ├── FileUtils.kt
+│   │   │       └── ThemeUtils.kt
+│   │   ├── res/
+│   │   │   ├── layout/
+│   │   │   │   ├── activity_splash.xml
+│   │   │   │   ├── activity_register.xml
+│   │   │   │   ├── activity_pin_auth.xml
+│   │   │   │   ├── activity_welcome.xml
+│   │   │   │   ├── activity_main.xml
+│   │   │   │   ├── fragment_home.xml
+│   │   │   │   ├── fragment_history.xml
+│   │   │   │   ├── fragment_import.xml
+│   │   │   │   ├── fragment_passwords.xml
+│   │   │   │   ├── fragment_wallet.xml
+│   │   │   │   ├── fragment_settings.xml
+│   │   │   │   ├── item_file.xml
+│   │   │   │   ├── item_password.xml
+│   │   │   │   ├── item_card.xml
+│   │   │   │   ├── item_history.xml
+│   │   │   │   ├── dialog_file_details.xml
+│   │   │   │   ├── dialog_add_password.xml
+│   │   │   │   ├── dialog_generate_password.xml
+│   │   │   │   ├── dialog_add_card.xml
+│   │   │   │   └── nav_header.xml
+│   │   │   ├── drawable/
+│   │   │   │   ├── clay_background.xml
+│   │   │   │   ├── clay_button.xml
+│   │   │   │   ├── clay_button_selected.xml
+│   │   │   │   ├── clay_edittext.xml
+│   │   │   │   ├── clay_card.xml
+│   │   │   │   ├── clay_bottom_nav.xml
+│   │   │   │   ├── clay_nav_item.xml
+│   │   │   │   ├── clay_pin_button.xml
+│   │   │   │   ├── bottom_nav_colors.xml
+│   │   │   │   └── tab_selector.xml
+│   │   │   ├── menu/
+│   │   │   │   ├── bottom_nav_menu.xml
+│   │   │   │   ├── nav_menu.xml
+│   │   │   │   ├── menu_home.xml
+│   │   │   │   └── menu_file_options.xml
+│   │   │   └── values/
+│   │   │       ├── colors.xml
+│   │   │       ├── strings.xml
+│   │   │       ├── themes.xml
+│   │   │       └── dimens.xml
